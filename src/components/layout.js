@@ -15,7 +15,7 @@ const Layout = ({ children }) => {
             <li>Blog</li>
           </ul>
         </nav>
-        <main className="container--main">{children}</main>
+        <main className="container--main section">{children}</main>
         <footer className="container--footer">
           © {new Date().getFullYear()}, developed by
           {` `}
