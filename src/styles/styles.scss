@@ -1,3 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Muli:wght@400;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lora:wght@500&display=swap");
+@import "/variables.scss";
+@import "/mixins.scss";
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -8,4 +14,88 @@
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: "Muli", Helvetica, sans-serif;
+}
+
+.container {
+  @include container(1150px);
+  &--main {
+    @include container(1150px);
+    margin-top: $borderSize;
+    min-height: 100vh;
+  }
+  &--footer {
+    @include container(1150px);
+    margin-bottom: $borderSize;
+  }
+}
+
+.app {
+  &--wrapper {
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+  }
+  &--nav {
+    justify-content: space-between;
+    align-items: center;
+    color: $lightwhite;
+    height: $borderSize;
+    position: fixed;
+    display: flex;
+    z-index: 20;
+    top: 0;
+    right: 0;
+    left: 0;
+    @include navnsocials;
+    .navitems {
+      display: inherit;
+      li:first-child {
+        margin-right: 4rem;
+      }
+    }
+  }
+}
+
+.borders {
+  position: absolute;
+  top: 0;
+  .top,
+  .bottom,
+  .left,
+  .right {
+    background-color: #383838;
+    position: fixed;
+    z-index: 10;
+  }
+  .top,
+  .bottom {
+    width: 100vw;
+  }
+  .left,
+  .right {
+    height: 100vh;
+  }
+  .thickness-width {
+    width: $borderSize;
+  }
+  .thickness-hight {
+    height: $borderSize;
+  }
+  .top {
+    top: 0;
+    left: 0;
+  }
+  .bottom {
+    bottom: 0;
+    left: 0;
+  }
+  .left {
+    left: 0;
+    top: 0;
+  }
+  .right {
+    right: 0;
+    top: 0;
+  }
 }

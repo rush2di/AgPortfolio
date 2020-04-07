@@ -1,0 +1,11 @@
+@mixin navnsocials($size: 0.9rem) {
+  font-style: normal;
+  font-weight: 800;
+  font-size: $size;
+  text-transform: uppercase;
+}
+
+@mixin container($width) {
+  width: $width;
+  margin: 0 auto;
+}
