@@ -1,0 +1,59 @@
+backend:
+  name: git-gateway
+  repo: rush2di/AgPortfolio
+  branch: master
+
+publish_mode: editorial_workflow
+media_folder: static/img
+public_folder: /img
+
+collections:
+  - name: "articles"
+    label: "Articles"
+    folder: "static/articles"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    identifier_field: title
+    fields:
+      - {
+          label: "Template Key",
+          name: "templateKey",
+          widget: "hidden",
+          default: "blog-post",
+        }
+      - { label: "title", name: "title", widget: "string" }
+      - { label: "publication date", name: "date", widget: "datetime" }
+      - { label: "Cover", name: "cover", widget: image }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "home"
+    label: "Home Page"
+    folder: "static/home"
+    slug: "home-page"
+    identifier_field: "templateKey"
+    fields:
+      - {
+          name: "templateKey",
+          label: "Template Key",
+          widget: "hidden",
+          default: "home-page-customizer",
+        }
+      - { label: "Profile Image", name: "profileImg", widget: image }
+      - { label: "Intro Paragraph", name: "introTxt", widget: "text" }
+
+  - name: "socials"
+    label: "Social Media Links"
+    folder: "static/socials"
+    create: true
+    slug: "social-links"
+    identifier_field: "templateKey"
+    fields:
+      - {
+          name: "templateKey",
+          label: "Template Key",
+          widget: "hidden",
+          default: "social-links-editor",
+        }
+      - { name: "instagram", label: "Instagram", widget: "text" }
+      - { name: "facebook", label: "Facebook", widget: "text" }
