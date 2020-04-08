@@ -30,6 +30,7 @@ collections:
   - name: "home"
     label: "Home Page"
     folder: "static/home"
+    create: true
     slug: "home-page"
     identifier_field: "templateKey"
     fields:
