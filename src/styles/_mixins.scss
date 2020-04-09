@@ -5,7 +5,7 @@
   text-transform: uppercase;
 }
 
-@mixin headings($size: 130px, $weight: 500, $spacing: -0.06em) {
+@mixin headings($size: 8.35rem, $weight: 500, $spacing: -0.06em) {
   font-family: "Playfair Display", "Franklin Gothic Medium", Arial, sans-serif;
   font-style: normal;
   font-weight: $weight;
@@ -13,6 +13,16 @@
   // line-height: 90%;  /* or 126px */
   letter-spacing: $spacing;
 }
+
+@mixin paragraph($size: 0.95rem, $weight: 400, $spacing: -0.02em) {
+  font-family: "Lora", "Franklin Gothic Medium", Arial, sans-serif;
+  font-style: normal;
+  font-weight: $weight;
+  font-size: $size;
+  // line-height: 90%;  /* or 126px */
+  letter-spacing: $spacing;
+}
+
 @mixin container($width) {
   width: $width;
   margin: 0 auto;

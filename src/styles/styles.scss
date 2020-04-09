@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Muli:wght@400;700;800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Lora:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500&display=swap");
 @import "/variables.scss";
 @import "/mixins.scss";
 
@@ -45,7 +45,7 @@ body {
     height: $borderSize;
     position: fixed;
     display: flex;
-    z-index: 20;
+    z-index: 55;
     top: 0;
     right: 0;
     left: 0;
@@ -63,13 +63,13 @@ body {
 .borders {
   position: absolute;
   top: 0;
+  z-index: 50;
   .top,
   .bottom,
   .left,
   .right {
     background-color: #383838;
     position: fixed;
-    z-index: 10;
   }
   .top,
   .bottom {
@@ -113,14 +113,14 @@ body {
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-gap: 4rem;
-      padding: 0 2rem;
+      padding: 0 3rem;
     }
   }
   .hero-grid {
     &-one {
       .hero-title {
         position: absolute;
-        z-index: 10;
+        z-index: 20;
         &-container {
           position: relative;
           height: 55vh;
@@ -135,7 +135,7 @@ body {
             padding: 0 0.3rem;
             display: inline-block;
             &:last-of-type {
-              margin-top: -3rem;
+              margin-top: -4rem;
             }
           }
           span {
@@ -145,6 +145,13 @@ body {
           }
         }
       }
+      p {
+        width: 70%;
+        color: $paragraph;
+        @include paragraph;
+        line-height: 1.7;
+        margin-left: 1rem;
+      }
     }
     &-two {
       // just for testing
@@ -153,8 +160,9 @@ body {
       .hero-image {
         &-container {
           width: 100%;
-          height: 100%;
+          height: 115%;
           position: relative;
+          margin-left: -1.5rem;
         }
         &-mask {
           position: absolute;
@@ -162,10 +170,11 @@ body {
           width: 100%;
           overflow: hidden;
           // just for testing
-          .testImg {
+          img {
             width: 100%;
-            height: 550px;
-            background-color: gray;
+            height: 100%;
+            object-position: center;
+            object-fit: cover;
           }
           .testMask {
             height: 100%;
@@ -173,8 +182,9 @@ body {
             background-color: white;
             z-index: 10;
             display: block;
-            transform: translateY(-10%);
             position: absolute;
+            top: 0;
+            right: 0;
           }
           //-------------------------
         }
