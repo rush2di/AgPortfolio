@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import React, { useEffect, useLayoutEffect } from "react"
+import React, { useLayoutEffect } from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import gsap from "gsap"
 
@@ -78,7 +78,7 @@ export const HeroContent = ({ txt, img, cmsPreviewImg }) => {
     })
     gsap.from(introduction.current, {
       duration: 1,
-      y: 10,
+      y: -10,
       delay: 1,
       ease: "power3.out",
       opacity: 0,
