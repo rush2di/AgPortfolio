@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react"
-import axios from "axios"
+import React from "react"
 
 import Hero from "../components/hero"
 import Albums from "../components/albums"
@@ -10,7 +9,7 @@ const HomePage = () => {
       <Hero />
       <Albums />
     </React.Fragment>
-    )
+  )
 }
 
 export default HomePage

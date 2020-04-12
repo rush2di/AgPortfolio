@@ -12,7 +12,9 @@ const Albums = () => {
   const [error, setError] = useState(false)
 
   const albumSelectionHandle = value => {
-    setActiveAlbumId(value)
+    if (value !== activeAlbumId) {
+      setActiveAlbumId(value)
+    }
   }
 
   useEffect(() => {
@@ -23,7 +25,7 @@ const Albums = () => {
       if (error) setError(false)
       switch (type) {
         case "albums":
-          setState([...newData])
+          setState(newData)
           if (activeAlbumId === "") {
             setActiveAlbumId(newData[0].id)
           }
@@ -31,6 +33,8 @@ const Albums = () => {
         case "photoset":
           setState(newData)
           break
+        default:
+          return null
       }
     }
 
@@ -39,9 +43,9 @@ const Albums = () => {
       const res = await axios.get(albumsBaseUrl)
       const { photoset } = res.data.photosets
       const albumsMapper = photoset.map(item => {
-        return { id: item.id, title: item.title._content, content: {} }
+        return { id: item.id, title: item.title._content, content: [] }
       })
-      if (_SUBSCRIBED) newStateParser("albums", albumsMapper)
+      if (_SUBSCRIBED) newStateParser("albums", [...albumsMapper])
     }
     // Fetch all photosets of an album by it's ID
     const photosFetcher = async () => {
@@ -50,8 +54,8 @@ const Albums = () => {
       )
       const { photo } = res.data.photoset
       const newState = state.map((item, i) => {
-        if (item.id === activeAlbumId && item.content !== {}) {
-          return { ...state[i], content: { ...photo } }
+        if (item.id === activeAlbumId && item.content !== []) {
+          return { ...state[i], content: [...photo] }
         }
         return item
       })
@@ -62,49 +66,102 @@ const Albums = () => {
     if (state.length === 0) {
       albumsFetcher().catch(() => setError(true))
     }
+    // Checking if the first update is done to fetch data
     if (activeAlbumId) {
       photosFetcher().catch(() => setError(true))
     }
 
-    // Unsubscribe after component unmounts
-    return () => (_SUBSCRIBED = false)
+    // Unsubscribe when component is unmounting
+    return () => {
+      _SUBSCRIBED = false
+    }
   }, [activeAlbumId])
 
   return (
     <React.Fragment>
-      <AlbumsList
-        data={state}
-        activeAlbumId={activeAlbumId}
-        albumSelectionHandle={albumSelectionHandle}
-      />
+      {!!activeAlbumId && (
+        <AlbumsList
+          data={state}
+          activeAlbumId={activeAlbumId}
+          albumSelectionHandle={albumSelectionHandle}
+        />
+      )}
     </React.Fragment>
   )
 }
 
 const AlbumsList = ({ data, albumSelectionHandle, activeAlbumId }) => {
-  const selectionFilter = data.filter(item => item.id === activeAlbumId)
-  //   console.log(selectionFilter)
+  // assigning the selected album data to selectedAlbum variable
+  const selectedAlbum = data.filter(item => item.id === activeAlbumId)
+  console.log(selectedAlbum)
   const categoriesMapper = data.map(item => {
+    const { id, title } = item
     return (
-      <li
-        key={item.id}
-        id={item.id}
-        onClick={e => albumSelectionHandle(e.target.id)}
-      >
-        {item.title}
+      <li key={id} id={id} onClick={e => albumSelectionHandle(e.target.id)}>
+        {title}
       </li>
     )
   })
   return (
-    <div className="section-albums">
+    <div className="section-albums container">
       <div className="section-albums--catcontainer">
         <div className="section-albums--catcontainer-items">
           <ul>{categoriesMapper}</ul>
         </div>
       </div>
-      <div className="section-albums--photo-grid"></div>
+      <div className="section-albums--photo-grid">
+        {selectedAlbum[0].content && (
+          <PhotosGrid selectedAlbum={selectedAlbum[0]} />
+        )}
+      </div>
     </div>
   )
 }
+
+const PhotosGrid = ({ selectedAlbum }) => {
+  if (!!selectedAlbum.content.length) {
+    const imagesPerGrid = (selectedAlbum.content.length / 3).toFixed()
+
+    return (
+      <React.Fragment>
+        <div className="section-albums--grid-col">
+          <AlbumColumn
+            selectedAlbum={selectedAlbum}
+            start={0}
+            end={imagesPerGrid}
+          />
+        </div>
+        <div className="section-albums--grid-col">
+          <AlbumColumn
+            selectedAlbum={selectedAlbum}
+            start={imagesPerGrid}
+            end={imagesPerGrid * 2}
+          />
+        </div>
+        <div className="section-albums--grid-col">
+          <AlbumColumn
+            selectedAlbum={selectedAlbum}
+            start={imagesPerGrid * 2}
+            end={selectedAlbum.length}
+          />
+        </div>
+      </React.Fragment>
+    )
+  } else {
+    return <div>Loading...</div>
+  }
+}
+
+const AlbumColumn = ({ selectedAlbum, start, end }) =>
+  selectedAlbum.content.slice(start, end).map(photo => {
+    const { server, secret, id } = photo
+    return (
+      <img
+        key={id}
+        src={`https://live.staticflickr.com/${server}/${id}_${secret}.jpg`}
+        alt=""
+      />
+    )
+  })
 
 export default Albums

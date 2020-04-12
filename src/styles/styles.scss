@@ -106,14 +106,16 @@ body {
 // Home page styels
 .section {
   &-hero {
-    margin-top: 7rem;
+    margin-top: 4rem;
+    height: 100%;
+    padding-bottom: 9.15rem;
     &--grid {
       height: 100%;
       width: 100%;
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-gap: 4rem;
-      padding: 0 3rem;
+      padding: 0 5rem;
     }
   }
   .hero-grid {
@@ -128,7 +130,7 @@ body {
           display: block;
           h1 {
             width: 100%;
-            @include headings;
+            @include headings(8rem);
             overflow: hidden;
             height: 100%;
             color: $primLight;
@@ -159,10 +161,10 @@ body {
       // ----------------
       .hero-image {
         &-container {
-          width: 100%;
-          height: 115%;
+          width: 90%;
+          height: 120%;
           position: relative;
-          margin-left: -1.5rem;
+          margin-top: 1.75rem;
         }
         &-mask {
           position: absolute;
@@ -189,6 +191,50 @@ body {
           //-------------------------
         }
       }
+    }
+  }
+  &-albums {
+    display: block;
+    padding: 0 3rem;
+    &--catcontainer {
+      display: inline-block;
+      width: 100%;
+      padding: 2rem 0 1rem;
+      overflow: hidden;
+    }
+    &--catcontainer-items {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      ul {
+        display: grid;
+        align-items: center;
+        justify-content: end;
+        width: 100%;
+        grid-template-columns: repeat(3, 1fr);
+        grid-column-gap: 1.5rem;
+        li {
+          @include headings(4.85rem, bold);
+          color: $primDark;
+          cursor: pointer;
+          width: 100%;
+          align-self: center;
+          justify-self: center;
+          text-align: center;
+          padding: 0 0.75rem;
+        }
+      }
+    }
+    &--photo-grid {
+      display: grid;
+      width: 100%;
+      grid-template-columns: repeat(3, 1fr);
+      grid-column-gap: 1.5rem;
+    }
+    &--grid-col {
+      @include flexbin(100%, 1.5rem);
     }
   }
 }

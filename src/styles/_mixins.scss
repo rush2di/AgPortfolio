@@ -27,3 +27,24 @@
   width: $width;
   margin: 0 auto;
 }
+
+@mixin flexbin($row-height, $space) {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  &:after {
+    content: "";
+    flex-grow: 999999999;
+    min-width: $row-height;
+    height: 0;
+  }
+  img {
+    position: relative;
+    display: block;
+    min-width: 100%;
+    flex-grow: 1;
+    margin-bottom: 1.5rem;
+    max-width: 100%;
+    padding: 0.75rem;
+  }
+}
