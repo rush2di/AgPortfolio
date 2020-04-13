@@ -42,10 +42,11 @@ const Albums = () => {
     const albumsFetcher = async () => {
       const res = await axios.get(albumsBaseUrl)
       const { photoset } = res.data.photosets
+
       const albumsMapper = photoset.map(item => {
         return { id: item.id, title: item.title._content, content: [] }
       })
-      if (_SUBSCRIBED) newStateParser("albums", [...albumsMapper])
+      if (_SUBSCRIBED) newStateParser("albums", [...albumsMapper.swap(0, 1)])
     }
     // Fetch all photosets of an album by it's ID
     const photosFetcher = async () => {
@@ -93,7 +94,23 @@ const Albums = () => {
 const AlbumsList = ({ data, albumSelectionHandle, activeAlbumId }) => {
   // assigning the selected album data to selectedAlbum variable
   const selectedAlbum = data.filter(item => item.id === activeAlbumId)
-  console.log(selectedAlbum)
+  const activeItem = React.useRef()
+  const activeItemChildren = activeItem.current && activeItem.current.childNodes
+
+  for (let node in activeItemChildren) {
+    if (activeItemChildren[node].className) {
+      activeItemChildren[node].className = ""
+    }
+    if (activeItemChildren[node].id === activeAlbumId) {
+      activeItemChildren[node].className = "--active"
+    }
+    // else {
+    // if (activeItemChildren[node].className) {
+    //   activeItemChildren[node].className = ""
+    // }
+    // }
+  }
+
   const categoriesMapper = data.map(item => {
     const { id, title } = item
     return (
@@ -106,7 +123,7 @@ const AlbumsList = ({ data, albumSelectionHandle, activeAlbumId }) => {
     <div className="section-albums container">
       <div className="section-albums--catcontainer">
         <div className="section-albums--catcontainer-items">
-          <ul>{categoriesMapper}</ul>
+          <ul ref={activeItem}>{categoriesMapper}</ul>
         </div>
       </div>
       <div className="section-albums--photo-grid">
@@ -118,6 +135,8 @@ const AlbumsList = ({ data, albumSelectionHandle, activeAlbumId }) => {
   )
 }
 
+// Function that makes a check if there is data or no
+// renders a tree columns gallery inspired by unsplash UI
 const PhotosGrid = ({ selectedAlbum }) => {
   if (!!selectedAlbum.content.length) {
     const imagesPerGrid = (selectedAlbum.content.length / 3).toFixed()
@@ -152,6 +171,7 @@ const PhotosGrid = ({ selectedAlbum }) => {
   }
 }
 
+// Function to map photosets into the parent column
 const AlbumColumn = ({ selectedAlbum, start, end }) =>
   selectedAlbum.content.slice(start, end).map(photo => {
     const { server, secret, id } = photo
@@ -163,5 +183,13 @@ const AlbumColumn = ({ selectedAlbum, start, end }) =>
       />
     )
   })
+
+// Important for reordering categories of UI perposes
+Array.prototype.swap = function(x, y) {
+  var b = this[x]
+  this[x] = this[y]
+  this[y] = b
+  return this
+}
 
 export default Albums

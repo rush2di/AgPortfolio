@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Muli:wght@400;700;800&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500&display=swap");
 @import "/variables.scss";
 @import "/mixins.scss";
@@ -15,6 +15,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: "Muli", Helvetica, sans-serif;
+  background-color: $bgwhite;
 }
 
 // Common containers styles
@@ -26,8 +27,20 @@ body {
     min-height: 100vh;
   }
   &--footer {
-    @include container(1150px);
-    margin-bottom: $borderSize;
+    position: fixed;
+    z-index: 55;
+    bottom: 0.45rem;
+    right: 2rem;
+    color: gray;
+    font-size: 0.75rem;
+    a {
+      color: $paragraph;
+      text-decoration: none;
+      font-weight: 700;
+      &:hover {
+        color: $primLight;
+      }
+    }
   }
 }
 
@@ -108,7 +121,7 @@ body {
   &-hero {
     margin-top: 4rem;
     height: 100%;
-    padding-bottom: 9.15rem;
+    padding-bottom: 1rem;
     &--grid {
       height: 100%;
       width: 100%;
@@ -125,7 +138,7 @@ body {
         z-index: 20;
         &-container {
           position: relative;
-          height: 55vh;
+          height: 300px;
           width: 100%;
           display: block;
           h1 {
@@ -148,7 +161,7 @@ body {
         }
       }
       p {
-        width: 70%;
+        width: 300px;
         color: $paragraph;
         @include paragraph;
         line-height: 1.7;
@@ -157,12 +170,12 @@ body {
     }
     &-two {
       // just for testing
-      height: 90vh;
+      height: 700px;
       // ----------------
       .hero-image {
         &-container {
-          width: 90%;
-          height: 120%;
+          width: 100%;
+          height: 100%;
           position: relative;
           margin-top: 1.75rem;
         }
@@ -199,8 +212,9 @@ body {
     &--catcontainer {
       display: inline-block;
       width: 100%;
-      padding: 2rem 0 1rem;
+      padding-bottom: 1.5rem;
       overflow: hidden;
+      margin-top: 3rem;
     }
     &--catcontainer-items {
       width: 100%;
@@ -216,7 +230,7 @@ body {
         grid-template-columns: repeat(3, 1fr);
         grid-column-gap: 1.5rem;
         li {
-          @include headings(4.85rem, bold);
+          @include headings(4.5rem, 500, 0);
           color: $primDark;
           cursor: pointer;
           width: 100%;
@@ -224,6 +238,9 @@ body {
           justify-self: center;
           text-align: center;
           padding: 0 0.75rem;
+        }
+        .--active {
+          color: $primLight;
         }
       }
     }
