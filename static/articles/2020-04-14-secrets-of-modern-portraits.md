@@ -1,7 +1,7 @@
 ---
 templateKey: blog-post
 title: Secrets of modern Photogrphy
-date: 2020-04-14T13:21:42.903Z
+date: 2020-04-13T13:21:42.903Z
 cover: /img/34651840_612009955832019_1390474822898679808_n.jpg
 description: >-
   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
