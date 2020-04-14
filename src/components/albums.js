@@ -104,11 +104,6 @@ const AlbumsList = ({ data, albumSelectionHandle, activeAlbumId }) => {
     if (activeItemChildren[node].id === activeAlbumId) {
       activeItemChildren[node].className = "--active"
     }
-    // else {
-    // if (activeItemChildren[node].className) {
-    //   activeItemChildren[node].className = ""
-    // }
-    // }
   }
 
   const categoriesMapper = data.map(item => {
