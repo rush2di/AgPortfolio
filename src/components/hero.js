@@ -56,7 +56,7 @@ export const HeroContent = ({ txt, img, payload }) => {
     gsap.from(title.current, {
       duration: 1,
       y: "100%",
-      delay: 0.3,
+      delay: 0.,
       ease: "power3.out",
     })
     gsap.from(subTitle.current, {
@@ -80,7 +80,7 @@ export const HeroContent = ({ txt, img, payload }) => {
     gsap.from(introduction.current, {
       duration: 1,
       y: -10,
-      delay: 1,
+      delay: 2.5,
       ease: "power3.out",
       opacity: 0,
     })
@@ -100,7 +100,7 @@ export const HeroContent = ({ txt, img, payload }) => {
               </h1>
             </div>
           </div>
-          <p ref={introduction}>{txt}</p>
+          <p className="intro-text" ref={introduction}>{txt}</p>
           {payload && <LastBlogPostCard lastBlogPost={payload} />}
         </div>
         <div className="hero-grid-two">
@@ -132,15 +132,15 @@ const LastBlogPostCard = ({ lastBlogPost }) => {
       {!loading && (
         <div
           style={{ backgroundImage: `url(${cover})` }}
-          className="hero-lastb--card"
+          className="hero-lastbp--card"
         >
           <div
-            style={{ backgroundColor: data.vibrant }}
+            style={{ backgroundColor: data.darkMuted }}
             className="card-overlay"
           ></div>
           <div className="card-overlay-content">
             <h3 style={{ color: data.lightVibrant }}>{title}</h3>
-            <p style={{ color: data.lightVibrant }}>{description}</p>
+            <p style={{ color: data.lightMuted }}>{description}</p>
           </div>
         </div>
       )}
