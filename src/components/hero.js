@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"
 import React, { useLayoutEffect } from "react"
 import { useStaticQuery, graphql } from "gatsby"
-import Palette from "react-palette"
+// import Palette from "react-palette"
 import gsap from "gsap"
 
 const Hero = ({ lastBlogPost = false }) => {
@@ -102,7 +102,7 @@ export const HeroContent = ({ txt, img, payload }) => {
           </div>
           <p className="intro-text" ref={introduction}>{txt}</p>
           {
-          payload && <LastBlogPostCard lastBlogPost={payload} />
+//           payload && <LastBlogPostCard lastBlogPost={payload} />
           }
         </div>
         <div className="hero-grid-two">
@@ -123,34 +123,34 @@ export const HeroContent = ({ txt, img, payload }) => {
   )
 }
 
-const LastBlogPostCard = ({ lastBlogPost }) => {
-  const { cover, title, description } = lastBlogPost.frontmatter
-//   const { data, loading, error } = usePalette(cover)
-  return (
-    <div className="hero-lastbp--container">
-      <h1>
-        <span>Last Blog Post</span>
-      </h1>
-    <Palette src={cover}>
-      {({ data, loading, error })=> (!loading && (
-        <div
-          style={{ backgroundImage: `url(${cover})` }}
-          className="hero-lastbp--card"
-        >
-          <div
-            style={{ backgroundColor: data.darkMuted }}
-            className="card-overlay"
-          ></div>
-          <div className="card-overlay-content">
-            <h3 style={{ color: data.lightVibrant }}>{title}</h3>
-            <p style={{ color: data.lightMuted }}>{description}</p>
-          </div>
-        </div>
-      ))}
-    </Palette>
-    </div>
-  )
-}
+// const LastBlogPostCard = ({ lastBlogPost }) => {
+//   const { cover, title, description } = lastBlogPost.frontmatter
+// //   const { data, loading, error } = usePalette(cover)
+//   return (
+//     <div className="hero-lastbp--container">
+//       <h1>
+//         <span>Last Blog Post</span>
+//       </h1>
+//     <Palette src={cover}>
+//       {({ data, loading, error })=> (!loading && (
+//         <div
+//           style={{ backgroundImage: `url(${cover})` }}
+//           className="hero-lastbp--card"
+//         >
+//           <div
+//             style={{ backgroundColor: data.darkMuted }}
+//             className="card-overlay"
+//           ></div>
+//           <div className="card-overlay-content">
+//             <h3 style={{ color: data.lightVibrant }}>{title}</h3>
+//             <p style={{ color: data.lightMuted }}>{description}</p>
+//           </div>
+//         </div>
+//       ))}
+//     </Palette>
+//     </div>
+//   )
+// }
 
 Hero.propTypes = {
   siteTitle: PropTypes.string,
