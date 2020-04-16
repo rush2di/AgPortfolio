@@ -102,7 +102,7 @@ export const HeroContent = ({ txt, img, payload }) => {
           </div>
           <p className="intro-text" ref={introduction}>{txt}</p>
           {
-          // payload && <LastBlogPostCard lastBlogPost={payload} />
+          payload && <LastBlogPostCard lastBlogPost={payload} />
           }
         </div>
         <div className="hero-grid-two">
