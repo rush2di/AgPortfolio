@@ -11,7 +11,7 @@ const Albums = () => {
   const [activeAlbumId, setActiveAlbumId] = useState("")
   const [error, setError] = useState(false)
 
-  const albumSelectionHandle = value => {
+  const albumSelectionHandle = (value) => {
     if (value !== activeAlbumId) {
       setActiveAlbumId(value)
     }
@@ -43,7 +43,7 @@ const Albums = () => {
       const res = await axios.get(albumsBaseUrl)
       const { photoset } = res.data.photosets
 
-      const albumsMapper = photoset.map(item => {
+      const albumsMapper = photoset.map((item) => {
         return { id: item.id, title: item.title._content, content: [] }
       })
       if (_SUBSCRIBED) newStateParser("albums", [...albumsMapper.swap(0, 1)])
@@ -93,7 +93,7 @@ const Albums = () => {
 
 const AlbumsList = ({ data, albumSelectionHandle, activeAlbumId }) => {
   // assigning the selected album data to selectedAlbum variable
-  const selectedAlbum = data.filter(item => item.id === activeAlbumId)
+  const selectedAlbum = data.filter((item) => item.id === activeAlbumId)
   const activeItem = React.useRef()
   const activeItemChildren = activeItem.current && activeItem.current.childNodes
 
@@ -106,10 +106,10 @@ const AlbumsList = ({ data, albumSelectionHandle, activeAlbumId }) => {
     }
   }
 
-  const categoriesMapper = data.map(item => {
+  const categoriesMapper = data.map((item) => {
     const { id, title } = item
     return (
-      <li key={id} id={id} onClick={e => albumSelectionHandle(e.target.id)}>
+      <li key={id} id={id} onClick={(e) => albumSelectionHandle(e.target.id)}>
         {title}
       </li>
     )
@@ -168,7 +168,7 @@ const PhotosGrid = ({ selectedAlbum }) => {
 
 // Function to map photosets into the parent column
 const AlbumColumn = ({ selectedAlbum, start, end }) =>
-  selectedAlbum.content.slice(start, end).map(photo => {
+  selectedAlbum.content.slice(start, end).map((photo) => {
     const { server, secret, id } = photo
     return (
       <img
@@ -180,7 +180,7 @@ const AlbumColumn = ({ selectedAlbum, start, end }) =>
   })
 
 // Important for reordering categories of UI perposes
-Array.prototype.swap = function(x, y) {
+Array.prototype.swap = function (x, y) {
   var b = this[x]
   this[x] = this[y]
   this[y] = b

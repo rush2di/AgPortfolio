@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import {Link} from "gatsby"
+import { Link } from "gatsby"
 
 import "../styles/styles.scss"
 
@@ -13,8 +13,12 @@ const Layout = ({ children }) => {
             <span>Grana.ab</span>
           </div>
           <ul className="navitems">
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/blog">Blog</Link></li>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/blog">Blog</Link>
+            </li>
           </ul>
         </nav>
         <main className="container--main section">{children}</main>

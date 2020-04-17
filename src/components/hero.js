@@ -4,6 +4,8 @@ import { useStaticQuery, graphql } from "gatsby"
 import ImagePalette from "react-image-palette"
 import gsap from "gsap"
 
+import arrow from "../assets/arrowmd.svg"
+
 const Hero = ({ lastBlogPost = false }) => {
   const { allMarkdownRemark } = useStaticQuery(
     graphql`
@@ -56,7 +58,7 @@ export const HeroContent = ({ txt, img, payload }) => {
     gsap.from(title.current, {
       duration: 1,
       y: "100%",
-      delay: 0,
+      delay: 0.6,
       ease: "power3.out",
     })
     gsap.from(subTitle.current, {
@@ -65,12 +67,17 @@ export const HeroContent = ({ txt, img, payload }) => {
       delay: 0.8,
       ease: "power3.out",
     })
-    gsap.to(imageMask.current, {
-      duration: 1.5,
-      x: "-100%",
-      delay: 1.5,
-      ease: "power3.inOut",
-    })
+
+    gsap.fromTo(
+      imageMask.current,
+      { x: "0%" },
+      {
+        duration: 1.5,
+        x: "-100%",
+        delay: 1.5,
+        ease: "power3.inOut",
+      }
+    )
     gsap.from(image.current, {
       duration: 1.5,
       scale: 1.3,
@@ -124,16 +131,19 @@ export const HeroContent = ({ txt, img, payload }) => {
 }
 
 const LastBlogPostCard = ({ lastBlogPost }) => {
-  const { cover, title, description } = lastBlogPost.frontmatter
+  const { title, description } = lastBlogPost.frontmatter
+  const { src } = lastBlogPost.frontmatter.cover.childImageSharp.fluid
   return (
     <div className="hero-lastbp--container">
       <h1>
-        <span>Last Blog Post</span>
+        <span>
+          Last Blog Post <img src={arrow} />
+        </span>
       </h1>
-      <ImagePalette image={cover}>
+      <ImagePalette image={src}>
         {({ backgroundColor, color, alternativeColor }) => (
           <div
-            style={{ backgroundImage: `url(${cover})` }}
+            style={{ backgroundImage: `url(${src})` }}
             className="hero-lastbp--card"
           >
             <div style={{ backgroundColor }} className="card-overlay"></div>

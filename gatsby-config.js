@@ -5,8 +5,6 @@ module.exports = {
     author: `@rush2di`,
   },
   plugins: [
-    `gatsby-plugin-react-helmet`,
-    "gatsby-plugin-sass",
     {
       resolve: "gatsby-transformer-remark",
       options: {
@@ -21,19 +19,21 @@ module.exports = {
           },
         ],
       },
+    },    
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `image`,
+        path: `${__dirname}/static/img`,
+      },
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `articles`,
         path: `${__dirname}/static/articles`,
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `image`,
-        path: `${__dirname}/static/img`,
       },
     },
     {
@@ -50,8 +50,8 @@ module.exports = {
         path: `${__dirname}/static/socials`,
       },
     },
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
+    `gatsby-plugin-react-helmet`,
+    "gatsby-plugin-sass",
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
