@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import axios from "axios"
+import { preloadImages } from "../utils/utils"
 
 const apiKey = "731f6d52097190e3d99faa37716978fd"
 const userId = `&user_id=155026906@N08&format=json&nojsoncallback=1`
@@ -122,7 +123,7 @@ const AlbumsList = ({ data, albumSelectionHandle, activeAlbumId }) => {
         </div>
       </div>
       <div className="section-albums--photo-grid">
-        {selectedAlbum[0].content && (
+        {!!selectedAlbum[0].content.length && (
           <PhotosGrid selectedAlbum={selectedAlbum[0]} />
         )}
       </div>
@@ -133,34 +134,43 @@ const AlbumsList = ({ data, albumSelectionHandle, activeAlbumId }) => {
 // Function that makes a check if there is data or no
 // renders a tree columns gallery inspired by unsplash UI
 const PhotosGrid = ({ selectedAlbum }) => {
-  if (!!selectedAlbum.content.length) {
-    const imagesPerGrid = (selectedAlbum.content.length / 3).toFixed()
+  // if (!!selectedAlbum.content.length) {
+    const [loading, setLoading] = useState(true)
+    const imagesSrc = selectedAlbum.content.map(({ server, secret, id })=>{
+      return `https://live.staticflickr.com/${server}/${id}_${secret}.jpg` 
+    })
+    const imagesPerGrid = (imagesSrc / 3).toFixed()
+    preloadImages(imagesSrc).done(() => {
+      setLoading(false)
+    })
 
-    return (
+    if(!loading) {
+          return (
       <React.Fragment>
         <div className="section-albums--grid-col">
           <AlbumColumn
-            selectedAlbum={selectedAlbum}
+            selectedAlbum={imagesSrc}
             start={0}
             end={imagesPerGrid}
           />
         </div>
         <div className="section-albums--grid-col">
           <AlbumColumn
-            selectedAlbum={selectedAlbum}
+            selectedAlbum={imagesSrc}
             start={imagesPerGrid}
             end={imagesPerGrid * 2}
           />
         </div>
         <div className="section-albums--grid-col">
           <AlbumColumn
-            selectedAlbum={selectedAlbum}
+            selectedAlbum={imagesSrc}
             start={imagesPerGrid * 2}
             end={selectedAlbum.length}
           />
         </div>
       </React.Fragment>
     )
+    }
   } else {
     return <div>Loading...</div>
   }
@@ -168,12 +178,11 @@ const PhotosGrid = ({ selectedAlbum }) => {
 
 // Function to map photosets into the parent column
 const AlbumColumn = ({ selectedAlbum, start, end }) =>
-  selectedAlbum.content.slice(start, end).map((photo) => {
-    const { server, secret, id } = photo
+  selectedAlbum.slice(start, end).map((photo) => {
     return (
       <img
-        key={id}
-        src={`https://live.staticflickr.com/${server}/${id}_${secret}.jpg`}
+        key={photo.substring(35,45)}
+        src={photo}
         alt=""
       />
     )
