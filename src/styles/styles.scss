@@ -363,6 +363,7 @@ body {
       width: 100%;
       grid-template-columns: repeat(3, 1fr);
       grid-column-gap: 1.5rem;
+      margin-bottom: 2rem;
     }
     &--grid-col {
       @include flexbin(100%, 1.5rem);
