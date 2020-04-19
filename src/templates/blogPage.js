@@ -33,6 +33,7 @@ const BlogPage = (props) => {
       }
     }
   `)
+ 
   return (
   <div className="section-blog">
     <div className="section-blog--title">
@@ -40,18 +41,47 @@ const BlogPage = (props) => {
     </div>
   </div>
   <div className="section-blog--mainGrid">
+  <ArticleCard data={allMarkdownRemark} />
   </div>
     )
 }
 
-const ArticleCard = () => {
+const ArticleCard = ({data}) => (
+  data.edges.map((post) => {
+  const { slug } = post.node.fields
+  const { fluid } = post.node.frontmatter.cover.childImageSharp
+  const { description, tags, date, title } = post.node.frontmatter
+  const tagsArray = tags.slice(' ')
+
   return (
     <div className="article-card--wrapper">
-      <h1>{ title }</h1>
+      <Image src={cover} />
+      <div className="article-card--tags">
+        {tagsArray.map()}
+      </div>
+      <h1>{title}</h1>
       <span>{date}</span>
-      <Image src={cover} />c
       <p>{description}</p>
       <button><Link to={slug}>Read More</Link></button>
     </div>
+    )
+  })
+)
+
+const Aside = () => {
+  return (
+    <aside className="aside--container">
+      <div className="aside--searchbox">
+        <form>
+          <input types="text" placeholder="search..." />
+        </form>
+      </div>
+      <div className="aside--categories">
+        tags sit here
+      </div>
+      <div className="aisde--latest">
+        four latest blog posts goes here
+      </div>
+    </aside>
     )
 }
