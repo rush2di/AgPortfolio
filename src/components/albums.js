@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import axios from "axios"
-import { preloadImages } from "../utils/utils"
+import { preloadImages, arrayItemsSwap } from "../utils/utils"
 
 const apiKey = "731f6d52097190e3d99faa37716978fd"
 const userId = `&user_id=155026906@N08&format=json&nojsoncallback=1`
@@ -47,7 +47,8 @@ const Albums = () => {
       const albumsMapper = photoset.map((item) => {
         return { id: item.id, title: item.title._content, content: [] }
       })
-      if (_SUBSCRIBED) newStateParser("albums", [...albumsMapper.swap(0, 1)])
+      const orderedAlbums = arrayItemsSwap(albumsMapper, 0, 1)
+      if (_SUBSCRIBED) newStateParser("albums", [...orderedAlbums])
     }
     // Fetch all photosets of an album by it's ID
     const photosFetcher = async () => {
@@ -81,22 +82,31 @@ const Albums = () => {
 
   return (
     <React.Fragment>
-      {!!activeAlbumId && (
-        <AlbumsList
-          data={state}
-          activeAlbumId={activeAlbumId}
-          albumSelectionHandle={albumSelectionHandle}
-        />
+      {error === false ? (
+        !!activeAlbumId && (
+          <AlbumsList
+            data={state}
+            activeAlbumId={activeAlbumId}
+            albumSelectionHandle={albumSelectionHandle}
+          />
+        )
+      ) : (
+        <div>
+          <p>
+            Opps! something went wrong, please check your network and try again
+          </p>
+        </div>
       )}
     </React.Fragment>
   )
 }
 
 const AlbumsList = ({ data, albumSelectionHandle, activeAlbumId }) => {
-  // assigning the selected album data to selectedAlbum variable
+  const [loading, setLoading] = useState(true)
   const selectedAlbum = data.filter((item) => item.id === activeAlbumId)
   const activeItem = React.useRef()
   const activeItemChildren = activeItem.current && activeItem.current.childNodes
+  let imagesSrc = []
 
   for (let node in activeItemChildren) {
     if (activeItemChildren[node].className) {
@@ -107,93 +117,79 @@ const AlbumsList = ({ data, albumSelectionHandle, activeAlbumId }) => {
     }
   }
 
-  const categoriesMapper = data.map((item) => {
-    const { id, title } = item
-    return (
-      <li key={id} id={id} onClick={(e) => albumSelectionHandle(e.target.id)}>
-        {title}
-      </li>
-    )
-  })
+  useState(() => {
+    if (!!selectedAlbum[0].content.length) {
+      imagesSrc = selectedAlbum[0].content.map(({ server, secret, id }) => {
+        return `https://live.staticflickr.com/${server}/${id}_${secret}.jpg`
+      })
+      preloadImages(imagesSrc).done(() => {
+        setLoading(false)
+      })
+    }
+
+    return () => {
+      setLoading(true)
+    }
+  }, [loading])
+
   return (
     <div className="section-albums container">
       <div className="section-albums--catcontainer">
         <div className="section-albums--catcontainer-items">
-          <ul ref={activeItem}>{categoriesMapper}</ul>
+          <ul ref={activeItem}>
+            <CategoriesMapper
+              data={data}
+              albumSelectionHandle={albumSelectionHandle}
+            />
+          </ul>
         </div>
       </div>
       <div className="section-albums--photo-grid">
-        {!!selectedAlbum[0].content.length && (
-          <PhotosGrid selectedAlbum={selectedAlbum[0]} />
-        )}
+        {loading ? <div>Loading...</div> : <PhotosGrid imagesSrc={imagesSrc} />}
       </div>
     </div>
   )
 }
 
-// Function that makes a check if there is data or no
-// renders a tree columns gallery inspired by unsplash UI
-const PhotosGrid = ({ selectedAlbum }) => {
-  // if (!!selectedAlbum.content.length) {
-    const [loading, setLoading] = useState(true)
-    const imagesSrc = selectedAlbum.content.map(({ server, secret, id })=>{
-      return `https://live.staticflickr.com/${server}/${id}_${secret}.jpg` 
-    })
-    const imagesPerGrid = (imagesSrc / 3).toFixed()
-    preloadImages(imagesSrc).done(() => {
-      setLoading(false)
-    })
+// Function that renders a three columns gallery inspired by unsplash UI
+const PhotosGrid = ({ imagesSrc }) => {
+  const imagesPerGrid = (imagesSrc.length / 3).toFixed()
 
-    if(!loading) {
-          return (
-      <React.Fragment>
-        <div className="section-albums--grid-col">
-          <AlbumColumn
-            selectedAlbum={imagesSrc}
-            start={0}
-            end={imagesPerGrid}
-          />
-        </div>
-        <div className="section-albums--grid-col">
-          <AlbumColumn
-            selectedAlbum={imagesSrc}
-            start={imagesPerGrid}
-            end={imagesPerGrid * 2}
-          />
-        </div>
-        <div className="section-albums--grid-col">
-          <AlbumColumn
-            selectedAlbum={imagesSrc}
-            start={imagesPerGrid * 2}
-            end={selectedAlbum.length}
-          />
-        </div>
-      </React.Fragment>
-    )
-    }
-  } else {
-    return <div>Loading...</div>
-  }
+  return (
+    <React.Fragment>
+      <div className="section-albums--grid-col">
+        <AlbumColumn imagesSrc={imagesSrc} start={0} end={imagesPerGrid} />
+      </div>
+      <div className="section-albums--grid-col">
+        <AlbumColumn
+          imagesSrc={imagesSrc}
+          start={imagesPerGrid}
+          end={imagesPerGrid * 2}
+        />
+      </div>
+      <div className="section-albums--grid-col">
+        <AlbumColumn
+          imagesSrc={imagesSrc}
+          start={imagesPerGrid * 2}
+          end={selectedAlbum.length}
+        />
+      </div>
+    </React.Fragment>
+  )
 }
 
 // Function to map photosets into the parent column
-const AlbumColumn = ({ selectedAlbum, start, end }) =>
-  selectedAlbum.slice(start, end).map((photo) => {
-    return (
-      <img
-        key={photo.substring(35,45)}
-        src={photo}
-        alt=""
-      />
-    )
+const AlbumColumn = ({ imagesSrc, start, end }) =>
+  imagesSrc.slice(start, end).map((photo) => {
+    return <img key={photo.substring(35, 45)} src={photo} alt="" />
   })
 
-// Important for reordering categories of UI perposes
-Array.prototype.swap = function (x, y) {
-  var b = this[x]
-  this[x] = this[y]
-  this[y] = b
-  return this
-}
+// Function to map albums categories
+const CategoriesMapper = ({ data, albumSelectionHandle }) =>
+  data.map(({ id, title }) => (
+    <li key={id} id={id} onClick={(e) => albumSelectionHandle(e.target.id)}>
+      {title}
+    </li>
+  ))
 
 export default Albums
