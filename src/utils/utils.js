@@ -1,9 +1,10 @@
 // function to preload fetched images
+
 export const preloadImages = (arr) => {
   let newImages = []
   let loadedimages = 0
   let postAction = () => {}
-  const arr = typeof arr != "object" ? [arr] : arr
+  arr = typeof arr != "object" ? [arr] : arr
   const imagePostLoad = () => {
     loadedimages++
     if (loadedimages === arr.length) postAction(newImages)
@@ -23,4 +24,13 @@ export const preloadImages = (arr) => {
       postAction = callback || postAction
     },
   }
+}
+
+// Important function for reordering categories of albums 
+
+export const arrayItemsSwap = (array, firstIndex, secondIndex ) => {
+  let firstItem = array[firstIndex]
+  array[firstIndex] = array[secondIndex]
+  array[secondIndex] = firstItem
+  return array
 }
