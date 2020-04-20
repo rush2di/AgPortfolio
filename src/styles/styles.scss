@@ -285,7 +285,8 @@ body {
   }
   &-albums {
     display: block;
-    padding: 0 3rem;
+    padding: 0 3rem 3rem;
+    min-height: 500px;
     &--catcontainer {
       display: inline-block;
       width: 100%;
@@ -358,15 +359,11 @@ body {
         }
       }
     }
-    &--photo-grid {
-      display: grid;
-      width: 100%;
-      grid-template-columns: repeat(3, 1fr);
-      grid-column-gap: 1.5rem;
-      margin-bottom: 2rem;
-    }
-    &--grid-col {
-      @include flexbin(100%, 1.5rem);
+    &--masonry-wrapper {
+      img {
+        width: calc(95.5% / 3);
+        margin: .5rem;
+      }
     }
   }
 }
