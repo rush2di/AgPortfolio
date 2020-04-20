@@ -5,33 +5,30 @@ import Image from "gatsby-image"
 
 const BlogPage = (props) => {
   const { allMarkdownRemark } = useStaticQuery(graphql`
-    {
-      allMarkdownRemark(
-        filter: { frontmatter: { templateKey: { eq: "blog-post" } } }
-        sort: { fields: [frontmatter___date], order: DESC }
-      ) {
-        edges {
-          node {
-            fields {
-              slug
-            }
-            frontmatter {
-              cover {
-                childImageSharp {
-                  fluid {
-                    src
-                  }
-                }
+{
+  allMarkdownRemark(filter: {frontmatter: {templateKey: {eq: "blog-post"}}}, sort: {fields: [frontmatter___date], order: DESC}) {
+    edges {
+      node {
+        fields {
+          slug
+        }
+        frontmatter {
+          cover {
+            childImageSharp {
+              fluid {
+                src
               }
-              date(formatString: "Do MMMM YYYY")
-              description
-              title
-              tags
             }
           }
+          date(formatString: "Do MMMM YYYY")
+          description
+          title
+          tags
         }
       }
     }
+  }
+}
   `)
  
   return (
@@ -39,9 +36,16 @@ const BlogPage = (props) => {
     <div className="section-blog--title">
       <h1>Blog</h1>
     </div>
-  </div>
-  <div className="section-blog--mainGrid">
-  <ArticleCard data={allMarkdownRemark} />
+  {
+  // </div>
+  // <div className="section-blog--mainGrid">
+  //   <div className="section-blog--gridft">
+  //     <ArticleCard data={allMarkdownRemark} />
+  //   </div>
+  //   <div className="section-blog--gridsec">
+  //     <Aside data={allMarkdownRemark} />
+  //   </div>
+    }
   </div>
     )
 }
@@ -68,7 +72,7 @@ const ArticleCard = ({data}) => (
   })
 )
 
-const Aside = () => {
+const Aside = ({ data }) => {
   return (
     <aside className="aside--container">
       <div className="aside--searchbox">
