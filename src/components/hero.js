@@ -84,12 +84,13 @@ export const HeroContent = ({ txt, img, payload }) => {
       delay: 1.8,
       ease: "power3.out",
     })
-    gsap.from(introduction.current, {
+    gsap.from(".ft-grid-box", {
       duration: 1,
       y: -10,
       delay: 2.5,
       ease: "power3.out",
       opacity: 0,
+      stagger: 0.2
     })
   })
 
@@ -107,7 +108,7 @@ export const HeroContent = ({ txt, img, payload }) => {
               </h1>
             </div>
           </div>
-          <p className="intro-text" ref={introduction}>
+          <p className="intro-text ft-grid-box" ref={introduction}>
             {txt}
           </p>
           {payload && <LastBlogPostCard lastBlogPost={payload} />}
@@ -134,10 +135,10 @@ const LastBlogPostCard = ({ lastBlogPost }) => {
   const { title, description } = lastBlogPost.frontmatter
   const { src } = lastBlogPost.frontmatter.cover.childImageSharp.fluid
   return (
-    <div className="hero-lastbp--container">
+    <div className="hero-lastbp--container ft-grid-box">
       <h1>
         <span>
-          Last Blog Post <img src={arrow} />
+          Last Blog Post <img src={arrow} alt="" />
         </span>
       </h1>
       <ImagePalette image={src}>
