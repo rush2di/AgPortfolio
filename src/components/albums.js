@@ -20,8 +20,24 @@ const Albums = () => {
   const controller = new ScrollMagic.Controller()
 
   const albumSelectionHandle = (value) => {
-    if (value !== activeAlbumId) {
-      setActiveAlbumId(value)
+    if (value !== activeAlbumId) setActiveAlbumId(value)
+  }
+
+  // Function to setstate after fetching new data
+  const newStateParser = (type, newData) => {
+    if (error) setError(false)
+    switch (type) {
+      case "albums":
+        setState(newData)
+        if (activeAlbumId === "") {
+          setActiveAlbumId(newData[0].id)
+        }
+        break
+      case "photoset":
+        setState(newData)
+        break
+      default:
+        return null
     }
   }
 
@@ -41,7 +57,6 @@ const Albums = () => {
         offset: 200,
       })
         .on("enter", (e) => {
-          console.log("check")
           onEnterAnimation.play()
         })
         .addTo(controller)
@@ -53,54 +68,35 @@ const Albums = () => {
     let localData = sessionStorage.getItem("state")
     let parsedLocalData = JSON.parse(localData)
 
-    // Function to setstate after fetching new data
-    let newStateParser = (type, newData) => {
-      if (error) setError(false)
-      switch (type) {
-        case "albums":
-          setState(newData)
-          if (activeAlbumId === "") {
-            setActiveAlbumId(newData[0].id)
-          }
-          break
-        case "photoset":
-          setState(newData)
-          break
-        default:
-          return null
-      }
-    }
-
     // Fetch all albums initial info and titles
     const albumsFetcher = async () => {
       const res = await axios.get(albumsBaseUrl)
       const { photoset } = res.data.photosets
-
       const albumsMapper = photoset.map((item) => {
         return { id: item.id, title: item.title._content, content: [] }
       })
       const orderedAlbums = arrayItemsSwap(albumsMapper, 0, 1)
+
       if (_SUBSCRIBED) newStateParser("albums", [...orderedAlbums])
     }
 
     // Fetch all photosets of an album by it's ID
     const photosFetcher = async () => {
-      let res = await Promise.all(
+      const res = await Promise.all(
         state.map(async ({ id }, i) => {
-          let albumPhotoset = await axios.get(
-            photosBaseUrl + "&photoset_id=" + id + userId
-          )
+          const url = photosBaseUrl + "&photoset_id=" + id + userId
+          const albumPhotoset = await axios.get(url)
           const { photo } = albumPhotoset.data.photoset
-          const imagesSrc = photo.map(
-            ({ server, secret, id }) =>
-              `https://live.staticflickr.com/${server}/${id}_${secret}.jpg`
-          )
+          const imagesSrc = photo.map(({ server, secret, id }) => {
+            return `https://live.staticflickr.com/${server}/${id}_${secret}.jpg`
+          })
           preloadImages(imagesSrc).done(() => {
             setLoadedImages((prevCount) => prevCount + 1)
           })
           return { ...state[i], content: [...imagesSrc] }
         })
       )
+
       if (_SUBSCRIBED) {
         sessionStorage.setItem("state", JSON.stringify(res))
         newStateParser("photoset", res)
@@ -111,8 +107,7 @@ const Albums = () => {
     if (!parsedLocalData) {
       if (state.length === 0) {
         albumsFetcher().catch(() => setError(true))
-      }
-      if (state.length && state[0].content.length === 0) {
+      } else if (state.length && state[0].content.length === 0) {
         photosFetcher().catch(() => setError(true))
       }
     }
@@ -141,16 +136,10 @@ const Albums = () => {
             albumSelectionHandle={albumSelectionHandle}
           />
         ) : (
-          <div className="container--loader">
-            <Loader />
-          </div>
+          <Loader />
         )
       ) : (
-        <div>
-          <p>
-            Opps! something went wrong, please check your network and try again
-          </p>
-        </div>
+        <ErrorMessage />
       )}
     </React.Fragment>
   )
@@ -215,5 +204,11 @@ const Titles = ({ data, albumSelectionHandle }) =>
       {title}
     </li>
   ))
+
+const ErrorMessage = () => (
+  <div>
+    <p>Opps! something went wrong, please check your network and try again</p>
+  </div>
+)
 
 export default Albums

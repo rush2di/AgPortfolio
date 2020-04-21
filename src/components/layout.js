@@ -7,7 +7,7 @@ import "../styles/styles.scss"
 
 const Layout = ({ children }) => {
   const path = globalHistory.location.pathname
-  
+
   return (
     <React.Fragment>
       <div className="app--wrapper">
@@ -17,10 +17,17 @@ const Layout = ({ children }) => {
           </div>
           <ul className="navitems">
             <li>
-              <Link className={path === "/" ? "disabled-link" : ""} to="/">Home</Link>
+              <Link className={path === "/" ? "disabled-link" : ""} to="/">
+                Home
+              </Link>
             </li>
             <li>
-              <Link className={path === "/blog" ? "disabled-link" : ""} to="/blog">Blog</Link>
+              <Link
+                className={path === "/blog" ? "disabled-link" : ""}
+                to="/blog"
+              >
+                Blog
+              </Link>
             </li>
           </ul>
         </nav>
