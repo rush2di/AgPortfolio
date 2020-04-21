@@ -6,12 +6,12 @@ module.exports = {
   },
   plugins: [
     {
-      resolve: "gatsby-transformer-remark",
+      resolve: `gatsby-transformer-remark`,
       options: {
         plugins: [
-          "gatsby-remark-relative-images",
+          `gatsby-remark-relative-images`,
           {
-            resolve: "gatsby-remark-images",
+            resolve: `gatsby-remark-images`,
             options: {
               maxWidth: 1200,
               linkImagesToOriginal: false,
@@ -51,7 +51,7 @@ module.exports = {
       },
     },
     `gatsby-plugin-react-helmet`,
-    "gatsby-plugin-sass",
+    `gatsby-plugin-sass`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -65,7 +65,7 @@ module.exports = {
       },
     },
     {
-      resolve: "gatsby-plugin-netlify-cms",
+      resolve: `gatsby-plugin-netlify-cms`,
       options: {
         modulePath: `${__dirname}/src/cms/cms.js`,
       },

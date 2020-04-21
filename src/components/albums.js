@@ -4,7 +4,7 @@ import ScrollMagic from "ScrollMagic"
 import axios from "axios"
 import gsap from "gsap"
 
-import { preloadImages, arrayItemsSwap, newStateParser } from "../utils/utils"
+import { preloadImages, arrayItemsSwap } from "../utils/utils"
 import Loader from "./loader"
 
 const apiKey = "731f6d52097190e3d99faa37716978fd"
