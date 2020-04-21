@@ -27,7 +27,9 @@
     "react-dom": "^16.13.1",
     "react-helmet": "^6.0.0",
     "react-image-palette": "^0.2.4",
-    "react-masonry-component": "^6.2.1"
+    "react-masonry-component": "^6.2.1",
+    "react-spinners-kit": "^1.9.1",
+    "scrollmagic": "^2.0.7"
   },
   "devDependencies": {
     "prettier": "^2.0.4"
