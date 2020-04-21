@@ -18,6 +18,11 @@ body {
   background-color: $bgwhite;
 }
 
+// Link disabler
+.disabled-link {
+  pointer-events: none;
+}
+
 
 // Common containers styles
 .container {
