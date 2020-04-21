@@ -18,6 +18,7 @@ body {
   background-color: $bgwhite;
 }
 
+
 // Common containers styles
 .container {
   @include container(1150px);
@@ -41,6 +42,13 @@ body {
         color: $primLight;
       }
     }
+  }
+  &--loader {
+    height: 450px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
   }
 }
 
@@ -361,9 +369,19 @@ body {
     }
     &--masonry-wrapper {
       img {
-        width: calc(95.5% / 3);
+        width: calc(70.5% / 3);
         margin: .5rem;
       }
     }
+  }
+}
+
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
