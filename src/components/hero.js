@@ -90,7 +90,7 @@ export const HeroContent = ({ txt, img, payload }) => {
       delay: 2.5,
       ease: "power3.out",
       opacity: 0,
-      stagger: 0.2
+      stagger: 0.2,
     })
   })
 

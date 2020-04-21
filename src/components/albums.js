@@ -1,9 +1,11 @@
 import React, { useEffect, useLayoutEffect, useState } from "react"
 import Masonry from "react-masonry-component"
+import ScrollMagic from "ScrollMagic"
 import axios from "axios"
 import gsap from "gsap"
 
-import { preloadImages, arrayItemsSwap } from "../utils/utils"
+import { preloadImages, arrayItemsSwap, newStateParser } from "../utils/utils"
+import Loader from "./loader"
 
 const apiKey = "731f6d52097190e3d99faa37716978fd"
 const userId = `&user_id=155026906@N08&format=json&nojsoncallback=1`
@@ -15,6 +17,7 @@ const Albums = () => {
   const [activeAlbumId, setActiveAlbumId] = useState("")
   const [error, setError] = useState(false)
   const [loadedImages, setLoadedImages] = useState(0)
+  const controller = new ScrollMagic.Controller()
 
   const albumSelectionHandle = (value) => {
     if (value !== activeAlbumId) {
@@ -22,12 +25,35 @@ const Albums = () => {
     }
   }
 
+  useLayoutEffect(() => {
+    if (loadedImages === 3 && !error) {
+      const onEnterAnimation = gsap
+        .timeline({ defaults: { ease: "power3.out", duration: 1 } })
+        .from(".catList", { y: -10, opacity: 0, stagger: 0.2 })
+        .from(".section-albums--masonry-wrapper", { opacity: 0 }, "+=0.1")
+
+      onEnterAnimation.pause()
+
+      new ScrollMagic.Scene({
+        triggerElement: ".catList",
+        duration: 0,
+        triggerHook: 0.85,
+        offset: 200,
+      })
+        .on("enter", (e) => {
+          console.log("check")
+          onEnterAnimation.play()
+        })
+        .addTo(controller)
+    }
+  }, [loadedImages, error])
+
   useEffect(() => {
-    // Set state subscription
     let _SUBSCRIBED = true
-    let localData = localStorage.getItem("state")
+    let localData = sessionStorage.getItem("state")
     let parsedLocalData = JSON.parse(localData)
-    // Function to set new data to state
+
+    // Function to setstate after fetching new data
     let newStateParser = (type, newData) => {
       if (error) setError(false)
       switch (type) {
@@ -69,33 +95,33 @@ const Albums = () => {
             ({ server, secret, id }) =>
               `https://live.staticflickr.com/${server}/${id}_${secret}.jpg`
           )
-            preloadImages(imagesSrc).done(() => {
-            setLoadedImages(prevCount => prevCount + 1)
+          preloadImages(imagesSrc).done(() => {
+            setLoadedImages((prevCount) => prevCount + 1)
           })
           return { ...state[i], content: [...imagesSrc] }
         })
       )
       if (_SUBSCRIBED) {
-        localStorage.setItem('state',JSON.stringify(res))
+        sessionStorage.setItem("state", JSON.stringify(res))
         newStateParser("photoset", res)
       }
     }
 
-    if(!parsedLocalData) {
-      // Checking if state is empty to start feching data
+    // checking if sessionStorage is empty to fetch needed data
+    if (!parsedLocalData) {
       if (state.length === 0) {
         albumsFetcher().catch(() => setError(true))
       }
-      // Checking if the first update is done to fetch relative photoset data
       if (state.length && state[0].content.length === 0) {
         photosFetcher().catch(() => setError(true))
-      }      
-    } 
+      }
+    }
+    // checking if state is empty to set it to data saved on sessionStorage
     if (!!parsedLocalData && !state.length) {
-      const imagesSrc = parsedLocalData.map(item => ( item.content ))
-      preloadImages(imagesSrc).done(()=>{
+      const imagesSrc = parsedLocalData.map((item) => item.content)
+      preloadImages(imagesSrc).done(() => {
         setState(parsedLocalData)
-        if(activeAlbumId === "") setActiveAlbumId(parsedLocalData[0].id)
+        if (activeAlbumId === "") setActiveAlbumId(parsedLocalData[0].id)
         setLoadedImages(3)
       })
     }
@@ -115,7 +141,9 @@ const Albums = () => {
             albumSelectionHandle={albumSelectionHandle}
           />
         ) : (
-          <div style={{ height: 500 }}>Loading...</div>
+          <div className="container--loader">
+            <Loader />
+          </div>
         )
       ) : (
         <div>
@@ -133,18 +161,6 @@ const AlbumsList = ({ data, albumSelectionHandle, activeAlbumId }) => {
   const activeItem = React.useRef()
   const activeItemChildren = activeItem.current && activeItem.current.childNodes
 
-
-  useLayoutEffect(() => {
-    gsap.from(".catList", {
-      duration: 1,
-      y: -10,
-      delay: 0.5,
-      ease: "power3.out",
-      opacity: 0,
-      stagger: 0.2
-    })
-  },[])
-
   for (let node in activeItemChildren) {
     if (activeItemChildren[node].className) {
       activeItemChildren[node].className = "catList"
@@ -159,50 +175,36 @@ const AlbumsList = ({ data, albumSelectionHandle, activeAlbumId }) => {
       <div className="section-albums--catcontainer">
         <div className="section-albums--catcontainer-items">
           <ul ref={activeItem}>
-            <CategoriesMapper
-              data={data}
-              albumSelectionHandle={albumSelectionHandle}
-            />
+            <Titles data={data} albumSelectionHandle={albumSelectionHandle} />
           </ul>
         </div>
       </div>
-        <PhotosGrid imagesSrc={selectedAlbum[0].content} />
+      <MasonryBox imagesSrc={selectedAlbum[0].content} />
     </div>
   )
 }
 
 // Function that renders a Masonry gallery
-const PhotosGrid = ({ imagesSrc }) => {
-
-  useLayoutEffect(() => {
-    gsap.from('.section-albums--masonry-wrapper',{
-      duration: 1,
-      opacity: 0,
-      delay: 0.5
-    })
-  },[])
-
+const MasonryBox = ({ imagesSrc }) => {
   return (
     <React.Fragment>
       <Masonry className={"section-albums--masonry-wrapper"}>
-        <AlbumColumn
-          imagesSrc={imagesSrc}
-          start={0}
-          end={imagesSrc.length}
-        />
+        <Gallery imagesSrc={imagesSrc} start={0} end={imagesSrc.length} />
       </Masonry>
     </React.Fragment>
   )
 }
 
 // Function to map photosets into the Masonry gallery
-const AlbumColumn = ({ imagesSrc, start, end }) =>
+const Gallery = ({ imagesSrc, start, end }) =>
   imagesSrc.slice(start, end).map((photo) => {
-    return <img className="imgy" key={photo.substring(35, 45)} src={photo} alt="" />
+    return (
+      <img className="imgy" key={photo.substring(35, 45)} src={photo} alt="" />
+    )
   })
 
-// Function to map albums categories
-const CategoriesMapper = ({ data, albumSelectionHandle }) =>
+// Function to map categories title
+const Titles = ({ data, albumSelectionHandle }) =>
   data.map(({ id, title }, i) => (
     <li
       key={id}
