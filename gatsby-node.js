@@ -29,5 +29,13 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
             ]
           : [],
     },
+    resolve: {
+      alias: {
+        ScrollMagic: Path.resolve(
+          'node_modules',
+          'scrollmagic/scrollmagic/uncompressed/ScrollMagic.js'
+          )
+      }
+    }
   })
 }
