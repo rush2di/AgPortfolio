@@ -17,7 +17,6 @@ const Albums = () => {
   const [activeAlbumId, setActiveAlbumId] = useState("")
   const [error, setError] = useState(false)
   const [loadedImages, setLoadedImages] = useState(0)
-  const controller = new ScrollMagic.Controller()
 
   const albumSelectionHandle = (value) => {
     if (value !== activeAlbumId) setActiveAlbumId(value)
@@ -41,7 +40,9 @@ const Albums = () => {
     }
   }
 
-  useLayoutEffect(() => {
+  useLayoutEffect(() => {    
+  const controller = new ScrollMagic.Controller()
+  
     if (loadedImages === 3 && !error) {
       const onEnterAnimation = gsap
         .timeline({ defaults: { ease: "power3.out", duration: 1 } })
