@@ -146,6 +146,10 @@ const Albums = () => {
   )
 }
 
+/*
+ Albums component filters the albums depending user selection
+ and pass it down to children masonry component
+*/
 const AlbumsList = ({ data, albumSelectionHandle, activeAlbumId }) => {
   const selectedAlbum = data.filter((item) => item.id === activeAlbumId)
   const activeItem = React.useRef()
@@ -174,7 +178,7 @@ const AlbumsList = ({ data, albumSelectionHandle, activeAlbumId }) => {
   )
 }
 
-// Function that renders a Masonry gallery
+// Masonry style gallery component
 const MasonryBox = ({ images }) => {
   const [imgCount, setImgCount] = useState(0)
   const [showCarousel, setShowCarousel] = useState(false)
@@ -193,10 +197,10 @@ const MasonryBox = ({ images }) => {
   }
   const handleNextBtn = () => {
     if (imgIndex !== imgCount) setImgIndex(imgIndex + 1)
-    if (imgIndex === imgCount) setImgIndex(0)
+    if (imgIndex === imgCount - 1) setImgIndex(0)
   }
   const loadMore = () => {
-    const limit = images.length - 1
+    const limit = images.length
     if (imgCount + 8 > limit) {
       setImgCount(limit)
     } else {
@@ -229,13 +233,16 @@ const MasonryBox = ({ images }) => {
           handleImageClick={handleImageClick}
         />
       </Masonry>
-      {imgCount !== images.length - 1 && (
-        <button onClick={loadMore}>Load More</button>
+      {imgCount !== images.length && (
+        <button className="btn--gray" onClick={loadMore}>
+          load more pictures
+        </button>
       )}
     </React.Fragment>
   )
 }
 
+// PhotoCarousel component
 const PhotoCarousel = ({
   images,
   index,
@@ -261,13 +268,13 @@ const PhotoCarousel = ({
   )
 }
 
-// Gallery component maps images into a Masonry style gallery
+// Gallery component maps images into the parenr Masonry component
 const Gallery = ({ images, start, end, handleImageClick }) =>
   images.slice(start, end).map((photo, index) => {
     return (
       <img
         onClick={() => handleImageClick(index)}
-        className="imgy"
+        className="section-albums--masonry-image"
         key={photo.substring(35, 45)}
         src={photo}
         alt=""
@@ -288,8 +295,9 @@ const Titles = ({ data, albumSelectionHandle }) =>
     </li>
   ))
 
+// Error message component in case data fetching failed
 const ErrorMessage = () => (
-  <div>
+  <div className="container--error-message">
     <p>Opps! something went wrong, please check your network and try again</p>
   </div>
 )
