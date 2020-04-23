@@ -3,8 +3,8 @@ import Layout from "../components/layout"
 import { graphql } from "gatsby"
 
 const Article = (props) => {
-	console.log(props)
-	return <div>test</div>
+  console.log(props)
+  return <div>test</div>
 }
 
 export default Article

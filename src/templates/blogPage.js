@@ -6,36 +6,39 @@ import Layout from "../components/layout"
 
 const BlogPage = (props) => {
   const { allMarkdownRemark } = useStaticQuery(graphql`
-{
-  allMarkdownRemark(filter: {frontmatter: {templateKey: {eq: "blog-post"}}}, sort: {fields: [frontmatter___date], order: DESC}) {
-    edges {
-      node {
-        fields {
-          slug
-        }
-        frontmatter {
-          cover {
-            childImageSharp {
-              fluid {
-                src
+    {
+      allMarkdownRemark(
+        filter: { frontmatter: { templateKey: { eq: "blog-post" } } }
+        sort: { fields: [frontmatter___date], order: DESC }
+      ) {
+        edges {
+          node {
+            fields {
+              slug
+            }
+            frontmatter {
+              cover {
+                childImageSharp {
+                  fluid(maxWidth: 1000, quality: 100) {
+                    ...GatsbyImageSharpFluid_tracedSVG
+                  }
+                }
               }
+              date(formatString: "Do MMMM YYYY")
+              description
+              title
+              tags
             }
           }
-          date(formatString: "Do MMMM YYYY")
-          description
-          title
-          tags
         }
       }
     }
-  }
-}
   `)
 
   console.log(allMarkdownRemark)
 
   return (
-     <Layout>
+    <Layout>
       <div className="section-blog">
         <div className="section-blog--title">
           <h1>Blog</h1>
@@ -51,7 +54,7 @@ const BlogPage = (props) => {
       </div>
     </Layout>
   )
- 
+
   // return (
   // <div className="section-blog">
   //   <div className="section-blog--title">
@@ -71,27 +74,31 @@ const BlogPage = (props) => {
   //   )
 }
 
-const ArticleCards = ({data}) => (
+const ArticleCards = ({ data }) =>
   data.edges.map((post) => {
-  const { slug } = post.node.fields
-  const { src } = post.node.frontmatter.cover.childImageSharp.fluid
-  const { description, tags, date, title } = post.node.frontmatter
-  const tagsArray = tags[0].split(" ")
-  console.log(tagsArray)
+    const { slug } = post.node.fields
+    const { fluid } = post.node.frontmatter.cover.childImageSharp
+    const { description, tags, date, title } = post.node.frontmatter
+    const tagsArray = tags[0].split(" ")
+    console.log(tagsArray)
 
-  return (
-    <div key={slug+"key"} className="article-card--wrapper">
-      <div className="article-card--tags">
-        {tagsArray.map(tag =>( <span>{tag}</span>)) }
+    return (
+      <div key={slug + "key"} className="article-card--wrapper">
+        <div className="article-card--tags">
+          {tagsArray.map((tag) => (
+            <span>{tag}</span>
+          ))}
+        </div>
+        <Image fluid={fluid} />
+        <h1>{title}</h1>
+        <span>{date}</span>
+        <p>{description}</p>
+        <button>
+          <Link to={`article${slug}`}>Read More</Link>
+        </button>
       </div>
-      <h1>{title}</h1>
-      <span>{date}</span>
-      <p>{description}</p>
-      <button><Link to={`article${slug}`}>Read More</Link></button>
-    </div>
     )
   })
-)
 
 const Aside = ({ data, tags }) => {
   return (
@@ -101,14 +108,10 @@ const Aside = ({ data, tags }) => {
           <input types="text" placeholder="search..." />
         </form>
       </div>
-      <div className="aside--categories">
-        tags sit here
-      </div>
-      <div className="aisde--latest">
-        four latest blog posts goes here
-      </div>
+      <div className="aside--categories">tags sit here</div>
+      <div className="aisde--latest">four latest blog posts goes here</div>
     </aside>
-    )
+  )
 }
 
 export default BlogPage
