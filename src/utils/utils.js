@@ -1,3 +1,5 @@
+import { useRef, useEffect } from "react"
+
 // function to preload fetched images
 
 export const preloadImages = (arr) => {
@@ -35,3 +37,12 @@ export const arrayItemsSwap = (array, firstIndex, secondIndex ) => {
   return array
 }
 
+// Costum hook to save a giving value before an update happens on the component
+
+export const usePrevious = (value) => {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+}
