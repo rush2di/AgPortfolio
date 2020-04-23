@@ -4,7 +4,7 @@ import ScrollMagic from "ScrollMagic"
 import axios from "axios"
 import gsap from "gsap"
 
-import { preloadImages, arrayItemsSwap } from "../utils/utils"
+import { preloadImages, arrayItemsSwap, usePrevious } from "../utils/utils"
 import Loader from "./loader"
 
 const apiKey = "731f6d52097190e3d99faa37716978fd"
@@ -40,9 +40,9 @@ const Albums = () => {
     }
   }
 
-  useLayoutEffect(() => {    
-  const controller = new ScrollMagic.Controller()
-  
+  useLayoutEffect(() => {
+    const controller = new ScrollMagic.Controller()
+
     if (loadedImages === 3 && !error) {
       const onEnterAnimation = gsap
         .timeline({ defaults: { ease: "power3.out", duration: 1 } })
@@ -169,31 +169,113 @@ const AlbumsList = ({ data, albumSelectionHandle, activeAlbumId }) => {
           </ul>
         </div>
       </div>
-      <MasonryBox imagesSrc={selectedAlbum[0].content} />
+      <MasonryBox images={selectedAlbum[0].content} />
     </div>
   )
 }
 
 // Function that renders a Masonry gallery
-const MasonryBox = ({ imagesSrc }) => {
+const MasonryBox = ({ images }) => {
+  const [imgCount, setImgCount] = useState(0)
+  const [showCarousel, setShowCarousel] = useState(false)
+  const [imgIndex, setImgIndex] = useState(0)
+  const previousImages = usePrevious(images)
+  const handleImageClick = (index) => {
+    setImgIndex(index)
+    setShowCarousel(true)
+  }
+  const handleHideCarousel = () => {
+    setShowCarousel(false)
+  }
+  const handlePreviousBtn = () => {
+    if (imgIndex !== 0) setImgIndex(imgIndex - 1)
+    if (imgIndex === 0) setImgIndex(imgCount - 1)
+  }
+  const handleNextBtn = () => {
+    if (imgIndex !== imgCount) setImgIndex(imgIndex + 1)
+    if (imgIndex === imgCount) setImgIndex(0)
+  }
+  const loadMore = () => {
+    const limit = images.length - 1
+    if (imgCount + 8 > limit) {
+      setImgCount(limit)
+    } else {
+      setImgCount((prevCount) => prevCount + 8)
+    }
+  }
+  useEffect(() => {
+    const sum = images.length > 10 ? (images.length / 3).toFixed() : 10
+    if (!imgCount) setImgCount(parseInt(sum))
+    if (previousImages !== images) {
+      setImgCount(parseInt(sum))
+    }
+  })
+
   return (
     <React.Fragment>
+      <PhotoCarousel
+        images={images}
+        index={imgIndex}
+        showCarousel={showCarousel}
+        handleHideCarousel={handleHideCarousel}
+        handlePreviousBtn={handlePreviousBtn}
+        handleNextBtn={handleNextBtn}
+      />
       <Masonry className={"section-albums--masonry-wrapper"}>
-        <Gallery imagesSrc={imagesSrc} start={0} end={imagesSrc.length} />
+        <Gallery
+          images={images}
+          start={0}
+          end={imgCount}
+          handleImageClick={handleImageClick}
+        />
       </Masonry>
+      {imgCount !== images.length - 1 && (
+        <button onClick={loadMore}>Load More</button>
+      )}
     </React.Fragment>
   )
 }
 
-// Function to map photosets into the Masonry gallery
-const Gallery = ({ imagesSrc, start, end }) =>
-  imagesSrc.slice(start, end).map((photo) => {
+const PhotoCarousel = ({
+  images,
+  index,
+  showCarousel,
+  handleHideCarousel,
+  handlePreviousBtn,
+  handleNextBtn,
+}) => {
+  return (
+    showCarousel && (
+      <div className="section-albums--carousel-wrapper">
+        <div
+          onClick={() => handleHideCarousel()}
+          className="section-albums--carousel-bg"
+        ></div>
+        <div className="section-albums--carousel-image">
+          <button onClick={() => handlePreviousBtn()}>prev</button>
+          <img src={images[index]} alt="" />
+          <button onClick={() => handleNextBtn()}>next</button>
+        </div>
+      </div>
+    )
+  )
+}
+
+// Gallery component maps images into a Masonry style gallery
+const Gallery = ({ images, start, end, handleImageClick }) =>
+  images.slice(start, end).map((photo, index) => {
     return (
-      <img className="imgy" key={photo.substring(35, 45)} src={photo} alt="" />
+      <img
+        onClick={() => handleImageClick(index)}
+        className="imgy"
+        key={photo.substring(35, 45)}
+        src={photo}
+        alt=""
+      />
     )
   })
 
-// Function to map categories title
+// Titles component maps categories titles
 const Titles = ({ data, albumSelectionHandle }) =>
   data.map(({ id, title }, i) => (
     <li
