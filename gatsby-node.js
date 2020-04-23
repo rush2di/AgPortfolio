@@ -1,6 +1,72 @@
 const { fmImagesToRelative } = require("gatsby-remark-relative-images")
 const { createFilePath } = require("gatsby-source-filesystem")
-const Path = require("path")
+const createPaginatedPages = require("gatsby-paginate")
+const path = require("path")
+
+const makeRequest = (graphql, request) => {
+  return new Promise((resolve, reject) => {
+    resolve(
+      graphql(request).then((result) => {
+        if (result.errors) {
+          reject(result.errors)
+        }
+        return result
+      })
+    )
+  })
+}
+
+exports.createPages = ({ graphql, actions: { createPage } }) => {
+  const getBlogPosts = makeRequest(
+    graphql,
+    `
+{
+  allMarkdownRemark(filter: {frontmatter: {templateKey: {eq: "blog-post"}}}, sort: {fields: [frontmatter___date], order: DESC}) {
+    edges {
+      node {
+        id
+        fields {
+          slug
+        }
+        frontmatter {
+          cover {
+            childImageSharp {
+              fluid {
+                src
+              }
+            }
+          }
+          date(formatString: "Do MMMM YYYY")
+          description
+          title
+          tags
+        }
+      }
+    }
+  }
+}
+  `
+  ).then((res) => {
+    const posts = res.data.allMarkdownRemark.edges
+    createPaginatedPages({
+      edges: posts,
+      createPage: createPage,
+      pageTemplate: "src/templates/blogPage.js",
+      pageLength: 4,
+      pathPrefix: "/blog",
+    })
+    posts.forEach((edge) => {
+      const { id, fields } = edge.node
+      createPage({
+        path: `/article${fields.slug}`,
+        component: path.resolve("src/templates/articlePage.js"),
+        context: { id },
+      })
+    })
+  })
+
+  return getBlogPosts
+}
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
@@ -16,53 +82,24 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   }
 }
 
-exports.onCreateWebpackConfig = ({
-  stage,
-  rules,
-  loaders,
-  plugins,
-  actions,
-}) => {
+exports.onCreateWebpackConfig = ({ stage, rules, loaders, actions }) => {
   actions.setWebpackConfig({
-   module: {
-     rules: stage === 'build-html'
-       ? [
-           {
-             test: /ScrollMagic/,
-             use: loaders.null(),
-           }
-         ]
-       : []
-   },
+    module: {
+      rules:
+        stage === "build-html"
+          ? [
+              {
+                test: /ScrollMagic/,
+                use: loaders.null(),
+              },
+            ]
+          : [],
+    },
     resolve: {
       alias: {
-        TweenLite: Path.resolve(
-          'node_modules',
-          'gsap/src/uncompressed/TweenLite.js'
-        ),
-        TweenMax: Path.resolve(
-          'node_modules',
-          'gsap/src/uncompressed/TweenMax.js'
-        ),
-        TimelineLite: Path.resolve(
-          'node_modules',
-          'gsap/src/uncompressed/TimelineLite.js'
-        ),
-        TimelineMax: Path.resolve(
-          'node_modules',
-          'gsap/src/uncompressed/TimelineMax.js'
-        ),
-        ScrollMagic: Path.resolve(
-          'node_modules',
-          'scrollmagic/scrollmagic/uncompressed/ScrollMagic.js'
-        ),
-        'animation.gsap': Path.resolve(
-          'node_modules',
-          'scrollmagic/scrollmagic/uncompressed/plugins/animation.gsap.js'
-        ),
-        'debug.addIndicators': Path.resolve(
-          'node_modules',
-          'scrollmagic/scrollmagic/uncompressed/plugins/debug.addIndicators.js'
+        ScrollMagic: path.resolve(
+          "node_modules",
+          "scrollmagic/scrollmagic/uncompressed/ScrollMagic.js"
         ),
       },
     },

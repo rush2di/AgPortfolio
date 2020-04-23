@@ -1,7 +1,8 @@
 import React from "react"
-import { useStaticQuery, graphql } from "gatsby"
+import { useStaticQuery, graphql, Link } from "gatsby"
 
 import Image from "gatsby-image"
+import Layout from "../components/layout"
 
 const BlogPage = (props) => {
   const { allMarkdownRemark } = useStaticQuery(graphql`
@@ -30,49 +31,69 @@ const BlogPage = (props) => {
   }
 }
   `)
- 
+
+  console.log(allMarkdownRemark)
+
   return (
-  <div className="section-blog">
-    <div className="section-blog--title">
-      <h1>Blog</h1>
-    </div>
-  {
+     <Layout>
+      <div className="section-blog">
+        <div className="section-blog--title">
+          <h1>Blog</h1>
+        </div>
+        <div className="section-blog--mainGrid">
+          <div className="section-blog--gridft">
+            <ArticleCards data={allMarkdownRemark} />
+          </div>
+          <div className="section-blog--gridsec">
+            <p>Welcome to page 2</p>
+          </div>
+        </div>
+      </div>
+    </Layout>
+  )
+ 
+  // return (
+  // <div className="section-blog">
+  //   <div className="section-blog--title">
+  //     <h1>Blog</h1>
+  //   </div>
+  // {
+  // // </div>
+  // // <div className="section-blog--mainGrid">
+  // //   <div className="section-blog--gridft">
+  // //     <ArticleCard data={allMarkdownRemark} />
+  // //   </div>
+  // //   <div className="section-blog--gridsec">
+  // //     <Aside data={allMarkdownRemark} />
+  // //   </div>
+  //   }
   // </div>
-  // <div className="section-blog--mainGrid">
-  //   <div className="section-blog--gridft">
-  //     <ArticleCard data={allMarkdownRemark} />
-  //   </div>
-  //   <div className="section-blog--gridsec">
-  //     <Aside data={allMarkdownRemark} />
-  //   </div>
-    }
-  </div>
-    )
+  //   )
 }
 
-const ArticleCard = ({data}) => (
+const ArticleCards = ({data}) => (
   data.edges.map((post) => {
   const { slug } = post.node.fields
-  const { fluid } = post.node.frontmatter.cover.childImageSharp
+  const { src } = post.node.frontmatter.cover.childImageSharp.fluid
   const { description, tags, date, title } = post.node.frontmatter
-  const tagsArray = tags.slice(' ')
+  const tagsArray = tags[0].split(" ")
+  console.log(tagsArray)
 
   return (
-    <div className="article-card--wrapper">
-      <Image src={cover} />
+    <div key={slug+"key"} className="article-card--wrapper">
       <div className="article-card--tags">
-        {tagsArray.map()}
+        {tagsArray.map(tag =>( <span>{tag}</span>)) }
       </div>
       <h1>{title}</h1>
       <span>{date}</span>
       <p>{description}</p>
-      <button><Link to={slug}>Read More</Link></button>
+      <button><Link to={`article${slug}`}>Read More</Link></button>
     </div>
     )
   })
 )
 
-const Aside = ({ data }) => {
+const Aside = ({ data, tags }) => {
   return (
     <aside className="aside--container">
       <div className="aside--searchbox">
@@ -89,3 +110,5 @@ const Aside = ({ data }) => {
     </aside>
     )
 }
+
+export default BlogPage
