@@ -54,6 +54,18 @@ body {
     justify-content: center;
     margin-bottom: 2rem;
   }
+  &--error-message {
+    height: 450px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+    p {
+      text-align: center;
+      color: $paragraph;
+    }
+  }
 }
 
 // Navbar styles
@@ -368,9 +380,14 @@ body {
     }
     &--masonry-wrapper {
       img {
+        cursor: pointer;
         width: calc(70.5% / 3);
         margin: 0.5rem;
+        transition: 0.2s all ease-out;
       }
+    }
+    &--masonry-image:hover {
+      opacity: 0.7;
     }
     &--carousel-wrapper {
       position: fixed;
@@ -413,6 +430,21 @@ body {
         &:last-of-type {
           right: 10rem;
         }
+      }
+    }
+    .btn--gray {
+      transition: 0.2s all ease-out;
+      background-color: transparent;
+      outline: none;
+      display: block;
+      font-size: 1rem;
+      color: #afafaf;
+      font-weight: 700;
+      margin: 1rem auto;
+      border: 0;
+      cursor: pointer;
+      &:hover {
+        color: #797979;
       }
     }
   }
