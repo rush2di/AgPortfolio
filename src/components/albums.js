@@ -11,6 +11,7 @@ const apiKey = "731f6d52097190e3d99faa37716978fd"
 const userId = `&user_id=155026906@N08&format=json&nojsoncallback=1`
 const albumsBaseUrl = `https://www.flickr.com/services/rest/?method=flickr.photosets.getList&api_key=${apiKey}${userId}`
 const photosBaseUrl = `https://www.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=${apiKey}`
+const sourceBaseUrl = "https://live.staticflickr.com/"
 
 const Albums = () => {
   const [state, setState] = useState([])
@@ -22,17 +23,15 @@ const Albums = () => {
     if (value !== activeAlbumId) setActiveAlbumId(value)
   }
 
-  // Function to setstate after fetching new data
   const newStateParser = (type, newData) => {
-    if (error) setError(false)
     switch (type) {
       case "albums":
+        if (error) setError(false)
         setState(newData)
-        if (activeAlbumId === "") {
-          setActiveAlbumId(newData[0].id)
-        }
+        if (!activeAlbumId) setActiveAlbumId(newData[0].id)
         break
       case "photoset":
+        if (error) setError(false)
         setState(newData)
         break
       default:
@@ -41,15 +40,14 @@ const Albums = () => {
   }
 
   useLayoutEffect(() => {
-    const controller = new ScrollMagic.Controller()
-
     if (loadedImages === 3 && !error) {
-      const onEnterAnimation = gsap
+      const controller = new ScrollMagic.Controller()
+      const animation = gsap
         .timeline({ defaults: { ease: "power3.out", duration: 1 } })
         .from(".catList", { y: -10, opacity: 0, stagger: 0.2 })
-        .from(".section-albums--masonry-wrapper", { opacity: 0 }, "+=0.1")
+        .from(".masonry", { opacity: 0 }, "+=0.1")
 
-      onEnterAnimation.pause()
+      animation.pause()
 
       new ScrollMagic.Scene({
         triggerElement: ".catList",
@@ -58,7 +56,7 @@ const Albums = () => {
         offset: 200,
       })
         .on("enter", (e) => {
-          onEnterAnimation.play()
+          animation.play()
         })
         .addTo(controller)
     }
@@ -66,62 +64,61 @@ const Albums = () => {
 
   useEffect(() => {
     let _SUBSCRIBED = true
-    let localData = sessionStorage.getItem("state")
-    let parsedLocalData = JSON.parse(localData)
-
+    let localData = JSON.parse(sessionStorage.getItem("state"))
     // Fetch all albums initial info and titles
     const albumsFetcher = async () => {
-      const res = await axios.get(albumsBaseUrl)
-      const { photoset } = res.data.photosets
-      const albumsMapper = photoset.map((item) => {
+      const response = await axios.get(albumsBaseUrl)
+      const { photoset } = response.data.photosets
+      const photosets = photoset.map((item) => {
         return { id: item.id, title: item.title._content, content: [] }
       })
-      const orderedAlbums = arrayItemsSwap(albumsMapper, 0, 1)
+      const newPhotosets = arrayItemsSwap(photosets, 0, 1)
 
-      if (_SUBSCRIBED) newStateParser("albums", [...orderedAlbums])
+      if (_SUBSCRIBED) newStateParser("albums", [...newPhotosets])
     }
-
     // Fetch all photosets of an album by it's ID
     const photosFetcher = async () => {
-      const res = await Promise.all(
+      const data = await Promise.all(
         state.map(async ({ id }, i) => {
-          const url = photosBaseUrl + "&photoset_id=" + id + userId
-          const albumPhotoset = await axios.get(url)
-          const { photo } = albumPhotoset.data.photoset
-          const imagesSrc = photo.map(({ server, secret, id }) => {
-            return `https://live.staticflickr.com/${server}/${id}_${secret}.jpg`
+          const response = await axios.get(
+            `${photosBaseUrl}&photoset_id=${id + userId}`
+          )
+          const { photo } = response.data.photoset
+          const images = photo.map(({ server, secret, id }) => {
+            return `${sourceBaseUrl + server}/${id}_${secret}.jpg`
           })
-          preloadImages(imagesSrc).done(() => {
+          preloadImages(images).done(() => {
             setLoadedImages((prevCount) => prevCount + 1)
           })
-          return { ...state[i], content: [...imagesSrc] }
+          return { ...state[i], content: [...images] }
         })
       )
-
       if (_SUBSCRIBED) {
-        sessionStorage.setItem("state", JSON.stringify(res))
-        newStateParser("photoset", res)
+        sessionStorage.setItem("state", JSON.stringify(data))
+        newStateParser("photoset", data)
       }
     }
 
-    // checking if sessionStorage is empty to fetch needed data
-    if (!parsedLocalData) {
-      if (state.length === 0) {
+    const getDataFromFetchers = () => {
+      if (!state.length) {
         albumsFetcher().catch(() => setError(true))
-      } else if (state.length && state[0].content.length === 0) {
+      } else if (state.length && !state[0].content.length) {
         photosFetcher().catch(() => setError(true))
       }
     }
-    // checking if state is empty to set it to data saved on sessionStorage
-    if (!!parsedLocalData && !state.length) {
-      const imagesSrc = parsedLocalData.map((item) => item.content)
-      preloadImages(imagesSrc).done(() => {
-        setState(parsedLocalData)
-        if (activeAlbumId === "") setActiveAlbumId(parsedLocalData[0].id)
+
+    const getDatafromSessionStorage = () => {
+      const images = localData.map((item) => item.content)
+      preloadImages(images).done(() => {
+        setState(localData)
+        if (!activeAlbumId) setActiveAlbumId(localData[0].id)
         setLoadedImages(3)
       })
     }
-    // Unsubscribe when component is unmounting
+
+    if (!!localData && !state.length) getDatafromSessionStorage()
+    if (!localData) getDataFromFetchers()
+
     return () => {
       _SUBSCRIBED = false
     }
@@ -180,33 +177,38 @@ const AlbumsList = ({ data, albumSelectionHandle, activeAlbumId }) => {
 
 // Masonry style gallery component
 const MasonryBox = ({ images }) => {
-  const [imgCount, setImgCount] = useState(0)
   const [showCarousel, setShowCarousel] = useState(false)
+  const [imgCount, setImgCount] = useState(0)
   const [imgIndex, setImgIndex] = useState(0)
   const previousImages = usePrevious(images)
+
   const handleImageClick = (index) => {
     setImgIndex(index)
     setShowCarousel(true)
   }
+
   const handleHideCarousel = () => {
     setShowCarousel(false)
   }
+
   const handlePreviousBtn = () => {
     if (imgIndex !== 0) setImgIndex(imgIndex - 1)
     if (imgIndex === 0) setImgIndex(imgCount - 1)
   }
+
   const handleNextBtn = () => {
     if (imgIndex !== imgCount) setImgIndex(imgIndex + 1)
     if (imgIndex === imgCount - 1) setImgIndex(0)
   }
-  const loadMore = () => {
-    const limit = images.length
-    if (imgCount + 8 > limit) {
-      setImgCount(limit)
+
+  const loadMoreImages = () => {
+    if (imgCount + 8 > images.length) {
+      setImgCount(images.length)
     } else {
       setImgCount((prevCount) => prevCount + 8)
     }
   }
+
   useEffect(() => {
     const sum = images.length > 10 ? (images.length / 3).toFixed() : 10
     if (!imgCount) setImgCount(parseInt(sum))
@@ -219,22 +221,21 @@ const MasonryBox = ({ images }) => {
     <React.Fragment>
       <PhotoCarousel
         images={images}
-        index={imgIndex}
+        imgIndex={imgIndex}
         showCarousel={showCarousel}
         handleHideCarousel={handleHideCarousel}
         handlePreviousBtn={handlePreviousBtn}
         handleNextBtn={handleNextBtn}
       />
-      <Masonry className={"section-albums--masonry-wrapper"}>
+      <Masonry className={"section-albums--masonry-wrapper masonry"}>
         <Gallery
           images={images}
-          start={0}
-          end={imgCount}
+          limit={imgCount}
           handleImageClick={handleImageClick}
         />
       </Masonry>
       {imgCount !== images.length && (
-        <button className="btn--gray" onClick={loadMore}>
+        <button className="btn--gray" onClick={loadMoreImages}>
           load more pictures
         </button>
       )}
@@ -245,7 +246,7 @@ const MasonryBox = ({ images }) => {
 // PhotoCarousel component
 const PhotoCarousel = ({
   images,
-  index,
+  imgIndex,
   showCarousel,
   handleHideCarousel,
   handlePreviousBtn,
@@ -260,7 +261,7 @@ const PhotoCarousel = ({
         ></div>
         <div className="section-albums--carousel-image">
           <button onClick={() => handlePreviousBtn()}>prev</button>
-          <img src={images[index]} alt="" />
+          <img src={images[imgIndex]} alt="" />
           <button onClick={() => handleNextBtn()}>next</button>
         </div>
       </div>
@@ -269,8 +270,8 @@ const PhotoCarousel = ({
 }
 
 // Gallery component maps images into the parenr Masonry component
-const Gallery = ({ images, start, end, handleImageClick }) =>
-  images.slice(start, end).map((photo, index) => {
+const Gallery = ({ images, limit, handleImageClick }) =>
+  images.slice(0, limit).map((photo, index) => {
     return (
       <img
         onClick={() => handleImageClick(index)}
@@ -284,11 +285,11 @@ const Gallery = ({ images, start, end, handleImageClick }) =>
 
 // Titles component maps categories titles
 const Titles = ({ data, albumSelectionHandle }) =>
-  data.map(({ id, title }, i) => (
+  data.map(({ id, title }, index) => (
     <li
       key={id}
       id={id}
-      className={i === 0 ? "catList --active" : "catList"}
+      className={!index ? "catList --active" : "catList"}
       onClick={(e) => albumSelectionHandle(e.target.id)}
     >
       {title}
