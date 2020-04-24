@@ -7,8 +7,8 @@ import gsap from "gsap"
 import { preloadImages, arrayItemsSwap, usePrevious } from "../utils/utils"
 import Loader from "./loader"
 
-const apiKey = process.env.API_KEY
-const userId = process.env.USER_ID
+const apiKey = process.env.GATSBY_API_KEY
+const userId = process.env.GATSBY_USER_ID
 const albumsBaseUrl = `https://www.flickr.com/services/rest/?method=flickr.photosets.getList&api_key=${apiKey}${userId}`
 const photosBaseUrl = `https://www.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=${apiKey}`
 const sourceBaseUrl = "https://live.staticflickr.com/"
