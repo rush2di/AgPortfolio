@@ -5,6 +5,7 @@ import axios from "axios"
 import gsap from "gsap"
 
 import { preloadImages, arrayItemsSwap, usePrevious } from "../utils/utils"
+import Arrow from "./arrows"
 import Loader from "./loader"
 
 const apiKey = process.env.GATSBY_API_KEY
@@ -38,29 +39,6 @@ const Albums = () => {
         return null
     }
   }
-
-  useLayoutEffect(() => {
-    if (loadedImages === 3 && !error) {
-      const controller = new ScrollMagic.Controller()
-      const animation = gsap
-        .timeline({ defaults: { ease: "power3.out", duration: 1 } })
-        .from(".catList", { y: -10, opacity: 0, stagger: 0.2 })
-        .from(".masonry", { opacity: 0 }, "+=0.1")
-
-      animation.pause()
-
-      new ScrollMagic.Scene({
-        triggerElement: ".catList",
-        duration: 0,
-        triggerHook: 0.85,
-        offset: 200,
-      })
-        .on("enter", (e) => {
-          animation.play()
-        })
-        .addTo(controller)
-    }
-  }, [loadedImages, error])
 
   useEffect(() => {
     let _SUBSCRIBED = true
@@ -161,6 +139,27 @@ const AlbumsList = ({ data, albumSelectionHandle, activeAlbumId }) => {
     }
   }
 
+  useLayoutEffect(() => {
+    const controller = new ScrollMagic.Controller()
+    const animation = gsap
+      .timeline({ defaults: { ease: "power3.out", duration: 1 } })
+      .from(".catList", { y: -10, opacity: 0, stagger: 0.2 })
+      .from(".masonry", { opacity: 0 }, "+=0.1")
+
+    animation.pause()
+
+    new ScrollMagic.Scene({
+      triggerElement: ".catList",
+      duration: 0,
+      triggerHook: 0.85,
+      offset: 200,
+    })
+      .on("enter", (e) => {
+        animation.play()
+      })
+      .addTo(controller)
+  }, [])
+
   return (
     <div className="section-albums container">
       <div className="section-albums--catcontainer">
@@ -219,15 +218,20 @@ const MasonryBox = ({ images }) => {
 
   return (
     <React.Fragment>
-      <PhotoCarousel
-        images={images}
-        imgIndex={imgIndex}
-        showCarousel={showCarousel}
-        handleHideCarousel={handleHideCarousel}
-        handlePreviousBtn={handlePreviousBtn}
-        handleNextBtn={handleNextBtn}
-      />
-      <Masonry className={"section-albums--masonry-wrapper masonry"}>
+      {showCarousel && (
+        <PhotoCarousel
+          images={images}
+          imgIndex={imgIndex}
+          showCarousel={showCarousel}
+          handleHideCarousel={handleHideCarousel}
+          handlePreviousBtn={handlePreviousBtn}
+          handleNextBtn={handleNextBtn}
+        />
+      )}
+      <Masonry
+        options={{ transitionDuration: 0 }}
+        className={"section-albums--masonry-wrapper masonry"}
+      >
         <Gallery
           images={images}
           limit={imgCount}
@@ -252,20 +256,51 @@ const PhotoCarousel = ({
   handlePreviousBtn,
   handleNextBtn,
 }) => {
+  const [isLeaving, setIsLeaving] = useState(false)
+
+  const animations = (params) => {
+    const animations = params
+    animations.play()
+  }
+
+  const hideCarousel = () => {
+    if (showCarousel) {
+      const params = gsap
+        .timeline({
+          onComplete: () => {
+            handleHideCarousel()
+          },
+          defaults: { duration: 0.5, ease: "power3.out" },
+        })
+        .to("#wrapper", { opacity: 0 })
+        .to("#image", { opacity: 0, scale: 0 })
+      animations(params)
+    }
+  }
+
+  useEffect(() => {
+    if (showCarousel) {
+      const params = gsap
+        .timeline({ defaults: { duration: 0.5, ease: "power3.out" } })
+        .to("#image", { opacity: 1, scale: 1 })
+        .to("#wrapper", { opacity: 1 })
+      animations(params)
+    }
+  }, [showCarousel])
+
   return (
-    showCarousel && (
-      <div className="section-albums--carousel-wrapper">
-        <div
-          onClick={() => handleHideCarousel()}
-          className="section-albums--carousel-bg"
-        ></div>
-        <div className="section-albums--carousel-image">
-          <button onClick={() => handlePreviousBtn()}>prev</button>
-          <img src={images[imgIndex]} alt="" />
-          <button onClick={() => handleNextBtn()}>next</button>
-        </div>
+    <div id="wrapper" className="section-albums--carousel-wrapper">
+      <div onClick={hideCarousel} className="section-albums--carousel-bg"></div>
+      <div className="section-albums--carousel-image">
+        <button onClick={() => handlePreviousBtn()}>
+          <Arrow type="left" />
+        </button>
+        <img id="image" src={images[imgIndex]} alt="" />
+        <button onClick={() => handleNextBtn()}>
+          <Arrow type="right" />
+        </button>
       </div>
-    )
+    </div>
   )
 }
 
