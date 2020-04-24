@@ -379,6 +379,7 @@ body {
       }
     }
     &--masonry-wrapper {
+      min-height: 500px;
       img {
         cursor: pointer;
         width: calc(70.5% / 3);
@@ -393,6 +394,7 @@ body {
       position: fixed;
       width: 100vw;
       height: 100vh;
+      opacity: 0;
       top: 0;
       left: 0;
       right: 0;
@@ -420,15 +422,33 @@ body {
       padding: 0 2rem;
       z-index: 20;
       img {
-        zoom: 1.1;
+        transform: scale(0);
+        opacity: 0;
       }
       button {
         position: fixed;
+        height: 70px;
+        width: 70px;
+        background-color: transparent;
+        outline: none;
+        cursor: pointer;
+        border: 0;
         &:first-child {
           left: 10rem;
         }
         &:last-of-type {
           right: 10rem;
+        }
+        &:hover {
+          svg {
+            color: $bgwhite;
+          }
+        }
+        svg {
+          transition: all .2s ease-out;
+          fill: $primLight;
+          width: 100%;
+          height: 100%;
         }
       }
     }
