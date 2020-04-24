@@ -55,43 +55,45 @@ export const HeroContent = ({ txt, img, payload }) => {
   const introduction = React.useRef()
 
   useLayoutEffect(() => {
-    gsap.from(title.current, {
-      duration: 1,
-      y: "100%",
-      delay: 0.6,
-      ease: "power3.out",
-    })
-    gsap.from(subTitle.current, {
-      duration: 1,
-      y: "100%",
-      delay: 0.8,
-      ease: "power3.out",
-    })
-
-    gsap.fromTo(
-      imageMask.current,
-      { x: "0%" },
-      {
-        duration: 1.5,
-        x: "-100%",
-        delay: 1.5,
-        ease: "power3.inOut",
-      }
-    )
-    gsap.from(image.current, {
-      duration: 1.5,
-      scale: 1.3,
-      delay: 1.8,
-      ease: "power3.out",
-    })
-    gsap.from(".ft-grid-box", {
-      duration: 1,
-      y: -10,
-      delay: 2.5,
-      ease: "power3.out",
-      opacity: 0,
-      stagger: 0.2,
-    })
+    const animation = gsap
+      .timeline({ delay: 0.5, defaults: { ease: "power3.out" } })
+      .from(title.current, {
+        duration: 1,
+        y: "100%",
+      })
+      .from(
+        subTitle.current,
+        {
+          duration: 1,
+          y: "100%",
+        },
+        "-=0.7"
+      )
+      .fromTo(
+        imageMask.current,
+        { x: "0%" },
+        {
+          duration: 1.5,
+          x: "-100%",
+          ease: "power3.inOut",
+        }
+      )
+      .from(
+        image.current,
+        {
+          duration: 1.5,
+          scale: 1.3,
+        },
+        "-=1"
+      )
+      .from(".ft-grid-box", {
+        duration: 1,
+        y: -10,
+        ease: "power3.out",
+        opacity: 0,
+        stagger: 0.2,
+      })
+    animation.play()
   })
 
   return (
