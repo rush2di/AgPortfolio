@@ -267,9 +267,7 @@ const PhotoCarousel = ({
     if (showCarousel) {
       const params = gsap
         .timeline({
-          onComplete: () => {
-            handleHideCarousel()
-          },
+          onComplete: () => { handleHideCarousel() },
           defaults: { duration: 0.5, ease: "power3.out" },
         })
         .to("#wrapper", { opacity: 0 })
