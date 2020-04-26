@@ -31,8 +31,12 @@ exports.createPages = ({ graphql, actions: { createPage } }) => {
         frontmatter {
           cover {
             childImageSharp {
-              fluid(maxWidth: 1000, quality: 100) {
-                ...GatsbyImageSharpFluid_tracedSVG
+              fluid {
+                aspectRatio
+                tracedSVG
+                sizes
+                src
+                srcSet                
               }
             }
           }
@@ -54,7 +58,7 @@ exports.createPages = ({ graphql, actions: { createPage } }) => {
       pageTemplate: "src/templates/blogPage.js",
       pageLength: 4,
       pathPrefix: "/blog",
-      context: {posts}
+      context: { posts }
     })
     posts.forEach((edge) => {
       const { id, fields } = edge.node
