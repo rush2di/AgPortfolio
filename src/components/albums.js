@@ -256,11 +256,24 @@ const PhotoCarousel = ({
   handlePreviousBtn,
   handleNextBtn,
 }) => {
-  const [isLeaving, setIsLeaving] = useState(false)
-
   const animations = (params) => {
     const animations = params
     animations.play()
+  }
+  const handleBtns = (type) => {
+    const paramsOne = gsap
+      .timeline({
+        defaults: { duration: 0.4, ease: "power3.out"}
+      })
+      .to("#image", { opacity: 0 })
+    const paramsTwo = gsap
+      .timeline({
+        onStart: () =>{ type === "next" ? handleNextBtn() : handlePreviousBtn()},
+        defaults: { duration: 0.4, ease: "power3.out"}
+      })
+      .to("#image", { opacity: 1 })
+
+    animations(paramsOne.add(paramsTwo))
   }
 
   const hideCarousel = () => {
@@ -271,7 +284,7 @@ const PhotoCarousel = ({
           defaults: { duration: 0.5, ease: "power3.out" },
         })
         .to("#wrapper", { opacity: 0 })
-        .to("#image", { opacity: 0, scale: 0 })
+        .to("#image", { opacity: 0, scale: 0 }, "-=0.5")
       animations(params)
     }
   }
@@ -281,7 +294,7 @@ const PhotoCarousel = ({
       const params = gsap
         .timeline({ defaults: { duration: 0.5, ease: "power3.out" } })
         .to("#image", { opacity: 1, scale: 1 })
-        .to("#wrapper", { opacity: 1 })
+        .to("#wrapper", { opacity: 1 }, "-=0.5")
       animations(params)
     }
   }, [showCarousel])
@@ -290,11 +303,11 @@ const PhotoCarousel = ({
     <div id="wrapper" className="section-albums--carousel-wrapper">
       <div onClick={hideCarousel} className="section-albums--carousel-bg"></div>
       <div className="section-albums--carousel-image">
-        <button onClick={() => handlePreviousBtn()}>
+        <button onClick={() => handleBtns("previous")}>
           <Arrow type="left" />
         </button>
         <img id="image" src={images[imgIndex]} alt="" />
-        <button onClick={() => handleNextBtn()}>
+        <button onClick={()=> handleBtns("next")}>
           <Arrow type="right" />
         </button>
       </div>
