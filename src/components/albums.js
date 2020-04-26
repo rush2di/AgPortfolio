@@ -263,13 +263,15 @@ const PhotoCarousel = ({
   const handleBtns = (type) => {
     const paramsOne = gsap
       .timeline({
-        defaults: { duration: 0.4, ease: "power3.out"}
+        defaults: { duration: 0.4, ease: "power3.out" },
       })
       .to("#image", { opacity: 0 })
     const paramsTwo = gsap
       .timeline({
-        onStart: () =>{ type === "next" ? handleNextBtn() : handlePreviousBtn()},
-        defaults: { duration: 0.4, ease: "power3.out"}
+        onStart: () => {
+          type === "next" ? handleNextBtn() : handlePreviousBtn()
+        },
+        defaults: { duration: 0.4, ease: "power3.out" },
       })
       .to("#image", { opacity: 1 })
 
@@ -280,7 +282,9 @@ const PhotoCarousel = ({
     if (showCarousel) {
       const params = gsap
         .timeline({
-          onComplete: () => { handleHideCarousel() },
+          onComplete: () => {
+            handleHideCarousel()
+          },
           defaults: { duration: 0.5, ease: "power3.out" },
         })
         .to("#wrapper", { opacity: 0 })
@@ -307,7 +311,7 @@ const PhotoCarousel = ({
           <Arrow type="left" />
         </button>
         <img id="image" src={images[imgIndex]} alt="" />
-        <button onClick={()=> handleBtns("next")}>
+        <button onClick={() => handleBtns("next")}>
           <Arrow type="right" />
         </button>
       </div>

@@ -58,7 +58,7 @@ exports.createPages = ({ graphql, actions: { createPage } }) => {
       pageTemplate: "src/templates/blogPage.js",
       pageLength: 4,
       pathPrefix: "/blog",
-      context: { posts }
+      context: { posts },
     })
     posts.forEach((edge) => {
       const { id, fields } = edge.node
