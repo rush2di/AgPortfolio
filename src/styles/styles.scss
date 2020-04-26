@@ -445,7 +445,7 @@ body {
           }
         }
         svg {
-          transition: all .2s ease-out;
+          transition: all 0.2s ease-out;
           fill: $primLight;
           width: 100%;
           height: 100%;
@@ -473,9 +473,10 @@ body {
 // Blog Page styles
 .section {
   &-blog {
+    margin: 3rem 0;
     &--title h1 {
-      @include headings(8.45rem, 400);  
-      margin: 3rem 0 4rem;    
+      @include headings(8.45rem, 400);
+      margin: 3rem 0 4rem;
       display: inline-block;
       color: $primLight;
     }
@@ -493,12 +494,9 @@ body {
           }
         }
         &--wrapper {
+          @include shadows-sm;
           background-color: white;
-          margin: .5rem;
-          // include styles in component directly later
-          .gatsby-image-wrapper {
-            height: 250px
-          }
+          margin: 0.5rem;
         }
         &--info {
           padding: 1.5rem;
@@ -511,7 +509,7 @@ body {
           }
           p {
             margin-bottom: 1.5rem;
-            font-size: .85rem;
+            font-size: 0.85rem;
             font-weight: 400;
             color: $paragraph;
             line-height: 1.5;
@@ -523,10 +521,10 @@ body {
           }
         }
         &--tags {
-          margin-bottom: .5rem;
+          margin-bottom: 0.5rem;
           span {
-            margin-right: .5rem;
-            font-size: .85rem;
+            margin-right: 0.5rem;
+            font-size: 0.85rem;
             font-weight: 600;
             color: $redish;
           }
@@ -538,7 +536,7 @@ body {
           justify-content: space-between;
           span {
             color: $paragraph;
-            font-size: .75rem;
+            font-size: 0.75rem;
           }
           button {
             background-color: transparent;
@@ -550,8 +548,8 @@ body {
               transform: translateY(50%);
               transition: all 0.2s ease-in;
               opacity: 0;
-              font-size: .75rem;
-              letter-spacing: .1rem;
+              font-size: 0.75rem;
+              letter-spacing: 0.1rem;
             }
           }
         }
@@ -576,12 +574,13 @@ body {
           }
         }
         &--card-wrapper {
+          @include shadows-sm;
           background-color: white;
           padding: 1rem;
-          margin: .5rem
+          margin: 0.5rem;
         }
         &--post-box {
-          transition: .2s all ease-out;
+          transition: 0.2s all ease-out;
           align-items: normal;
           display: flex;
           height: 100%;
@@ -591,9 +590,9 @@ body {
           }
         }
         &--inside-box {
-          padding: .2rem .5rem .5rem;
+          padding: 0.2rem 0.5rem 0.5rem;
           color: $paragraph;
-          font-size: .85rem;
+          font-size: 0.85rem;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
@@ -604,9 +603,53 @@ body {
             display: block;
             text-transform: lowercase;
             &:last-of-type {
-              font-size: .7rem;
+              font-size: 0.7rem;
             }
           }
+        }
+        &--search-box {
+          @include shadows-sm;
+          padding: 1rem;
+          margin: 1rem .5rem;
+          position: relative;
+          background-color: white;
+          h1 {
+            margin-bottom: 1rem;
+            color: $primLight;
+            font-weight: 900;
+          }
+          .react-autosuggest__input {
+            padding: .5rem;
+            border: 1px solid #cacaca;
+            width: 100%;
+          }
+          .react-autosuggest__suggestions-container {
+            background: white;            
+            width: 91.1%;
+            position: absolute;
+            z-index: 5;
+            border-right: 1px solid #e0e0e0;
+            border-left: 1px solid #e0e0e0;
+          }
+          .react-autosuggest__suggestion {
+            padding: 0.5rem;
+            white-space: nowrap;
+            cursor: pointer;
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+            border-bottom: 1px solid #e0e0e0;
+          }
+          .react-autosuggest__suggestion--highlighted {
+            background: #407ee2;
+            color: white;
+          }
+        }
+        &--search-input {
+          width: 100%;
+          padding: 0 0 .5rem;
+          display: block;
         }
       }
     }
