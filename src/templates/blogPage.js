@@ -1,15 +1,16 @@
 import React,{useState} from "react"
-import { Link, navigate } from "gatsby"
-import Image from "gatsby-image"
 import Masonry from "react-masonry-component"
 import Autosuggest from "react-autosuggest"
+import { Link, navigate } from "gatsby"
+import PropTypes from "prop-types"
+import Image from "gatsby-image"
 
 import Layout from "../components/layout"
 import Pagination from "../components/pagination"
 
 // Blog Page wrapper component
-const BlogPage = (props) => {
-  const { group, first, last, index, pageCount,posts } = props.pageContext
+const BlogPage = ({pageContext}) => {
+  const { group, first, last, index, pageCount, posts } = pageContext
   return (
     <Layout>
       <div className="section-blog">
@@ -181,8 +182,37 @@ const SearchBox = ({ data }) => {
       renderSuggestion={renderSuggestion}
       inputProps={inputProps}
       onSuggestionSelected={onSuggestionSelected}
+      multiSection={false}
     />
   )
 }
 
 export default BlogPage
+
+
+// Prop-Types
+BlogPage.propTypes = {
+  pageContext: PropTypes.object.isRequired
+}
+
+MasonryBox.propTypes = {
+  data: PropTypes.array.isRequired,
+  posts: PropTypes.array.isRequired
+}
+
+ArticleCards.propTypes = {
+  data: PropTypes.array.isRequired
+}
+
+Aside.propTypes = {
+  data: PropTypes.array.isRequired,
+  slicedPosts: PropTypes.array.isRequired
+}
+
+LatestPosts.propTypes = {
+  data: PropTypes.array.isRequired
+}
+
+SearchBox.propTypes = {
+  data: PropTypes.array.isRequired
+}
