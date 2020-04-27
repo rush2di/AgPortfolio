@@ -7,9 +7,7 @@ import Layout from "../components/layout"
 import ShareButtons from "../components/shareButtons"
 
 const Article = ({ data }) => {
-  const urlOrigin =
-    (!!window.location && window.location.origine) ||
-    "https://grana-ab.netlify.app"
+  const urlOrigin = "https://grana-ab.netlify.app"
   const {
     src: bgImage,
   } = data.markdownRemark.frontmatter.cover.childImageSharp.fluid
