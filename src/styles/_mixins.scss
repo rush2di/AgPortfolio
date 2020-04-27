@@ -1,8 +1,9 @@
 @mixin navnsocials($size: 0.8rem) {
   font-style: normal;
-  font-weight: 800;
+  font-weight: 500;
   font-size: $size;
   text-transform: uppercase;
+  letter-spacing: .1rem;
 }
 
 @mixin headings($size: 8.35rem, $weight: 500, $spacing: -0.06em) {
