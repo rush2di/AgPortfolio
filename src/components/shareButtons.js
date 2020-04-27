@@ -1,9 +1,10 @@
-import React from "react";
+import React from "react"
 import PropTypes from "prop-types"
 
-
-const ShareButtons = ({ slug, title }) => {	
-  const urlOrigin = (!!window.location && window.location.origine) || "https://grana-ab.netlify.app"
+const ShareButtons = ({ slug, title }) => {
+  const urlOrigin =
+    (!!window.location && window.location.origine) ||
+    "https://grana-ab.netlify.app"
 
   return (
     <React.Fragment>
@@ -72,6 +73,6 @@ export default ShareButtons
 
 // Prop-Types
 ShareButtons.propTypes = {
-	slug: PropTypes.string.isRequired,
-	title: PropTypes.string.isRequired
+  slug: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
 }

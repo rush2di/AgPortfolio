@@ -88,14 +88,14 @@ Pagination.PropTypes = {
   first: PropTypes.bool,
   last: PropTypes.bool,
   index: PropTypes.number,
-  pageCount: PropTypes.number
+  pageCount: PropTypes.number,
 }
 
 PageNums.proprTypes = {
   index: PropTypes.number,
-  pageCount: PropTypes.number
+  pageCount: PropTypes.number,
 }
 
 ListItem.propTypes = {
-  callBackRange: PropTypes.array
+  callBackRange: PropTypes.array,
 }
