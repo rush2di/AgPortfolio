@@ -1,13 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import PropTypes from "prop-types"
 
 
 const ShareButtons = ({ slug, title }) => {	
-  let urlOrigin = "https://grana-ab.netlify.app"
+  const [urlOrigin, setUrlOrigin] = useState("https://grana-ab.netlify.app")
 
-  useEffect(()=>{
-    urlOrigin = (!!window.location && window.location.origine) || "https://grana-ab.netlify.app"
-  })
+   useLayoutEffect(()=>{
+    const windowUrl = (!!window.location && window.location.origin) || "https://grana-ab.netlify.app"
+    setUrlOrigin(windowUrl)
+    return () => { setUrlOrigin("https://grana-ab.netlify.app")}
+  }, [])
 
   return (
     <React.Fragment>

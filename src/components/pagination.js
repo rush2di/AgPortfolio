@@ -84,7 +84,7 @@ const ListItem = (callBackRange) => {
 export default Pagination
 
 // Prop-Types
-Pagination.PropTypes = {
+Pagination.propTypes = {
   first: PropTypes.bool,
   last: PropTypes.bool,
   index: PropTypes.number,
