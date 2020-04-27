@@ -8,6 +8,7 @@ import ShareButtons from "../components/shareButtons"
 
 const Article = ({ data }) => {
   let urlOrigin = "https://grana-ab.netlify.app"
+  const { src: bgImage } = data.markdownRemark.frontmatter.cover.childImageSharp.fluid
   const { title, date, tags, description } = data.markdownRemark.frontmatter
   const { slug } = data.markdownRemark.fields
   const { html } = data.markdownRemark
@@ -41,12 +42,10 @@ const Article = ({ data }) => {
               className="article_head--bg"
               style={{ backgroundImage: `url(${bgImage})` }}
             >
-              <div className="article_head--over">
+              <div className="article_head--over">              
                 <h3>{title}</h3>
                 <div className="article_head--over-tags">
-                  {tagsArray.map((tag, i) => (
-                    <span key={"tag-" + i}>{tag}</span>
-                  ))}
+                  {tagsArray.map((tag, i) => <span key={'tag-'+i}>{tag}</span>)}
                 </div>
                 <span className="article_head--over-dates">{date}</span>
               </div>
@@ -82,7 +81,7 @@ export const pageQuery = graphql`
         cover {
           childImageSharp {
             fluid {
-              src
+              src          
             }
           }
         }
@@ -91,6 +90,7 @@ export const pageQuery = graphql`
     }
   }
 `
+
 
 export default Article
 
