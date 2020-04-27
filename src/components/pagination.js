@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
+import PropTypes from "prop-types"
 
 // Pagination wrapper component
 const Pagination = ({ first, last, index, pageCount }) => {
@@ -81,3 +82,20 @@ const ListItem = (callBackRange) => {
 }
 
 export default Pagination
+
+// Prop-Types
+Pagination.PropTypes = {
+  first: PropTypes.bool,
+  last: PropTypes.bool,
+  index: PropTypes.number,
+  pageCount: PropTypes.number
+}
+
+PageNums.proprTypes = {
+  index: PropTypes.number,
+  pageCount: PropTypes.number
+}
+
+ListItem.propTypes = {
+  callBackRange: PropTypes.array
+}

@@ -1,12 +1,10 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { Link } from "gatsby"
-import { globalHistory } from "@reach/router"
 
 import "../styles/styles.scss"
 
 const Layout = ({ children }) => {
-  const path = globalHistory.location.pathname
 
   return (
     <React.Fragment>
@@ -17,15 +15,12 @@ const Layout = ({ children }) => {
           </div>
           <ul className="navitems">
             <li>
-              <Link className={path === "/" ? "disabled-link" : ""} to="/">
+              <Link activeClassName="active-link" to="/">
                 Home
               </Link>
             </li>
             <li>
-              <Link
-                className={path === "/blog" ? "disabled-link" : ""}
-                to="/blog"
-              >
+              <Link activeClassName="active-link" to="/blog">
                 Blog
               </Link>
             </li>

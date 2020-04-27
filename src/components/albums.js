@@ -1,6 +1,7 @@
 import React, { useEffect, useLayoutEffect, useState } from "react"
 import Masonry from "react-masonry-component"
 import ScrollMagic from "ScrollMagic"
+import PropTypes from "prop-types"
 import axios from "axios"
 import gsap from "gsap"
 
@@ -14,6 +15,7 @@ const albumsBaseUrl = `https://www.flickr.com/services/rest/?method=flickr.photo
 const photosBaseUrl = `https://www.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=${apiKey}`
 const sourceBaseUrl = "https://live.staticflickr.com/"
 
+// Albums section wrapper component
 const Albums = () => {
   const [state, setState] = useState([])
   const [activeAlbumId, setActiveAlbumId] = useState("")
@@ -87,11 +89,13 @@ const Albums = () => {
 
     const getDatafromSessionStorage = () => {
       const images = localData.map((item) => item.content)
-      preloadImages(images).done(() => {
-        setState(localData)
-        if (!activeAlbumId) setActiveAlbumId(localData[0].id)
-        setLoadedImages(3)
-      })
+      if(_SUBSCRIBED) {
+        preloadImages(images).done(() => {
+          setState(localData)
+          if (!activeAlbumId) setActiveAlbumId(localData[0].id)
+          setLoadedImages(3)
+        })
+      }
     }
 
     if (!!localData && !state.length) getDatafromSessionStorage()
@@ -144,7 +148,7 @@ const AlbumsList = ({ data, albumSelectionHandle, activeAlbumId }) => {
     const animation = gsap
       .timeline({ defaults: { ease: "power3.out", duration: 1 } })
       .from(".catList", { y: -10, opacity: 0, stagger: 0.2 })
-      .from(".masonry", { opacity: 0 }, "+=0.1")
+      .from("#masonry", { opacity: 0 }, "+=0.1")
 
     animation.pause()
 
@@ -229,8 +233,9 @@ const MasonryBox = ({ images }) => {
         />
       )}
       <Masonry
+        id="masonry"
         options={{ transitionDuration: 0 }}
-        className={"section-albums--masonry-wrapper masonry"}
+        className={"section-albums--masonry-wrapper"}
       >
         <Gallery
           images={images}
@@ -324,6 +329,7 @@ const Gallery = ({ images, limit, handleImageClick }) =>
   images.slice(0, limit).map((photo, index) => {
     return (
       <img
+        id="gallery-image"
         onClick={() => handleImageClick(index)}
         className="section-albums--masonry-image"
         key={photo.substring(35, 45)}
@@ -354,3 +360,36 @@ const ErrorMessage = () => (
 )
 
 export default Albums
+
+
+// Prop-Types
+AlbumsList.propTypes = {
+  data: PropTypes.array.isRequired,
+  activeAlbumId: PropTypes.string.isRequired,
+  albumSelectionHandle: PropTypes.func.isRequired
+}
+
+Titles.propTypes = {
+  data: PropTypes.array.isRequired,
+  albumSelectionHandle: PropTypes.func.isRequired
+}
+
+MasonryBox.propTypes = {
+  images: PropTypes.array.isRequired
+}
+
+Gallery.propTypes = {
+  images: PropTypes.array.isRequired,
+  limit: PropTypes.number.isRequired,
+  handleImageClick: PropTypes.func.isRequired
+}
+
+PhotoCarousel.propTypes = {
+  images: PropTypes.array.isRequired,
+  imgIndex: PropTypes.number.isRequired,
+  showCarousel: PropTypes.bool.isRequired,
+  handleHideCarousel: PropTypes.func.isRequired,
+  handlePreviousBtn: PropTypes.func.isRequired,
+  handleNextBtn: PropTypes.func.isRequired
+}
+
