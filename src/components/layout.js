@@ -5,6 +5,7 @@ import { Link } from "gatsby"
 import "../styles/styles.scss"
 
 const Layout = ({ children }) => {
+
   return (
     <React.Fragment>
       <div className="app--wrapper">

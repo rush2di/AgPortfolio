@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React,{useState} from "react"
 import Masonry from "react-masonry-component"
 import Autosuggest from "react-autosuggest"
 import { Link, navigate } from "gatsby"
@@ -9,19 +9,14 @@ import Layout from "../components/layout"
 import Pagination from "../components/pagination"
 
 // Blog Page wrapper component
-const BlogPage = ({ pageContext }) => {
+const BlogPage = ({pageContext}) => {
   const { group, first, last, index, pageCount, posts } = pageContext
   return (
     <Layout>
       <div className="section-blog">
         <div className="section-blog--main">
           <MasonryBox data={group} posts={posts} />
-          <Pagination
-            first={first}
-            last={last}
-            index={index}
-            pageCount={pageCount}
-          />
+          <Pagination first={first} last={last} index={index} pageCount={pageCount} />
         </div>
       </div>
     </Layout>
@@ -36,7 +31,7 @@ const MasonryBox = ({ data, posts }) => {
   return (
     <Masonry>
       <ArticleCards data={[...data].splice(0, 2)} />
-      <Aside slicedPosts={slicedPosts()} data={posts} />
+      <Aside slicedPosts={slicedPosts()} data={posts}/>
       {data.length > 2 && <ArticleCards data={[...data].splice(2)} />}
     </Masonry>
   )
@@ -57,7 +52,7 @@ const ArticleCards = ({ data }) =>
         to={`article${slug}`}
       >
         <div className="article-card--wrapper">
-          <Image fluid={fluid} style={{ height: 215 }} />
+          <Image fluid={fluid} style={{height: 215}}/>
           <div className="article-card--info">
             <div className="article-card--tags">
               {tagsArray.map((tag, index) => (
@@ -78,22 +73,22 @@ const ArticleCards = ({ data }) =>
     )
   })
 
-// Aside section warapper component
-const Aside = ({ slicedPosts, data }) => {
+// Aside section warapper component 
+const Aside = ({slicedPosts, data}) => {
   return (
     <aside className="aside--container">
       <div className="aside--card-wrapper">
-        <h1>Latest</h1>
+         <h1>Latest</h1>
         <LatestPosts data={slicedPosts} />
       </div>
       <div className="aside--search-box">
         <h1>Search</h1>
         <div className="aside--search-input">
-          <SearchBox data={data} />
+         <SearchBox data={data} />
         </div>
       </div>
     </aside>
-  )
+    )
 }
 
 // Aside lastest posts component
@@ -121,9 +116,9 @@ const SearchBox = ({ data }) => {
   const [value, setValue] = useState("")
   const [suggestions, setSuggestions] = useState([])
 
-  const postsData = data.map((post) => {
+  const postsData = data.map(post => {
     const { tags, title } = post.node.frontmatter
-    const { slug } = post.node.fields
+    const { slug } = post.node.fields    
     const tagsArray = tags[0].split(" ")
 
     return {
@@ -133,13 +128,13 @@ const SearchBox = ({ data }) => {
     }
   })
 
-  const getSuggestions = (value) => {
+  const getSuggestions = value => {
     const inputValue = value.trim().toLowerCase()
     const inputLength = inputValue.length
 
     return inputLength === 0
       ? []
-      : postsData.filter((post) => {
+      : postsData.filter(post => {
           return (
             post.name.search(inputValue) !== -1 ||
             post.tags.includes(inputValue)
@@ -147,11 +142,11 @@ const SearchBox = ({ data }) => {
         })
   }
 
-  const getSuggestionValue = (suggestion) => {
+  const getSuggestionValue = suggestion => {
     return suggestion.name
   }
 
-  const renderSuggestion = (suggestion) => {
+  const renderSuggestion = suggestion => {
     return suggestion.name
   }
 
@@ -194,29 +189,30 @@ const SearchBox = ({ data }) => {
 
 export default BlogPage
 
+
 // Prop-Types
 BlogPage.propTypes = {
-  pageContext: PropTypes.object.isRequired,
+  pageContext: PropTypes.object.isRequired
 }
 
 MasonryBox.propTypes = {
   data: PropTypes.array.isRequired,
-  posts: PropTypes.array.isRequired,
+  posts: PropTypes.array.isRequired
 }
 
 ArticleCards.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired
 }
 
 Aside.propTypes = {
   data: PropTypes.array.isRequired,
-  slicedPosts: PropTypes.array.isRequired,
+  slicedPosts: PropTypes.array.isRequired
 }
 
 LatestPosts.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired
 }
 
 SearchBox.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired
 }
