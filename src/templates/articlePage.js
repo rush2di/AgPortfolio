@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
@@ -7,14 +7,18 @@ import Layout from "../components/layout"
 import ShareButtons from "../components/shareButtons"
 
 const Article = ({ data }) => {
-  const urlOrigin = "https://grana-ab.netlify.app"
-  const {
-    src: bgImage,
-  } = data.markdownRemark.frontmatter.cover.childImageSharp.fluid
+  let urlOrigin = "https://grana-ab.netlify.app"
   const { title, date, tags, description } = data.markdownRemark.frontmatter
   const { slug } = data.markdownRemark.fields
   const { html } = data.markdownRemark
   const tagsArray = tags[0].split(" ")
+  const {
+    src: bgImage,
+  } = data.markdownRemark.frontmatter.cover.childImageSharp.fluid
+
+  useEffect(()=>{
+    urlOrigin = (!!window.location && window.location.origine) || "https://grana-ab.netlify.app"
+  })
 
   return (
     <React.Fragment>
