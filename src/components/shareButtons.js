@@ -1,10 +1,12 @@
-import React from "react"
+import React, { useEffect } from "react"
 import PropTypes from "prop-types"
 
 const ShareButtons = ({ slug, title }) => {
-  const urlOrigin =
-    (!!window.location && window.location.origine) ||
-    "https://grana-ab.netlify.app"
+  const urlOrigin = "https://grana-ab.netlify.app"
+
+   useEffect(()=>{
+    urlOrigin = (!!window.location && window.location.origine) || "https://grana-ab.netlify.app"
+  })
 
   return (
     <React.Fragment>
