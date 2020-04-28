@@ -3,11 +3,12 @@ import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 
-import Layout from "../components/layout"
 import ShareButtons from "../components/shareButtons"
 
 const Article = ({ data }) => {
-  const { src: bgImage } = data.markdownRemark.frontmatter.cover.childImageSharp.fluid
+  const {
+    src: bgImage,
+  } = data.markdownRemark.frontmatter.cover.childImageSharp.fluid
   const { title, date, tags, description } = data.markdownRemark.frontmatter
   const { slug } = data.markdownRemark.fields
   const { html } = data.markdownRemark
@@ -15,10 +16,14 @@ const Article = ({ data }) => {
 
   const [urlOrigin, setUrlOrigin] = useState("https://grana-ab.netlify.app")
 
-   useLayoutEffect(()=>{
-    const windowUrl = (!!window.location && window.location.origin) || "https://grana-ab.netlify.app"
+  useLayoutEffect(() => {
+    const windowUrl =
+      (!!window.location && window.location.origin) ||
+      "https://grana-ab.netlify.app"
     setUrlOrigin(windowUrl)
-    return () => { setUrlOrigin("https://grana-ab.netlify.app")}
+    return () => {
+      setUrlOrigin("https://grana-ab.netlify.app")
+    }
   }, [])
 
   return (
@@ -35,34 +40,32 @@ const Article = ({ data }) => {
         <meta property="og:locale" content="fr_FR" />
         <link rel="canonical" href={`${urlOrigin}/article${slug}`} />
       </Helmet>
-      <Layout>
-        <div className="article_wrapper">
-          <div className="article_head">
-            <div
-              className="article_head--bg"
-              style={{ backgroundImage: `url(${bgImage})` }}
-            >
-              <div className="article_head--over">
-                <h3>{title}</h3>
-                <div className="article_head--over-tags">
-                  {tagsArray.map((tag, i) => (
-                    <span key={"tag-" + i}>{tag}</span>
-                  ))}
-                </div>
-                <span className="article_head--over-dates">{date}</span>
+      <div className="article_wrapper">
+        <div className="article_head">
+          <div
+            className="article_head--bg"
+            style={{ backgroundImage: `url(${bgImage})` }}
+          >
+            <div className="article_head--over">
+              <h3>{title}</h3>
+              <div className="article_head--over-tags">
+                {tagsArray.map((tag, i) => (
+                  <span key={"tag-" + i}>{tag}</span>
+                ))}
               </div>
+              <span className="article_head--over-dates">{date}</span>
             </div>
           </div>
-          <div
-            className="article_body"
-            dangerouslySetInnerHTML={{ __html: html }}
-          />
-          <div className="article_share">
-            <span>Share the article</span>
-            <ShareButtons slug={slug} title={title} />
-          </div>
         </div>
-      </Layout>
+        <div
+          className="article_body"
+          dangerouslySetInnerHTML={{ __html: html }}
+        />
+        <div className="article_share">
+          <span>Share the article</span>
+          <ShareButtons slug={slug} title={title} />
+        </div>
+      </div>
     </React.Fragment>
   )
 }
