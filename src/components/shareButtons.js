@@ -1,14 +1,17 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react"
 import PropTypes from "prop-types"
 
-
-const ShareButtons = ({ slug, title }) => {	
+const ShareButtons = ({ slug, title }) => {
   const [urlOrigin, setUrlOrigin] = useState("https://grana-ab.netlify.app")
 
-   useLayoutEffect(()=>{
-    const windowUrl = (!!window.location && window.location.origin) || "https://grana-ab.netlify.app"
+  useLayoutEffect(() => {
+    const windowUrl =
+      (!!window.location && window.location.origin) ||
+      "https://grana-ab.netlify.app"
     setUrlOrigin(windowUrl)
-    return () => { setUrlOrigin("https://grana-ab.netlify.app")}
+    return () => {
+      setUrlOrigin("https://grana-ab.netlify.app")
+    }
   }, [])
 
   return (
@@ -78,6 +81,6 @@ export default ShareButtons
 
 // Prop-Types
 ShareButtons.propTypes = {
-	slug: PropTypes.string.isRequired,
-	title: PropTypes.string.isRequired
+  slug: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
 }

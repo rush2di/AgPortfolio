@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import React, { useLayoutEffect } from "react"
+import React, { useState, useLayoutEffect } from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import ImagePalette from "react-image-palette"
 import gsap from "gsap"
@@ -7,10 +7,10 @@ import gsap from "gsap"
 import arrow from "../assets/arrowmd.svg"
 
 const Hero = ({ lastBlogPost = false }) => {
-  const { allMarkdownRemark } = useStaticQuery(
+  const { data, socials } = useStaticQuery(
     graphql`
       {
-        allMarkdownRemark(
+        data: allMarkdownRemark(
           filter: {
             frontmatter: { templateKey: { eq: "home-page-customizer" } }
           }
@@ -31,23 +31,44 @@ const Hero = ({ lastBlogPost = false }) => {
             }
           }
         }
+        socials: allMarkdownRemark(
+          filter: {
+            frontmatter: { templateKey: { eq: "social-links-editor" } }
+          }
+        ) {
+          edges {
+            node {
+              frontmatter {
+                instagram
+                facebook
+              }
+            }
+          }
+        }
       }
     `
   )
 
-  const { introTxt: txt } = allMarkdownRemark.edges[0].node.frontmatter
-  const {
-    fluid: img,
-  } = allMarkdownRemark.edges[0].node.frontmatter.profileImg.childImageSharp
+  const { instagram, facebook } = socials.edges[0].node.frontmatter
+  const { introTxt } = data.edges[0].node.frontmatter
+  const { fluid } = data.edges[0].node.frontmatter.profileImg.childImageSharp
 
   return (
     <React.Fragment>
-      <HeroContent txt={txt} img={img} payload={lastBlogPost} />
+      <HeroContent
+        txt={introTxt}
+        img={fluid}
+        payload={lastBlogPost}
+        instagram={instagram}
+        facebook={facebook}
+      />
     </React.Fragment>
   )
 }
 
-export const HeroContent = ({ txt, img, payload }) => {
+const HeroContent = ({ txt, img, payload, instagram, facebook }) => {
+  const [shadows, setShadows] = useState(false)
+
   const title = React.useRef()
   const subTitle = React.useRef()
   const imageMask = React.useRef()
@@ -55,8 +76,15 @@ export const HeroContent = ({ txt, img, payload }) => {
   const introduction = React.useRef()
 
   useLayoutEffect(() => {
+    let _SUBSCRIBED = true
     const animation = gsap
-      .timeline({ delay: 0.5, defaults: { ease: "power3.out" } })
+      .timeline({
+        onComplete: () => {
+          if (_SUBSCRIBED) setShadows(true)
+        },
+        delay: 1,
+        defaults: { ease: "power3.out" },
+      })
       .from(title.current, {
         duration: 1,
         y: "100%",
@@ -94,7 +122,10 @@ export const HeroContent = ({ txt, img, payload }) => {
         stagger: 0.2,
       })
     animation.play()
-  })
+    return () => {
+      _SUBSCRIBED = false
+    }
+  }, [])
 
   return (
     <div className="section-hero">
@@ -115,7 +146,7 @@ export const HeroContent = ({ txt, img, payload }) => {
           </p>
           {payload && <LastBlogPostCard lastBlogPost={payload} />}
         </div>
-        <div className="hero-grid-two">
+        <div className={`hero-grid-two ${shadows ? "shadows-md" : ""}`}>
           <div className="hero-image-container">
             <div className="hero-image-mask">
               <img
@@ -124,7 +155,11 @@ export const HeroContent = ({ txt, img, payload }) => {
                 srcSet={img.srcSet && img.srcSet}
                 alt=""
               />
-              <div ref={imageMask} className="testMask"></div>
+              <div className="hero-image-socials">
+                {!!instagram && <a href={instagram}>instagram</a>}
+                {!!facebook && <a href={facebook}>facebook</a>}
+              </div>
+              <div ref={imageMask} className="mask"></div>
             </div>
           </div>
         </div>
@@ -161,6 +196,9 @@ const LastBlogPostCard = ({ lastBlogPost }) => {
   )
 }
 
+export default Hero
+
+// Prop-Types
 Hero.propTypes = {
   siteTitle: PropTypes.string,
 }
@@ -168,5 +206,3 @@ Hero.propTypes = {
 Hero.defaultProps = {
   siteTitle: ``,
 }
-
-export default Hero

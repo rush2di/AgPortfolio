@@ -89,7 +89,7 @@ const Albums = () => {
 
     const getDatafromSessionStorage = () => {
       const images = localData.map((item) => item.content)
-      if(_SUBSCRIBED) {
+      if (_SUBSCRIBED) {
         preloadImages(images).done(() => {
           setState(localData)
           if (!activeAlbumId) setActiveAlbumId(localData[0].id)
@@ -332,7 +332,7 @@ const Gallery = ({ images, limit, handleImageClick }) =>
         id="gallery-image"
         onClick={() => handleImageClick(index)}
         className="section-albums--masonry-image"
-        key={photo.substring(35, 45)}
+        key={photo.substring(35, 45) + index}
         src={photo}
         alt=""
       />
@@ -361,27 +361,26 @@ const ErrorMessage = () => (
 
 export default Albums
 
-
 // Prop-Types
 AlbumsList.propTypes = {
   data: PropTypes.array.isRequired,
   activeAlbumId: PropTypes.string.isRequired,
-  albumSelectionHandle: PropTypes.func.isRequired
+  albumSelectionHandle: PropTypes.func.isRequired,
 }
 
 Titles.propTypes = {
   data: PropTypes.array.isRequired,
-  albumSelectionHandle: PropTypes.func.isRequired
+  albumSelectionHandle: PropTypes.func.isRequired,
 }
 
 MasonryBox.propTypes = {
-  images: PropTypes.array.isRequired
+  images: PropTypes.array.isRequired,
 }
 
 Gallery.propTypes = {
   images: PropTypes.array.isRequired,
   limit: PropTypes.number.isRequired,
-  handleImageClick: PropTypes.func.isRequired
+  handleImageClick: PropTypes.func.isRequired,
 }
 
 PhotoCarousel.propTypes = {
@@ -390,6 +389,5 @@ PhotoCarousel.propTypes = {
   showCarousel: PropTypes.bool.isRequired,
   handleHideCarousel: PropTypes.func.isRequired,
   handlePreviousBtn: PropTypes.func.isRequired,
-  handleNextBtn: PropTypes.func.isRequired
+  handleNextBtn: PropTypes.func.isRequired,
 }
-
