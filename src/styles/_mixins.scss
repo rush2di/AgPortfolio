@@ -3,7 +3,7 @@
   font-weight: 500;
   font-size: $size;
   text-transform: uppercase;
-  letter-spacing: .1rem;
+  letter-spacing: 0.1rem;
 }
 
 @mixin headings($size: 8.35rem, $weight: 500, $spacing: -0.06em) {
@@ -50,5 +50,5 @@
 }
 
 @mixin shadows-sm() {
-  box-shadow: 2px 2px 15px #00000030
+  box-shadow: 2px 2px 15px #00000030;
 }
