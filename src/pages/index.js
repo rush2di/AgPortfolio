@@ -1,12 +1,11 @@
 import React from "react"
 
-import Layout from "../components/layout"
 import HomePage from "../templates/homePage"
 
 const IndexPage = () => (
-  <Layout>
+  <React.Fragment>
     <HomePage />
-  </Layout>
+  </React.Fragment>
 )
 
 export default IndexPage
