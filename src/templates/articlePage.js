@@ -62,7 +62,7 @@ const Article = ({ data }) => {
           dangerouslySetInnerHTML={{ __html: html }}
         />
         <div className="article_share">
-          <span>Share the article</span>
+          <span>Share this article</span>
           <ShareButtons slug={slug} title={title} />
         </div>
       </div>

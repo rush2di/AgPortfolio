@@ -76,6 +76,10 @@ body {
   }
 }
 
+.shadows-md {
+  box-shadow: 5px 5px 20px #00000042 !important;
+}
+
 // Navbar styles
 .app {
   &--wrapper {
@@ -95,6 +99,12 @@ body {
     right: 0;
     left: 0;
     @include navnsocials;
+    .navlogo {
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+    }
     .navitems {
       display: inherit;
       li:first-child {
@@ -182,6 +192,7 @@ body {
     height: 100%;
     padding-bottom: 1rem;
     &--grid {
+      opacity: 0;
       height: 100%;
       width: 100%;
       display: grid;
@@ -287,6 +298,8 @@ body {
       }
     }
     &-two {
+      transition: all 0.4s ease-out;
+      box-shadow: 0 0 0 transparent;
       height: 720px;
       width: 100%;
       .hero-image {
@@ -377,7 +390,7 @@ body {
             display: block;
             width: 0%;
             background-color: $primDark;
-            height: 1.75px;
+            height: 1.45px;
             transition: width 0.2s ease-out;
             margin: 0 auto 0 1rem;
           }
@@ -693,6 +706,63 @@ body {
           padding: 0 0 0.5rem;
           display: block;
         }
+      }
+    }
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #7a7a7a;
+      margin-top: 1rem;
+      a {
+        font-weight: 500;
+        text-decoration: none;
+        &:hover {
+          text-decoration: none !important;
+        }
+      }
+    .pagination_number {
+        margin: 0 0.5rem;
+        ul {
+          list-style: none;
+          display: inline-flex;
+        }
+        li {
+          margin: 0.2rem;
+        }
+        .link {
+          .pagination_number--box {
+            background: #858585;
+            color: white;
+            border-color: #757575;
+          }
+        }          
+        .--disabled {
+          pointer-events: none;
+        }
+        &--box {
+          border: 1px solid #cacaca;
+          width: 2rem;
+          height: 2rem;
+          border-radius: 0.2rem;
+          display: flex;
+          align-items: center;
+          color: $primDark;
+          background: #e4e4e4;
+          justify-content: center;
+          &:hover {
+            background: #cacaca;
+            color: #4e4e4e;
+          }
+        }
+      }
+      .arrow {
+        font-size: 2.5rem;
+        font-weight: 400;
+        margin: -2.2rem auto 0;
+        height: 20px;
+        width: 12px;
+        text-decoration: none;
       }
     }
   }

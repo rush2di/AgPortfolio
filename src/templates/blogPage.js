@@ -6,21 +6,25 @@ import PropTypes from "prop-types"
 import Image from "gatsby-image"
 
 import Pagination from "../components/pagination"
+import Seo from "../components/seo"
 
 // Blog Page wrapper component
 const BlogPage = ({ pageContext }) => {
   const { group, first, last, index, pageCount, posts } = pageContext
   return (
     <React.Fragment>
+      <Seo title="Blog" />
       <div className="section-blog">
         <div className="section-blog--main">
           <MasonryBox data={group} posts={posts} />
+          { pageCount === 1 ||
           <Pagination
             first={first}
             last={last}
             index={index}
             pageCount={pageCount}
           />
+          }
         </div>
       </div>
     </React.Fragment>
