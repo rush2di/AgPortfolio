@@ -1,6 +1,6 @@
 import PropTypes from "prop-types"
 import React, { useState, useLayoutEffect } from "react"
-import { useStaticQuery, graphql } from "gatsby"
+import { useStaticQuery, graphql, Link } from "gatsby"
 import ImagePalette from "react-image-palette"
 import gsap from "gsap"
 
@@ -69,6 +69,7 @@ const Hero = ({ lastBlogPost = false }) => {
 const HeroContent = ({ txt, img, payload, instagram, facebook }) => {
   const [shadows, setShadows] = useState(false)
 
+  const grid = React.useRef()
   const title = React.useRef()
   const subTitle = React.useRef()
   const imageMask = React.useRef()
@@ -85,6 +86,7 @@ const HeroContent = ({ txt, img, payload, instagram, facebook }) => {
         delay: 1,
         defaults: { ease: "power3.out" },
       })
+      .to( grid.current, {duration:0.2, opacity: 1})
       .from(title.current, {
         duration: 1,
         y: "100%",
@@ -129,7 +131,7 @@ const HeroContent = ({ txt, img, payload, instagram, facebook }) => {
 
   return (
     <div className="section-hero">
-      <div className="section-hero--grid">
+      <div ref={grid} className="section-hero--grid">
         <div className="hero-grid-one">
           <div className="hero-title-container">
             <div className="hero-title">
@@ -144,7 +146,7 @@ const HeroContent = ({ txt, img, payload, instagram, facebook }) => {
           <p className="intro-text ft-grid-box" ref={introduction}>
             {txt}
           </p>
-          {payload && <LastBlogPostCard lastBlogPost={payload} />}
+          {payload && <LastBlogPostCard payload={payload} />}
         </div>
         <div className={`hero-grid-two ${shadows ? "shadows-md" : ""}`}>
           <div className="hero-image-container">
@@ -168,9 +170,13 @@ const HeroContent = ({ txt, img, payload, instagram, facebook }) => {
   )
 }
 
-const LastBlogPostCard = ({ lastBlogPost }) => {
-  const { title, description } = lastBlogPost.frontmatter
-  const { src } = lastBlogPost.frontmatter.cover.childImageSharp.fluid
+const LastBlogPostCard = ({ payload }) => {
+  const { title, description } = payload.frontmatter
+  const { src } = payload.frontmatter.cover.childImageSharp.fluid
+  const { slug } = payload.fields
+
+  const linkStyles = { width: "100%", display: "block", height: "100%"}
+
   return (
     <div className="hero-lastbp--container ft-grid-box">
       <h1>
@@ -179,18 +185,20 @@ const LastBlogPostCard = ({ lastBlogPost }) => {
         </span>
       </h1>
       <ImagePalette image={src}>
-        {({ backgroundColor, color, alternativeColor }) => (
-          <div
-            style={{ backgroundImage: `url(${src})` }}
-            className="hero-lastbp--card"
-          >
-            <div style={{ backgroundColor }} className="card-overlay"></div>
-            <div className="card-overlay-content">
-              <h3 style={{ color }}>{title}</h3>
-              <p style={{ color: alternativeColor }}>{description}</p>
+        {({ backgroundColor, color, alternativeColor }) => {
+          const bgImage = { backgroundImage: `url(${src})` }
+          return (
+            <div style={bgImage} className="hero-lastbp--card shadows-md" >
+              <Link style={linkStyles} to={`article/${slug}`}>
+                <div style={{ backgroundColor }} className="card-overlay"></div>
+                <div className="card-overlay-content">
+                  <h3 style={{ color }}>{title}</h3>
+                  <p style={{ color: alternativeColor }}>{description}</p>
+                </div>
+              </Link>
             </div>
-          </div>
-        )}
+          )
+        }}
       </ImagePalette>
     </div>
   )

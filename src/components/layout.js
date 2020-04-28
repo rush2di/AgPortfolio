@@ -10,7 +10,9 @@ const Layout = ({ children, location }) => (
     <div className="app--wrapper">
       <nav className="app--nav container">
         <div className="navlogo">
-          <span>Grana.ab</span>
+          <Link activeClassName="active-link" to="/">
+            <span>Grana.ab</span>
+          </Link>
         </div>
         <ul className="navitems">
           <li>
