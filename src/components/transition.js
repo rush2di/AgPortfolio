@@ -38,7 +38,7 @@ class Transition extends React.PureComponent {
     return (
       <TransitionGroup>
         <ReactTransition
-          key={location.pathname}
+          key={!!location ? location.pathname : ""}
           timeout={{
             enter: timeout,
             exit: timeout,
