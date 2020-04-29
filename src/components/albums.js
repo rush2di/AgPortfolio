@@ -5,7 +5,12 @@ import PropTypes from "prop-types"
 import axios from "axios"
 import gsap from "gsap"
 
-import { preloadImages, arrayItemsSwap, usePrevious } from "../utils/utils"
+import {
+  preloadImages,
+  arrayItemsSwap,
+  usePrevious,
+  useSwipableList,
+} from "../utils/utils"
 import Arrow from "./arrows"
 import Loader from "./loader"
 
@@ -132,6 +137,8 @@ const Albums = () => {
 const AlbumsList = ({ data, albumSelectionHandle, activeAlbumId }) => {
   const selectedAlbum = data.filter((item) => item.id === activeAlbumId)
   const activeItem = React.useRef()
+  const slider = React.useRef()
+  const swipableProps = useSwipableList(slider)
   const activeItemChildren = activeItem.current && activeItem.current.childNodes
 
   for (let node in activeItemChildren) {
@@ -166,7 +173,11 @@ const AlbumsList = ({ data, albumSelectionHandle, activeAlbumId }) => {
 
   return (
     <div className="section-albums container">
-      <div className="section-albums--catcontainer">
+      <div
+        {...swipableProps}
+        ref={slider}
+        className="section-albums--catcontainer"
+      >
         <div className="section-albums--catcontainer-items">
           <ul ref={activeItem}>
             <Titles data={data} albumSelectionHandle={albumSelectionHandle} />

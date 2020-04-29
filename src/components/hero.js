@@ -86,7 +86,7 @@ const HeroContent = ({ txt, img, payload, instagram, facebook }) => {
         delay: 1,
         defaults: { ease: "power3.out" },
       })
-      .to( grid.current, {duration:0.2, opacity: 1})
+      .to(grid.current, { duration: 0.2, opacity: 1 })
       .from(title.current, {
         duration: 1,
         y: "100%",
@@ -175,7 +175,7 @@ const LastBlogPostCard = ({ payload }) => {
   const { src } = payload.frontmatter.cover.childImageSharp.fluid
   const { slug } = payload.fields
 
-  const linkStyles = { width: "100%", display: "block", height: "100%"}
+  const linkStyles = { width: "100%", display: "block", height: "100%" }
 
   return (
     <div className="hero-lastbp--container ft-grid-box">
@@ -188,7 +188,7 @@ const LastBlogPostCard = ({ payload }) => {
         {({ backgroundColor, color, alternativeColor }) => {
           const bgImage = { backgroundImage: `url(${src})` }
           return (
-            <div style={bgImage} className="hero-lastbp--card shadows-md" >
+            <div style={bgImage} className="hero-lastbp--card shadows-md">
               <Link style={linkStyles} to={`article/${slug}`}>
                 <div style={{ backgroundColor }} className="card-overlay"></div>
                 <div className="card-overlay-content">
