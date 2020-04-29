@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react"
+import { useRef, useEffect, useState } from "react"
 
 // function to preload fetched images
 
@@ -28,21 +28,93 @@ export const preloadImages = (arr) => {
   }
 }
 
-// Important function for reordering categories of albums 
+// Important function for re-ordering categories of albums
 
-export const arrayItemsSwap = (array, firstIndex, secondIndex ) => {
+export const arrayItemsSwap = (array, firstIndex, secondIndex) => {
   let firstItem = array[firstIndex]
   array[firstIndex] = array[secondIndex]
   array[secondIndex] = firstItem
   return array
 }
 
-// Costum hook to save a giving value before an update happens on the component
+/*/////////////////////////////////////////////////
+////////////:: CUSTOM HOOKS :://///////////////////
+/////////////////////////////////////////////////*/
+
+/* 
+Costum hook to save a giving value before an update
+happens on the component
+*/
 
 export const usePrevious = (value) => {
-  const ref = useRef();
+  const ref = useRef()
   useEffect(() => {
-    ref.current = value;
-  });
-  return ref.current;
+    ref.current = value
+  })
+  return ref.current
+}
+
+/*
+ useSwibableList hook checks the screen width size
+and apply swipable scroll behaviour on smaller screens
+*/
+
+export const useSwipableList = (slider) => {
+  const [applySwipe, setApplySwipe] = useState(false)
+  let isDown = false
+  let startX
+  let scrollLeft
+
+  useEffect(() => {
+    if (window.innerWidth <= 900) setApplySwipe(true)
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth <= 900) setApplySwipe(true)
+      if (window.innerWidth > 900 && applySwipe) setApplySwipe(false)
+    })
+    return () => {
+      window.removeEventListener("resize", () => {
+        setApplySwipe(false)
+      })
+    }
+  }, [])
+
+  const handleMouseDown = (e) => {
+    isDown = true
+    slider.current.classList.add("--slider-active")
+    startX = e.pageX - slider.current.offsetLeft
+    scrollLeft = slider.current.scrollLeft
+  }
+
+  const handleMouseUp = () => {
+    isDown = false
+    slider.current.classList.remove("--slider-active")
+  }
+
+  const handleMouseLeave = () => {
+    isDown = false
+    slider.current.classList.remove("--slider-active")
+  }
+
+  const handleMouseMove = (e) => {
+    if (!isDown) return
+    e.preventDefault()
+    const x = e.pageX - slider.current.offsetLeft
+    const walk = (x - startX) * 1.5
+    slider.current.scrollLeft = scrollLeft - walk
+  }
+
+  if (applySwipe) {
+    return {
+      onMouseDown: (e) => {
+        handleMouseDown(e)
+      },
+      onMouseUp: handleMouseUp,
+      onMouseLeave: handleMouseLeave,
+      onMouseMove: (e) => {
+        handleMouseMove(e)
+      },
+    }
+  }
+  return
 }
