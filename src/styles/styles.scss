@@ -74,6 +74,14 @@ body {
       color: $paragraph;
     }
   }
+  @media (max-width: 1024px) {
+    width: 100vw;
+    margin: 0;
+    padding: 0 3rem;
+    &--main {
+      width: 100vw;
+    }
+  }
 }
 
 .shadows-md {
@@ -324,6 +332,7 @@ body {
             width: 100%;
             background-color: $bgwhite;
             z-index: 15;
+            border: .5rem solid $bgwhite;
             display: block;
             position: absolute;
             top: 0;
@@ -350,8 +359,15 @@ body {
           }
         }
       }
-    }
-  }
+      @media (max-width: 1024px) {
+        .hero-image {
+          &-mask .mask {
+            top: -7px;
+          }
+        }
+      }
+    } 
+  }     
   &-albums {
     display: block;
     padding: 0 2rem 3rem;
@@ -520,6 +536,17 @@ body {
       cursor: pointer;
       &:hover {
         color: #797979;
+      }
+    }
+    @media (max-width: 1024px) {
+      padding: 0 4rem 3rem;
+      &--catcontainer-items ul li{
+        font-size: 4rem;
+        padding: 0 0.5rem; 
+      }
+      &--masonry-wrapper img {
+        width: calc(69.3333% / 3);
+        margin: 0.5rem;
       }
     }
   }
@@ -763,6 +790,11 @@ body {
         height: 20px;
         width: 12px;
         text-decoration: none;
+      }
+    }
+    @media (max-width:1024px) {
+      &--main {
+        padding: 0 3rem;
       }
     }
   }
@@ -1040,7 +1072,119 @@ body {
         margin: 1.5rem 0 !important;
       }
     }
+    @media (max-width: 1024px) {
+      padding: 0 3rem;
+    }
   }
+}
+
+// MEDIA QUERIES 
+@media (max-width: 900px) {
+  // Home Page 
+  .section {
+    &-hero {
+      margin-top: 2.5rem;
+      &--grid {
+        grid-gap: 0;
+        padding: 0 2.5rem;
+      }
+    }
+    .hero {
+      &-grid-one {
+        .intro-text {
+          font-size: .85rem;
+        }
+        .hero-lastbp {
+          &--card {
+            width: 300px;
+            height: 175px;
+            .card-overlay-content {
+              p {
+                display: none;
+              }
+              h3 {
+                font-size: 1rem;
+              }
+            }
+          }
+          &--container h1 {
+            font-size: .85rem;
+          }
+        }
+        .hero-title-container {
+          height: 215px;
+            h1 {
+              font-size: 6.45rem ;
+              padding: 0 0.3rem ;
+          }
+        }
+      }
+      &-grid-two {
+        height: 600px;
+      }
+    }
+    &-albums {
+      padding: 0 2rem 3rem;
+    }
+    &-albums--catcontainer {
+      padding: 0 0 1rem;
+      overflow-x: scroll;
+      &-items {
+        display: block;
+        padding: 0;
+        ul {
+          display: inline-flex;
+          padding: 0 1rem;
+          li {
+            display: inline-block;
+            padding: 0 0.5rem;
+            margin-right: 3rem;
+          }
+        }
+      }
+    }
+    &-albums--masonry {
+      &-wrapper {
+        padding: 0 1rem;
+        img {
+          width: calc(88.3333% / 3);
+        }
+      }
+    }
+  }
+  //   @media (max-width: 768px) {
+  //   &-hero {
+  //     margin-top: 2.5rem;
+  //     &--grid {
+  //       grid-gap: 0;
+  //       padding: 0 2.5rem;
+  //     }
+  //     .hero {        
+  //       &-grid-one {
+  //         &-title-container {
+  //           height: 215px;
+  //           h1 {
+  //             font-size: 6.45rem ;                    
+  //             padding: 0 0.3rem ;
+  //           }
+  //         } 
+  //         &-lastbp--card {
+  //           width: 300px;
+  //           height: 175px;
+  //           .card-overlay-content p {
+  //             display: none;
+  //           }
+  //         }
+  //       }
+  //       &-grid-two {
+  //         height: 600px;
+  //       }
+  //     }
+  //     .intro-text {
+  //       font-size: .85rem;
+  //     }
+  //   }
+  // }
 }
 
 @keyframes fadeIn {
@@ -1051,3 +1195,5 @@ body {
     opacity: 1;
   }
 }
+
+
