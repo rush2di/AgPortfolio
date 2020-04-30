@@ -13,6 +13,7 @@ import {
 } from "../utils/utils"
 import Arrow from "./arrows"
 import Loader from "./loader"
+import ArrowLg from "../assets/arrowlg.svg"
 
 const apiKey = process.env.GATSBY_API_KEY
 const userId = process.env.GATSBY_USER_ID
@@ -51,6 +52,7 @@ const Albums = () => {
     let _SUBSCRIBED = true
     let localData = JSON.parse(sessionStorage.getItem("state"))
     // Fetch all albums initial info and titles
+    ///////////////////////////////////////////
     const albumsFetcher = async () => {
       const response = await axios.get(albumsBaseUrl)
       const { photoset } = response.data.photosets
@@ -62,6 +64,7 @@ const Albums = () => {
       if (_SUBSCRIBED) newStateParser("albums", [...newPhotosets])
     }
     // Fetch all photosets of an album by it's ID
+    //////////////////////////////////////////////
     const photosFetcher = async () => {
       const data = await Promise.all(
         state.map(async ({ id }, i) => {
@@ -173,6 +176,9 @@ const AlbumsList = ({ data, albumSelectionHandle, activeAlbumId }) => {
 
   return (
     <div className="section-albums container">
+      <div className="section-albums--info">
+        <span>swipe for more albums <img src={ArrowLg} alt=""/></span>
+      </div>
       <div
         {...swipableProps}
         ref={slider}
@@ -189,7 +195,9 @@ const AlbumsList = ({ data, albumSelectionHandle, activeAlbumId }) => {
   )
 }
 
-// Masonry style gallery component
+// Masonry style gallery component ////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
 const MasonryBox = ({ images }) => {
   const [showCarousel, setShowCarousel] = useState(false)
   const [imgCount, setImgCount] = useState(0)
@@ -263,7 +271,9 @@ const MasonryBox = ({ images }) => {
   )
 }
 
-// PhotoCarousel component
+// PhotoCarousel component ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+
 const PhotoCarousel = ({
   images,
   imgIndex,
@@ -335,7 +345,9 @@ const PhotoCarousel = ({
   )
 }
 
-// Gallery component maps images into the parenr Masonry component
+// Gallery component maps images into the parenr Masonry component ////////////
+//////////////////////////////////////////////////////////////////////////////
+
 const Gallery = ({ images, limit, handleImageClick }) =>
   images.slice(0, limit).map((photo, index) => {
     return (
@@ -350,7 +362,9 @@ const Gallery = ({ images, limit, handleImageClick }) =>
     )
   })
 
-// Titles component maps categories titles
+// Titles component maps categories titles ////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+
 const Titles = ({ data, albumSelectionHandle }) =>
   data.map(({ id, title }, index) => (
     <li
@@ -363,7 +377,9 @@ const Titles = ({ data, albumSelectionHandle }) =>
     </li>
   ))
 
-// Error message component in case data fetching failed
+// Error message component in case data fetching failed /////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
 const ErrorMessage = () => (
   <div className="container--error-message">
     <p>Opps! something went wrong, please check your network and try again</p>
@@ -372,7 +388,9 @@ const ErrorMessage = () => (
 
 export default Albums
 
-// Prop-Types
+// Prop-Types ////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+
 AlbumsList.propTypes = {
   data: PropTypes.array.isRequired,
   activeAlbumId: PropTypes.string.isRequired,
