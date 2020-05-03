@@ -2,7 +2,7 @@ import React, { Component } from "react"
 
 import { ArticleTemplate } from "../../templates/articlePage"
 
-class PostPreview extends Component {
+class ArticlePreview extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -41,15 +41,16 @@ class PostPreview extends Component {
 		const title = this.props.entry.getIn(["data", "title"])
 		const date = this.props.entry.getIn(["data", "date"])
 		const tags = this.props.entry.getIn(["data", "tags"])
-		const slug = false
 		const html = this.props.widgetFor("body")
 		const bgImage = this.state.src
 		return (
 			<React.Fragment>
-				<ArticleTemplate {...{title, date, tags, slug, html, bgImage}} />
+				<ArticleTemplate {...{title, date, tags, slug, bgImage}} isPreview={true} >
+					<div className="article_body">{html}</div>
+				</ArticleTemplate>
 			</React.Fragment>
 		)
 	}
 }
 
-export default 
+export default ArticlePreview

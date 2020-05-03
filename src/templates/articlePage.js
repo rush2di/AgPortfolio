@@ -50,7 +50,7 @@ const Article = ({ data }) => {
 // Article section template //////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
 
-export const ArticleTemplate = ({title, date, tags, slug = false, html, bgImage}) => {  
+export const ArticleTemplate = ({title, date, tags, slug = false, html, bgImage, isPreview = false, children}) => {  
   const tagsArray = tags[0].split(" ")
 
   return (
@@ -71,11 +71,16 @@ export const ArticleTemplate = ({title, date, tags, slug = false, html, bgImage}
           </div>
         </div>
       </div>
-      <div
-        className="article_body"
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
-      { slug &&
+      { isPreview ? (
+        {children}
+        ) : (
+        <div
+          className="article_body"
+          dangerouslySetInnerHTML={{ __html: html }}
+        />
+        )
+      }
+      { isPreview ||
       <div className="article_share">
         <span>Share this article</span>
         <ShareButtons slug={slug} title={title} />
