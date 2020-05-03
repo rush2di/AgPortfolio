@@ -117,6 +117,7 @@ const MobileNavMenu = ({ handleMenuClick }) => {
               frontmatter {
                 instagram
                 facebook
+                email
               }
             }
           }
@@ -124,7 +125,7 @@ const MobileNavMenu = ({ handleMenuClick }) => {
       }
     `
   )
-  const { instagram, facebook } = allMarkdownRemark.edges[0].node.frontmatter
+  const { instagram, facebook, email } = allMarkdownRemark.edges[0].node.frontmatter
   const { width } = useScreenSpy()
 
   return (
@@ -142,11 +143,6 @@ const MobileNavMenu = ({ handleMenuClick }) => {
             </Link>
           </li>
           <li onClick={() => { handleMenuClick() }} >
-            <a id="link-item" href="mailto:">
-              Contact me
-            </a>
-          </li>
-          <li onClick={() => { handleMenuClick() }} >
             <a id="link-item" href={instagram}>
               Instagram
             </a>
@@ -154,6 +150,11 @@ const MobileNavMenu = ({ handleMenuClick }) => {
           <li onClick={() => { handleMenuClick() }} >
             <a id="link-item" href={facebook}>
               Facebook
+            </a>
+          </li>
+          <li onClick={() => { handleMenuClick() }} >
+            <a id="link-item" href={`mailto:${email}`}>
+              Contact me
             </a>
           </li>
         </ul>

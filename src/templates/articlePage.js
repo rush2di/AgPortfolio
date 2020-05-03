@@ -15,7 +15,6 @@ const Article = ({ data }) => {
   const { title, date, tags, description } = data.markdownRemark.frontmatter
   const { slug } = data.markdownRemark.fields
   const { html } = data.markdownRemark
-  const tagsArray = tags[0].split(" ")
 
   const [urlOrigin, setUrlOrigin] = useState("https://grana-ab.netlify.app")
 
@@ -43,34 +42,47 @@ const Article = ({ data }) => {
         <meta property="og:locale" content="fr_FR" />
         <link rel="canonical" href={`${urlOrigin}/article${slug}`} />
       </Helmet>
-      <div className="article_wrapper">
-        <div className="article_head">
-          <div
-            className="article_head--bg"
-            style={{ backgroundImage: `url(${bgImage})` }}
-          >
-            <div className="article_head--over">
-              <h3>{title}</h3>
-              <div className="article_head--over-tags">
-                {tagsArray.map((tag, i) => (
-                  <span key={"tag-" + i}>{tag}</span>
-                ))}
-              </div>
-              <span className="article_head--over-dates">{date}</span>
-            </div>
-          </div>
-        </div>
-        <div
-          className="article_body"
-          dangerouslySetInnerHTML={{ __html: html }}
-        />
-        <div className="article_share">
-          <span>Share this article</span>
-          <ShareButtons slug={slug} title={title} />
-        </div>
-      </div>
+      <ArticleTemplate {...{title, date, tags, slug, html, bgImage}} />
     </React.Fragment>
   )
+}
+
+// Article section template //////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+
+export const ArticleTemplate = ({title, date, tags, slug = false, html, bgImage}) => {  
+  const tagsArray = tags[0].split(" ")
+
+  return (
+    <div className="article_wrapper">
+      <div className="article_head">
+        <div
+          className="article_head--bg"
+          style={{ backgroundImage: `url(${bgImage})` }}
+        >
+          <div className="article_head--over">
+            <h3>{title}</h3>
+            <div className="article_head--over-tags">
+              {tagsArray.map((tag, i) => (
+                <span key={"tag-" + i}>{tag}</span>
+              ))}
+            </div>
+            <span className="article_head--over-dates">{date}</span>
+          </div>
+        </div>
+      </div>
+      <div
+        className="article_body"
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
+      { slug &&
+      <div className="article_share">
+        <span>Share this article</span>
+        <ShareButtons slug={slug} title={title} />
+      </div>
+      }
+    </div>
+      )
 }
 
 export const pageQuery = graphql`

@@ -20,7 +20,6 @@ body {
 
 // Transition Cover ///////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
-
 .transition--cover {
   position: fixed;
   width: 100%;
@@ -35,7 +34,6 @@ body {
 
 // Common containers styles //////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
-
 .container {
   @include container(1100px);
   &--main {
@@ -82,14 +80,12 @@ body {
 
 // Common shadows styles ////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-
 .shadows-md {
   box-shadow: 5px 5px 20px #00000042 !important;
 }
 
-// Mobile nav styles ////////////////////////////////////////////////////////
+// Mobile nav styles ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-
 .mobile-nav {
   display: none;
   position: relative;
@@ -267,7 +263,8 @@ body {
   }
 }
 
-// Pages layout borders
+// Pages layout borders ////////////////////////////////////////
+///////////////////////////////////////////////////////////////
 .borders {
   position: absolute;
   top: 0;
@@ -311,7 +308,8 @@ body {
   }
 }
 
-// Home page styels
+// Home page styels ////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
 .section {
   &-hero {
     margin-top: 6.5rem;
@@ -716,7 +714,8 @@ body {
   }
 }
 
-// Blog Page styles
+// Blog Page styles ////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
 .section {
   &-blog {
     margin: 3rem 0;
@@ -930,7 +929,8 @@ body {
   }
 }
 
-// Article Page Styles
+// Article Page Styles /////////////////////////////////////////
+///////////////////////////////////////////////////////////////
 .section {
   .article_wrapper {
     .article_head {
@@ -985,15 +985,6 @@ body {
         width: 100%;
         background: #0000009e;
       }
-      // @include media("<=phoneL") {
-      //   &--bg {
-      //     height: 250px;
-      //   }
-      //   h3 {
-      //     top: 42%;
-      //     font-size: 2rem;
-      //   }
-      // }
     }
 
     .resp-sharing-button__link,
@@ -1070,9 +1061,6 @@ body {
       margin: 0 5rem 1rem;
       padding-bottom: 1.5rem;
       line-height: 1.6;
-      // @include media("<=530px") {
-      //   margin: 1.5rem 0 0;
-      // }
       pre {
         margin-bottom: 1rem;
       }
@@ -1187,14 +1175,6 @@ body {
         font-weight: 600;
         margin-right: 0.5rem;
       }
-      // @include media("<=530px") {
-      //   margin: 0 0;
-      //   flex-wrap: wrap;
-      //   justify-content: normal;
-      //   a {
-      //     margin: 0.5rem 0.5rem 0.5rem 0;
-      //   }
-      // }
     }
     .article_relative {
       margin: 0 1rem;
@@ -1208,14 +1188,12 @@ body {
   }
 }
 
+/////////////////////////////////////////////////////////////////////
+///////////////////////// MEDIA QUERIES ////////////////////////////
 ///////////////////////////////////////////////////////////////////
-///////////////////////// MEDIA QUERIES //////////////////////////
-//////////////////////////////////////////////////////////////////
-
 @media (max-width: 1150px) {
   // Comon containers styles /////////////////////////////////////
   ////////////////////////////////////////////////////////////////
-
   .container {
     width: calc(100vw - 2rem);
     margin: 0;
@@ -1227,7 +1205,6 @@ body {
 
   // Home Page styles ////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////
-
   .section {
     &-hero {
       margin-top: 5rem;
@@ -1268,7 +1245,6 @@ body {
 ///////////////////////////////////////////////////////////////////
 //////////////////// New Break point @950px //////////////////////
 /////////////////////////////////////////////////////////////////
-
 @media (max-width: 950px) {
   // Blog Page styles ////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////
@@ -1324,10 +1300,9 @@ body {
   }
 }
 
+/////////////////////////////////////////////////////////////////////
+//////////////////// New Break point @995px ////////////////////////
 ///////////////////////////////////////////////////////////////////
-//////////////////// New Break point @995px //////////////////////
-/////////////////////////////////////////////////////////////////
-
 @media (max-width: 995px) {
   // Home Page styles ////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////
@@ -1416,10 +1391,9 @@ body {
   }
 }
 
+/////////////////////////////////////////////////////////////////////
+//////////////////// New Break point @775px ////////////////////////
 ///////////////////////////////////////////////////////////////////
-//////////////////// New Break point @775px //////////////////////
-/////////////////////////////////////////////////////////////////
-
 @media (max-width: 775px) {
   // Nav layout styles ////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////
@@ -1501,8 +1475,7 @@ body {
   }
 
   // Article Page styles ////////////////////////////////////////////
-  /////////////////////////////////////////////////////////////////
-
+  //////////////////////////////////////////////////////////////////
   .section {
     .article_wrapper {
       padding: 0 2rem;
@@ -1522,10 +1495,9 @@ body {
   }
 }
 
-///////////////////////////////////////////////////////////////////
-//////////////////// New Break point @665px //////////////////////
-/////////////////////////////////////////////////////////////////
-
+//////////////////////////////////////////////////////////////////////
+//////////////////// New Break point @665px /////////////////////////
+////////////////////////////////////////////////////////////////////
 @media (max-width: 665px) {
   // Layout styles ////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////
@@ -1550,13 +1522,13 @@ body {
     .mobile-nav-btn-lines {
       background-color: $primDark !important;
       border-radius: 0.2em !important;
-      height: 4.5px !important;
+      height: 4px !important;
     }
     .mobile-nav-btn-lines::after,
     .mobile-nav-btn-lines::before {
       background-color: $primDark !important;
       border-radius: 0.2em !important;
-      height: 4.5px !important;
+      height: 4px !important;
     }
     .mobile-nav-btn-lines::after {
       width: 35px !important;
@@ -1739,7 +1711,7 @@ body {
     }
   }
   // Article Page styles ////////////////////////////////////////////
-  ///////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////
   .section {
     .article_wrapper .article_head {
       margin: 3rem 0.5rem;
@@ -1756,6 +1728,231 @@ body {
   }
 }
 
+///////////////////////////////////////////////////////////////////
+//////////////////// New Break point @550px //////////////////////
+/////////////////////////////////////////////////////////////////
+@media (max-width: 550px) {
+  // Home Page styles ////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////
+  .section {
+    &-hero .hero-grid-one .hero-title-container h1 {
+      font-size: 4.5rem !important;
+    }
+    &-hero .hero-lastbp--card {
+      height: 250px !important;
+      margin-top: 1.15rem !important;
+    }
+    &-hero .hero-grid-two {      
+      width: 85%;
+      margin: -5rem auto 0;
+    }
+    &-hero--grid {
+      padding: 0 2rem; 
+    }
+    &-albums {
+      padding: 0 1rem 3rem;
+    }
+    &-albums .btn--gray {
+      margin: 2rem 1.5rem 1rem;
+      font-size: 1.4rem;
+    }
+    &-about {      
+      padding: 0 2.5rem !important;
+    }
+    &-about-socials a {      
+      font-size: 1.35rem;
+      margin: 0 .75rem;
+    }
+  }
+}
+
+
+///////////////////////////////////////////////////////////////////
+//////////////////// New Break point @425px //////////////////////
+/////////////////////////////////////////////////////////////////
+@media (max-width: 425px) {
+  // Container Layouts styles ////////////////////////////////////
+  ///////////////////////////////////////////////////////////////
+  .container {
+    width: 100vw;
+    margin: 0;
+    padding: 0 2rem;
+    &--main {
+      width: 100vw;
+    }
+    &--footer {
+      margin: 0.5rem 1rem;
+      padding: 0 0.5rem;
+      font-size: .85rem;
+    }
+  }
+  .app--nav {    
+    padding-top: 1.5rem;
+    .mobile-nav-btn {
+      top: -15px;
+      right: 0px;
+    }
+  }
+
+  // Home Page styles ////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////
+  .section {
+    &-hero--grid {
+      padding: 0 1rem;
+    }
+    .hero-title-container {
+      height: 130px !important;
+    }
+    &-hero .hero-grid-one .hero-title-container h1 {
+      font-size: 3.8rem !important;
+      &:last-of-type {
+        margin-top: -2rem !important;
+      }
+    }
+    &-hero .hero-grid-two {
+      margin: -2rem auto 0;
+    }
+    &-hero .hero-lastbp--sm {
+      margin: 3.5rem 0 1rem;      
+      padding: 0 .5rem;
+    }
+    &-hero .hero-lastbp--card {
+      height: 235px !important;
+      margin-top: 1rem !important
+    }
+    &-albums--info {      
+      font-size: 1.15rem !important;
+      padding: 0 0.5rem !important;
+      margin: 1.5rem 0 0.5rem !important;
+    }
+    &-albums--catcontainer {
+      padding: 0 !important;
+    }
+    &-albums--catcontainer-items ul {
+      padding: 0 !important;
+    }
+    &-albums--masonry-wrapper {
+      padding: 0 !important;
+    }
+    &-albums--masonry-wrapper img {
+      width: calc(50% - 1rem) !important;
+    }
+    &-albums--carousel-image img {
+      margin-left: 0!important;
+    }
+    &-albums--carousel-image button{
+      &:first-child {
+        left: 0.15rem;        
+      }
+      &:last-of-type {
+        right: 0.15rem;
+      }
+    }
+    &-albums {
+      padding: 0 1rem !important;
+    }
+    &-albums .btn--gray {
+      margin: 2rem 0.5rem 1rem !important;
+    }
+    &-about {
+      padding: 0 1.5rem !important;
+    }
+  }
+
+  // Blog Page styles ////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////
+  .section {
+    &-blog--main {
+      padding: 0 0.5rem;
+    }
+    &-blog .mobile-card-wrapper {
+      margin: 0 1.5rem 4rem;
+    }
+    .article_wrapper .article_head--bg {
+      height: 250px;
+    }
+    .article_wrapper .article_head--over h3 {
+      font-size: 1.35rem;
+    }
+    .article_wrapper .article_body {
+      margin: 0 1rem 1rem;
+    }
+  }
+
+  // Article Page styles ////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////
+  .section {
+    .article_wrapper {
+      padding: 0 0.5rem
+    }
+    .article_wrapper .article_share {
+      margin: 0 1rem 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      padding-bottom: 1.5rem;
+      font-size: 0.9rem;
+      span {        
+        font-size: 0.95rem;
+        font-weight: 800;
+        margin-right: 0.5rem;
+      }
+    }
+  }
+}
+
+///////////////////////////////////////////////////////////////////
+//////////////////// New Break point @375px //////////////////////
+/////////////////////////////////////////////////////////////////
+@media(max-width: 375px) {
+  // Home Page styles ////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////
+  .section {
+    &-hero .hero-grid-one .hero-title-container h1 {
+      font-size: 3.5rem !important;
+      &:last-of-type {
+        margin-top: -1.5rem !important;
+      }
+    }
+    &-hero .hero-grid-two {
+      height: 470px;
+    }
+    &-hero .hero-lastbp--card {
+      height: 215px !important;
+    }
+  }
+}
+
+///////////////////////////////////////////////////////////////////
+//////////////////// New Break point @320px //////////////////////
+/////////////////////////////////////////////////////////////////
+@media(max-width: 320px) {
+  // Home Page styles ////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////
+  .section {
+    &-hero .hero-grid-one .hero-title-container h1 {
+      font-size: 2.75rem !important;
+    }
+    &-hero .hero-grid-two {
+      height: 425px;
+    }
+    .hero-title-container {
+      height: 105px !important;
+    }
+    &-hero .hero-lastbp--card {
+      height: 180px !important;
+    }
+    &-hero .hero-lastbp--card .card-overlay-content {
+      padding: 1rem !important;
+      h3 {
+        font-size: 0.85rem !important
+      }
+    }
+  }
+}
+
+// Keyfram ///////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 @keyframes fadeIn {
   0% {
     opacity: 0;
