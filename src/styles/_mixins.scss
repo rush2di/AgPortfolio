@@ -29,6 +29,40 @@
   margin: 0 auto;
 }
 
+@mixin autosuggest() {
+  width: 100%;
+  position: relative;
+  padding: 0 0 0.5rem;
+  display: block;
+  .react-autosuggest__input {
+    padding: 0.5rem;
+    border: 1px solid #cacaca;
+    width: 100%;
+  }
+  .react-autosuggest__suggestions-container {
+    background: white;
+    width: 100%;
+    position: absolute;
+    z-index: 5;
+    border-right: 1px solid #e0e0e0;
+    border-left: 1px solid #e0e0e0;
+  }
+  .react-autosuggest__suggestion {
+    padding: 0.5rem;
+    white-space: nowrap;
+    cursor: pointer;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  .react-autosuggest__suggestion--highlighted {
+    background: #407ee2;
+    color: white;
+  }
+}
+
 @mixin flexbin($row-height, $space) {
   position: relative;
   display: flex;
