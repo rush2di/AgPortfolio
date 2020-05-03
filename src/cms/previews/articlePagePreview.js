@@ -45,7 +45,7 @@ class ArticlePreview extends Component {
 		const bgImage = this.state.src
 		return (
 			<React.Fragment>
-				<ArticleTemplate {...{title, date, tags, slug, bgImage}} isPreview={true} >
+				<ArticleTemplate {...{title, date, tags, bgImage}} isPreview={true} >
 					<div className="article_body">{html}</div>
 				</ArticleTemplate>
 			</React.Fragment>

@@ -50,7 +50,7 @@ const Article = ({ data }) => {
 // Article section template //////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
 
-export const ArticleTemplate = ({title, date, tags, slug = false, html, bgImage, isPreview = false, children}) => {  
+export const ArticleTemplate = ({title, date, tags, slug, html, bgImage, isPreview = false, children}) => {  
   const tagsArray = tags[0].split(" ")
 
   return (
