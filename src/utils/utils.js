@@ -1,4 +1,10 @@
-import { useRef, useEffect, useState } from "react"
+import React, {
+  createContext,
+  useContext,
+  useRef,
+  useEffect,
+  useState,
+} from "react"
 
 // function to preload fetched images
 
@@ -60,24 +66,10 @@ and apply swipable scroll behaviour on smaller screens
 */
 
 export const useSwipableList = (slider) => {
-  const [applySwipe, setApplySwipe] = useState(false)
+  const { width } = useScreenSpy(950)
   let isDown = false
   let startX
   let scrollLeft
-
-  useEffect(() => {
-    if (window.innerWidth <= 900) setApplySwipe(true)
-
-    window.addEventListener("resize", () => {
-      if (window.innerWidth <= 900) setApplySwipe(true)
-      if (window.innerWidth > 900 && applySwipe) setApplySwipe(false)
-    })
-    return () => {
-      window.removeEventListener("resize", () => {
-        setApplySwipe(false)
-      })
-    }
-  }, [])
 
   const handleMouseDown = (e) => {
     isDown = true
@@ -104,7 +96,7 @@ export const useSwipableList = (slider) => {
     slider.current.scrollLeft = scrollLeft - walk
   }
 
-  if (applySwipe) {
+  if (width <= 950) {
     return {
       onMouseDown: (e) => {
         handleMouseDown(e)
@@ -118,3 +110,43 @@ export const useSwipableList = (slider) => {
   }
   return
 }
+
+/*
+ useScreenSpy hook checks the window screen width on first 
+ mount and after every window resize event and returns it value
+*/
+
+const ScreenSpy = createContext(500)
+
+export const ScreenSpyProvider = ({ children }) => {
+  const [dimensions, setDimensions] = useState({ width: 0 })
+
+  useEffect(() => {
+    const handleResize = () => {
+      setDimensions({
+        width: window.innerWidth,
+      })
+    }
+    if (dimensions.width === 0) handleResize()
+
+    window.addEventListener("resize", handleResize)
+    return () => {
+      window.removeEventListener("resize", handleResize)
+    }
+  }, [])
+
+  return <ScreenSpy.Provider value={dimensions}>{children}</ScreenSpy.Provider>
+}
+
+export const useScreenSpy = () => useContext(ScreenSpy)
+
+
+//  useIsMounted hook checks if a component is mounted 
+// export const useIsMounted = () => {
+//   const isMounted = useRef(false);
+//   useEffect(() => {
+//     isMounted.current = true;
+//     return () => isMounted.current = false;
+//   }, []);
+//   return isMounted;
+// };

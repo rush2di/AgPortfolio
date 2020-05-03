@@ -14,6 +14,7 @@ import {
 import Arrow from "./arrows"
 import Loader from "./loader"
 import ArrowLg from "../assets/arrowlg.svg"
+import PLusIcon from "../assets/plusIcon.svg"
 
 const apiKey = process.env.GATSBY_API_KEY
 const userId = process.env.GATSBY_USER_ID
@@ -21,7 +22,10 @@ const albumsBaseUrl = `https://www.flickr.com/services/rest/?method=flickr.photo
 const photosBaseUrl = `https://www.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=${apiKey}`
 const sourceBaseUrl = "https://live.staticflickr.com/"
 
-// Albums section wrapper component
+
+// Albums section wrapper component ////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
+
 const Albums = () => {
   const [state, setState] = useState([])
   const [activeAlbumId, setActiveAlbumId] = useState("")
@@ -133,9 +137,10 @@ const Albums = () => {
   )
 }
 
-/*
- Albums component filters the albums depending user selection
- and pass it down to children masonry component
+/* ///////////////////////////////////////////////////////////////////////////////////
+ Albums component filters the albums depending user selection ///////////////////////
+ and pass it down to children masonry component ////////////////////////////////////
+ //////////////////////////////////////////////////////////////////////////////////
 */
 const AlbumsList = ({ data, albumSelectionHandle, activeAlbumId }) => {
   const selectedAlbum = data.filter((item) => item.id === activeAlbumId)
@@ -177,7 +182,9 @@ const AlbumsList = ({ data, albumSelectionHandle, activeAlbumId }) => {
   return (
     <div className="section-albums container">
       <div className="section-albums--info">
-        <span>swipe for more albums <img src={ArrowLg} alt=""/></span>
+        <span>
+          swipe for more albums <img src={ArrowLg} alt="" />
+        </span>
       </div>
       <div
         {...swipableProps}
@@ -264,7 +271,10 @@ const MasonryBox = ({ images }) => {
       </Masonry>
       {imgCount !== images.length && (
         <button className="btn--gray" onClick={loadMoreImages}>
-          load more pictures
+          <span>
+            load more pictures
+            <img src={PLusIcon} alt="" />
+          </span>
         </button>
       )}
     </React.Fragment>

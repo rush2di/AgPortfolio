@@ -5,53 +5,18 @@ import ImagePalette from "react-image-palette"
 import gsap from "gsap"
 
 import arrow from "../assets/arrowmd.svg"
+import { useScreenSpy } from "../utils/utils"
 
-const Hero = ({ lastBlogPost = false }) => {
-  const { data, socials } = useStaticQuery(
-    graphql`
-      {
-        data: allMarkdownRemark(
-          filter: {
-            frontmatter: { templateKey: { eq: "home-page-customizer" } }
-          }
-        ) {
-          edges {
-            node {
-              frontmatter {
-                introTxt
-                profileImg {
-                  childImageSharp {
-                    fluid {
-                      src
-                      srcSet
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-        socials: allMarkdownRemark(
-          filter: {
-            frontmatter: { templateKey: { eq: "social-links-editor" } }
-          }
-        ) {
-          edges {
-            node {
-              frontmatter {
-                instagram
-                facebook
-              }
-            }
-          }
-        }
-      }
-    `
-  )
 
+// Hero section wrapper component ////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+
+const Hero = ({ lastBlogPost = false, homeContent, socials }) => {
   const { instagram, facebook } = socials.edges[0].node.frontmatter
-  const { introTxt } = data.edges[0].node.frontmatter
-  const { fluid } = data.edges[0].node.frontmatter.profileImg.childImageSharp
+  const { introTxt } = homeContent.edges[0].node.frontmatter
+  const {
+    fluid,
+  } = homeContent.edges[0].node.frontmatter.profileImg.childImageSharp
 
   return (
     <React.Fragment>
@@ -66,8 +31,12 @@ const Hero = ({ lastBlogPost = false }) => {
   )
 }
 
+// Hero section content component ////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+
 const HeroContent = ({ txt, img, payload, instagram, facebook }) => {
   const [shadows, setShadows] = useState(false)
+  const { width } = useScreenSpy()
 
   const grid = React.useRef()
   const title = React.useRef()
@@ -165,10 +134,16 @@ const HeroContent = ({ txt, img, payload, instagram, facebook }) => {
             </div>
           </div>
         </div>
+        <div className="hero-lastbp--sm">
+          {width <= 665 && payload && <LastBlogPostCard payload={payload} />}
+        </div>
       </div>
     </div>
   )
 }
+
+// LastBlogPostCard component ////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
 const LastBlogPostCard = ({ payload }) => {
   const { title, description } = payload.frontmatter
@@ -190,10 +165,15 @@ const LastBlogPostCard = ({ payload }) => {
           return (
             <div style={bgImage} className="hero-lastbp--card shadows-md">
               <Link style={linkStyles} to={`article/${slug}`}>
-                <div style={{ backgroundColor }} className="card-overlay"></div>
+                <div
+                  style={{ backgroundColor: color }}
+                  className="card-overlay"
+                ></div>
+                <div className="card-overlay-dark"></div>
                 <div className="card-overlay-content">
-                  <h3 style={{ color }}>{title}</h3>
-                  <p style={{ color: alternativeColor }}>{description}</p>
+                  <h3 style={{ color: backgroundColor }}>Latest blog post</h3>
+                  <h3 style={{ color: backgroundColor }}>{title}</h3>
+                  <p style={{ color: backgroundColor }}>{description}</p>
                 </div>
               </Link>
             </div>
@@ -206,7 +186,9 @@ const LastBlogPostCard = ({ payload }) => {
 
 export default Hero
 
-// Prop-Types
+// Prop-Types ////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+
 Hero.propTypes = {
   siteTitle: PropTypes.string,
 }

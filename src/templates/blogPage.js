@@ -6,46 +6,80 @@ import PropTypes from "prop-types"
 import Image from "gatsby-image"
 
 import Pagination from "../components/pagination"
+import { useScreenSpy } from "../utils/utils"
 import Seo from "../components/seo"
 
-// Blog Page wrapper component
+
+// Blog Page wrapper component ///////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+
 const BlogPage = ({ pageContext }) => {
   const { group, first, last, index, pageCount, posts } = pageContext
+  const { width } = useScreenSpy()
   return (
     <React.Fragment>
       <Seo title="Blog" />
       <div className="section-blog">
         <div className="section-blog--main">
           <MasonryBox data={group} posts={posts} />
-          { pageCount === 1 ||
-          <Pagination
-            first={first}
-            last={last}
-            index={index}
-            pageCount={pageCount}
-          />
-          }
+          {pageCount === 1 || (
+            <Pagination
+              first={first}
+              last={last}
+              index={index}
+              pageCount={pageCount}
+            />
+          )}
         </div>
+        {width <= 950 && (
+          <div className="mobile-card-wrapper">
+            <h1>Latest</h1>
+            <LatestPosts data={slicedPosts(group)} />
+          </div>
+        )}
       </div>
     </React.Fragment>
   )
 }
 
-// Masonry main section content wrapper
+// Masonry main section content wrapper //////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+
 const MasonryBox = ({ data, posts }) => {
-  const slicedPosts = () => {
-    return data.length > 6 ? [...data].splice(0, 6) : [...data]
-  }
-  return (
-    <Masonry>
-      <ArticleCards data={[...data].splice(0, 2)} />
-      <Aside slicedPosts={slicedPosts()} data={posts} />
-      {data.length > 2 && <ArticleCards data={[...data].splice(2)} />}
-    </Masonry>
+  const { width } = useScreenSpy()
+  return width <= 950 ? (
+    <React.Fragment>
+      <div className="mobile-card-wrapper">
+        <h1>Search</h1>
+        <div className="aside--search-input">
+          <SearchBox data={posts} />
+        </div>
+      </div>
+      <Masonry>
+        <ArticleCards data={data} />
+      </Masonry>
+    </React.Fragment>
+  ) : (
+    <React.Fragment>
+      <Masonry>
+        <ArticleCards data={[...data].splice(0, 2)} />
+        <Aside slicedPosts={slicedPosts(data)} data={posts} />
+        {data.length > 2 && <ArticleCards data={[...data].splice(2)} />}
+      </Masonry>
+    </React.Fragment>
   )
 }
 
-// Blog article cards mapper
+// Posts slicer function ///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+const slicedPosts = (data) => {
+  return data.length > 6 ? [...data].splice(0, 6) : [...data]
+}
+
+// Blog article cards mapper /////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+
 const ArticleCards = ({ data }) =>
   data.map((post) => {
     const { slug } = post.node.fields
@@ -81,7 +115,9 @@ const ArticleCards = ({ data }) =>
     )
   })
 
-// Aside section warapper component
+// Aside section warapper component ///////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
 const Aside = ({ slicedPosts, data }) => {
   return (
     <aside className="aside--container">
@@ -99,7 +135,9 @@ const Aside = ({ slicedPosts, data }) => {
   )
 }
 
-// Aside lastest posts component
+// Aside lastest posts component /////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+
 const LatestPosts = ({ data }) =>
   data.map((post, index) => {
     const styles = { height: 70, width: 75, margin: 3 }
@@ -119,7 +157,9 @@ const LatestPosts = ({ data }) =>
     )
   })
 
-// Aside search box component
+// Aside search box component ///////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+
 const SearchBox = ({ data }) => {
   const [value, setValue] = useState("")
   const [suggestions, setSuggestions] = useState([])
@@ -197,7 +237,9 @@ const SearchBox = ({ data }) => {
 
 export default BlogPage
 
-// Prop-Types
+// Prop-Types //////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+
 BlogPage.propTypes = {
   pageContext: PropTypes.object.isRequired,
 }
