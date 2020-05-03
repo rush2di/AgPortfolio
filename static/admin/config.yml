@@ -34,6 +34,8 @@ collections:
     create: false
     slug: "home-page"
     identifier_field: "templateKey"
+    editor: 
+      preview: true
     fields:
       - {
           name: "templateKey",
