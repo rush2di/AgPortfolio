@@ -1,7 +1,5 @@
 import CMS from "netlify-cms-app"
 
-// import PostPreview from "./previews/postPreview"
-// import InformationPreview from "./previews/informationPreview"
+import "../styles/styles.scss"
 
-// CMS.registerPreviewTemplate("articles", PostPreview)
-// CMS.registerPreviewTemplate("apropos", InformationPreview)
+CMS.registerPreviewTemplate("articles", articlePagePreview)
