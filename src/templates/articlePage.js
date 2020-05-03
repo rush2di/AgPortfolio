@@ -5,6 +5,9 @@ import { graphql } from "gatsby"
 
 import ShareButtons from "../components/shareButtons"
 
+// Article page template wrapper ///////////////////////////////////////////// 
+/////////////////////////////////////////////////////////////////////////////
+
 const Article = ({ data }) => {
   const {
     src: bgImage,
@@ -98,7 +101,9 @@ export const pageQuery = graphql`
 
 export default Article
 
-// Prop-Types
+// Prop-Types ////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+
 Article.propTypes = {
   data: PropTypes.shape({
     markdownRemark: PropTypes.shape({
