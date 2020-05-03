@@ -31,7 +31,7 @@ collections:
   - name: "home"
     label: "Home Page"
     folder: "static/home"
-    create: true
+    create: false
     slug: "home-page"
     identifier_field: "templateKey"
     fields:
@@ -47,7 +47,7 @@ collections:
   - name: "socials"
     label: "Social Media Links"
     folder: "static/socials"
-    create: true
+    create: false
     slug: "social-links"
     identifier_field: "templateKey"
     fields:
@@ -59,3 +59,4 @@ collections:
         }
       - { name: "instagram", label: "Instagram", widget: "text" }
       - { name: "facebook", label: "Facebook", widget: "text" }
+      - { name: "email", label: "Email", widget: "text" }
