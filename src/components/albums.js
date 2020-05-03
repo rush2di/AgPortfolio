@@ -55,8 +55,8 @@ const Albums = () => {
   useEffect(() => {
     let _SUBSCRIBED = true
     let localData = JSON.parse(sessionStorage.getItem("state"))
-    // Fetch all albums initial info and titles
-    ///////////////////////////////////////////
+    // Fetch all albums initial info and titles ////////////////////////
+    ///////////////////////////////////////////////////////////////////
     const albumsFetcher = async () => {
       const response = await axios.get(albumsBaseUrl)
       const { photoset } = response.data.photosets
@@ -67,22 +67,24 @@ const Albums = () => {
 
       if (_SUBSCRIBED) newStateParser("albums", [...newPhotosets])
     }
-    // Fetch all photosets of an album by it's ID
-    //////////////////////////////////////////////
+    // Fetch all photosets of an album by it's ID //////////////////////
+    ///////////////////////////////////////////////////////////////////
     const photosFetcher = async () => {
       const data = await Promise.all(
-        state.map(async ({ id }, i) => {
-          const response = await axios.get(
-            `${photosBaseUrl}&photoset_id=${id + userId}`
-          )
+        state.map(async ({ id }, index) => {
+
+          const response = await axios.get(`${photosBaseUrl}&photoset_id=${id + userId}`)
           const { photo } = response.data.photoset
-          const images = photo.map(({ server, secret, id }) => {
-            return `${sourceBaseUrl + server}/${id}_${secret}.jpg`
-          })
-          preloadImages(images).done(() => {
+
+          const images = photo.map(({ server, secret, id }) => (
+            `${sourceBaseUrl + server}/${id}_${secret}.jpg`
+          ))
+
+          preloadImages(images).done(() => { 
             setLoadedImages((prevCount) => prevCount + 1)
           })
-          return { ...state[i], content: [...images] }
+
+          return { ...state[index], content: [...images] }
         })
       )
       if (_SUBSCRIBED) {
@@ -90,7 +92,8 @@ const Albums = () => {
         newStateParser("photoset", data)
       }
     }
-
+    // function to perform api calls to fetch data /////////////////////
+    ///////////////////////////////////////////////////////////////////
     const getDataFromFetchers = () => {
       if (!state.length) {
         albumsFetcher().catch(() => setError(true))
@@ -98,7 +101,8 @@ const Albums = () => {
         photosFetcher().catch(() => setError(true))
       }
     }
-
+    // function to get data saved on session storage ///////////////////
+    ///////////////////////////////////////////////////////////////////
     const getDatafromSessionStorage = () => {
       const images = localData.map((item) => item.content)
       if (_SUBSCRIBED) {
@@ -109,7 +113,8 @@ const Albums = () => {
         })
       }
     }
-
+    // if session storage is empty make the api calls else get local data //
+    ///////////////////////////////////////////////////////////////////////
     if (!!localData && !state.length) getDatafromSessionStorage()
     if (!localData) getDataFromFetchers()
 
@@ -297,32 +302,21 @@ const PhotoCarousel = ({
     animations.play()
   }
   const handleBtns = (type) => {
-    const paramsOne = gsap
-      .timeline({
-        defaults: { duration: 0.4, ease: "power3.out" },
-      })
-      .to("#image", { opacity: 0 })
-    const paramsTwo = gsap
-      .timeline({
-        onStart: () => {
-          type === "next" ? handleNextBtn() : handlePreviousBtn()
-        },
-        defaults: { duration: 0.4, ease: "power3.out" },
-      })
-      .to("#image", { opacity: 1 })
+    const defaults = { duration: 0.4, ease: "power3.out" }
+    const onStart = () => type === "next" ? handleNextBtn() : handlePreviousBtn()
+
+    const paramsOne = gsap.timeline({ defaults }).to("#image", { opacity: 0 })
+    const paramsTwo = gsap.timeline({ onStart, defaults }).to("#image", { opacity: 1 })
 
     animations(paramsOne.add(paramsTwo))
   }
 
   const hideCarousel = () => {
+    const defaults = { duration: 0.5, ease: "power3.out" }
+    const onComplete = () => handleHideCarousel() 
     if (showCarousel) {
       const params = gsap
-        .timeline({
-          onComplete: () => {
-            handleHideCarousel()
-          },
-          defaults: { duration: 0.5, ease: "power3.out" },
-        })
+        .timeline({ onComplete, defaults })
         .to("#wrapper", { opacity: 0 })
         .to("#image", { opacity: 0, scale: 0 }, "-=0.5")
       animations(params)
