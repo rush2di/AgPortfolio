@@ -7,7 +7,6 @@ import Transition from "./transition"
 import { ScreenSpyProvider, useScreenSpy } from "../utils/utils"
 import "../styles/styles.scss"
 
-
 // Constant Layout wrapper component /////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
 
@@ -16,7 +15,10 @@ const Layout = ({ children, location }) => {
 
   const handleMenuClick = () => {
     const closeAnimation = gsap
-      .timeline({ onStart: () => { setIsOpen(false) },
+      .timeline({
+        onStart: () => {
+          setIsOpen(false)
+        },
         defaults: { ease: "power3.out", duration: 0.8, delay: 0.2 },
       })
       .to("#link-item", { y: 20, opacity: 0 })
@@ -90,7 +92,9 @@ const MobileNav = ({ isOpen, handleMenuClick }) => {
     width <= 775 && (
       <div className="mobile-nav">
         <div
-          onClick={() => { handleMenuClick() }}
+          onClick={() => {
+            handleMenuClick()
+          }}
           className={`mobile-nav-btn ${classToggle}`}
         >
           <div className="mobile-nav-btn-lines"></div>
@@ -125,34 +129,58 @@ const MobileNavMenu = ({ handleMenuClick }) => {
       }
     `
   )
-  const { instagram, facebook, email } = allMarkdownRemark.edges[0].node.frontmatter
+  const {
+    instagram,
+    facebook,
+    email,
+  } = allMarkdownRemark.edges[0].node.frontmatter
   const { width } = useScreenSpy()
 
   return (
     width <= 775 && (
       <div id="nav-wrapper" className="mobile-nav-wrapper">
         <ul className="mobile-nav-items">
-          <li onClick={() => { handleMenuClick() }} >
+          <li
+            onClick={() => {
+              handleMenuClick()
+            }}
+          >
             <Link id="link-item" activeClassName="active-link" to="/">
               Home
             </Link>
           </li>
-          <li onClick={() => { handleMenuClick() }} >
+          <li
+            onClick={() => {
+              handleMenuClick()
+            }}
+          >
             <Link id="link-item" activeClassName="active-link" to="/blog">
               Blog
             </Link>
           </li>
-          <li onClick={() => { handleMenuClick() }} >
+          <li
+            onClick={() => {
+              handleMenuClick()
+            }}
+          >
             <a id="link-item" href={instagram}>
               Instagram
             </a>
           </li>
-          <li onClick={() => { handleMenuClick() }} >
+          <li
+            onClick={() => {
+              handleMenuClick()
+            }}
+          >
             <a id="link-item" href={facebook}>
               Facebook
             </a>
           </li>
-          <li onClick={() => { handleMenuClick() }} >
+          <li
+            onClick={() => {
+              handleMenuClick()
+            }}
+          >
             <a id="link-item" href={`mailto:${email}`}>
               Contact me
             </a>

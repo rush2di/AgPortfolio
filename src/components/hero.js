@@ -1,12 +1,11 @@
 import PropTypes from "prop-types"
 import React, { useState, useLayoutEffect } from "react"
-import { useStaticQuery, graphql, Link } from "gatsby"
+import { Link } from "gatsby"
 import ImagePalette from "react-image-palette"
 import gsap from "gsap"
 
 import arrow from "../assets/arrowmd.svg"
 import { useScreenSpy } from "../utils/utils"
-
 
 // Hero section wrapper component ////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////

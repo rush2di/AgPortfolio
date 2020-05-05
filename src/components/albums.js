@@ -22,7 +22,6 @@ const albumsBaseUrl = `https://www.flickr.com/services/rest/?method=flickr.photo
 const photosBaseUrl = `https://www.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=${apiKey}`
 const sourceBaseUrl = "https://live.staticflickr.com/"
 
-
 // Albums section wrapper component ////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////
 
@@ -72,15 +71,17 @@ const Albums = () => {
     const photosFetcher = async () => {
       const data = await Promise.all(
         state.map(async ({ id }, index) => {
-
-          const response = await axios.get(`${photosBaseUrl}&photoset_id=${id + userId}`)
+          const response = await axios.get(
+            `${photosBaseUrl}&photoset_id=${id + userId}`
+          )
           const { photo } = response.data.photoset
 
-          const images = photo.map(({ server, secret, id }) => (
-            `${sourceBaseUrl + server}/${id}_${secret}.jpg`
-          ))
+          const images = photo.map(
+            ({ server, secret, id }) =>
+              `${sourceBaseUrl + server}/${id}_${secret}.jpg`
+          )
 
-          preloadImages(images).done(() => { 
+          preloadImages(images).done(() => {
             setLoadedImages((prevCount) => prevCount + 1)
           })
 
@@ -303,17 +304,20 @@ const PhotoCarousel = ({
   }
   const handleBtns = (type) => {
     const defaults = { duration: 0.4, ease: "power3.out" }
-    const onStart = () => type === "next" ? handleNextBtn() : handlePreviousBtn()
+    const onStart = () =>
+      type === "next" ? handleNextBtn() : handlePreviousBtn()
 
     const paramsOne = gsap.timeline({ defaults }).to("#image", { opacity: 0 })
-    const paramsTwo = gsap.timeline({ onStart, defaults }).to("#image", { opacity: 1 })
+    const paramsTwo = gsap
+      .timeline({ onStart, defaults })
+      .to("#image", { opacity: 1 })
 
     animations(paramsOne.add(paramsTwo))
   }
 
   const hideCarousel = () => {
     const defaults = { duration: 0.5, ease: "power3.out" }
-    const onComplete = () => handleHideCarousel() 
+    const onComplete = () => handleHideCarousel()
     if (showCarousel) {
       const params = gsap
         .timeline({ onComplete, defaults })
