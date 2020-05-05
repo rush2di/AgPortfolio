@@ -34,7 +34,7 @@ const Article = ({ data }) => {
         <title>{title} | Grana.ab</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta property="og:title" content={`${title} | Theke`} />
+        <meta property="og:title" content={`${title} | Grana.ab`} />
         <meta property="og:description" content={description} />
         <meta property="og:image" content={`${urlOrigin}${bgImage}`} />
         <meta property="og:url" content={`${urlOrigin}/article${slug}`} />
