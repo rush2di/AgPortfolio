@@ -1734,7 +1734,10 @@ body {
   ///////////////////////////////////////////////////////////////
   .section {
     &-hero .hero-grid-one .hero-title-container h1 {
-      font-size: 4.5rem !important;
+      font-size: 4.2rem !important;
+      &:last-of-type {
+        margin-top: -2.35rem !important;
+      }
     }
     &-hero .hero-lastbp--card {
       height: 250px !important;
