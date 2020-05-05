@@ -40,7 +40,8 @@ class ArticlePreview extends Component {
 	render() {
 		const title = this.props.entry.getIn(["data", "title"])
 		const date = this.props.entry.getIn(["data", "date"])
-		const tags = this.props.entry.getIn(["data", "tags"])
+		const tagsCheck = this.props.entry.getIn(["data", "tags"])
+		const tags = tagsCheck ? tagsCheck.toJS() : ["tags go here"]
 		const html = this.props.widgetFor("body")
 		const bgImage = this.state.src
 		
