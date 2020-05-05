@@ -1,6 +1,6 @@
 ---
 templateKey: blog-post
-title: patterns and photography
+title: Let there be light
 date: 2020-05-05T21:21:27.925Z
 cover: /img/natalia-bacetti-first-sight2.jpg
 description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
