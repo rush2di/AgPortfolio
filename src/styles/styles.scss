@@ -951,6 +951,9 @@ body {
           color: white;
           font-size: 2.5rem;
           text-transform: capitalize;
+          font-size: 1.5rem;
+          padding: 0 0.5rem;
+          text-align: center;  
         }
         &-tags {
           span {
@@ -1761,13 +1764,6 @@ body {
       font-size: 1.35rem;
       margin: 0 0.75rem;
     }
-  }
-}
-// Article Page ////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////
-.section {
-  .article_wrapper .article_head--over h3 {
-    font-size: 1.5rem;
   }
 }
 

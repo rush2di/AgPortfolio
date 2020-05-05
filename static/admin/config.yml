@@ -1,7 +1,7 @@
 backend:
   name: git-gateway
   repo: rush2di/AgPortfolio
-  branch: master
+  branch: production
 
 publish_mode: editorial_workflow
 media_folder: static/img

@@ -10,8 +10,8 @@ import ShareButtons from "../components/shareButtons"
 
 const Article = ({ data }) => {
   const {
-    src: bgImage,
-  } = data.markdownRemark.frontmatter.cover.childImageSharp.fluid
+    cover: bgImage,
+  } = data.markdownRemark.frontmatter
   const { title, date, tags, description } = data.markdownRemark.frontmatter
   const { slug } = data.markdownRemark.fields
   const { html } = data.markdownRemark
@@ -58,7 +58,7 @@ export const ArticleTemplate = ({title, date, tags, slug, html, bgImage, isPrevi
       <div className="article_head">
         <div
           className="article_head--bg"
-          style={{ backgroundImage: `url(${bgImage})` }}
+          style={{ backgroundImage: `url(${bgImage.childImageSharp ? bgImage.childImageSharp.fluid : bgImage})` }}
         >
           <div className="article_head--over">
             <h3>{title}</h3>
