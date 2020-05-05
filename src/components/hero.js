@@ -120,7 +120,7 @@ const HeroContent = ({ txt, img, payload, instagram, facebook }) => {
               <img
                 ref={image}
                 src={img.childImageSharp ? img.childImageSharp.fluid.src : img}
-                srcSet={img.childImageSharp ? imgchildImageSharp.fluid.srcSet : ""}
+                srcSet={img.childImageSharp ? img.childImageSharp.fluid.srcSet : ""}
                 alt=""
               />
               <div className="hero-image-socials">
