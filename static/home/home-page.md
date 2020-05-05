@@ -1,7 +1,7 @@
 ---
 templateKey: home-page-customizer
-profileImg: /img/91511139_3320374327977324_3432426868123369472_o.jpg
-introTxt: >-
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-  temaliqua, enim ad minim veniam
+profileImg: /img/34702393_2097042593643843_7104312916211400704_o.jpg
+introTxt: I'm young photographer from morocco , i started doing photography 4
+  years ago with my iphone , know i'm shooting with my canon 60d , from
+  portraits , visuals , products and food and fine art photography .
 ---
