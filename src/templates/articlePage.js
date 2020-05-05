@@ -9,12 +9,11 @@ import ShareButtons from "../components/shareButtons"
 /////////////////////////////////////////////////////////////////////////////
 
 const Article = ({ data }) => {
-  const {
-    cover: bgImage,
-  } = data.markdownRemark.frontmatter
+  const { cover } = data.markdownRemark.frontmatter
   const { title, date, tags, description } = data.markdownRemark.frontmatter
   const { slug } = data.markdownRemark.fields
   const { html } = data.markdownRemark
+  const bgImage = cover.childImageSharp ? cover.childImageSharp.fluid.src : cover
 
   const [urlOrigin, setUrlOrigin] = useState("https://grana-ab.netlify.app")
 
@@ -58,7 +57,7 @@ export const ArticleTemplate = ({title, date, tags, slug, html, bgImage, isPrevi
       <div className="article_head">
         <div
           className="article_head--bg"
-          style={{ backgroundImage: `url(${bgImage.childImageSharp ? bgImage.childImageSharp.fluid : bgImage})` }}
+          style={{ backgroundImage: `url(${bgImage})` }}
         >
           <div className="article_head--over">
             <h3>{title}</h3>
