@@ -43,7 +43,7 @@ class ArticlePreview extends Component {
 		const tags = this.props.entry.getIn(["data", "tags"])
 		const html = this.props.widgetFor("body")
 		const bgImage = this.state.src
-		console.log(title, date, tags)
+		
 		return (
 			<React.Fragment>
 				<ArticleTemplate {...{title, date, tags, bgImage}} isPreview={true} >

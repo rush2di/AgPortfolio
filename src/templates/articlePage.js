@@ -72,7 +72,7 @@ export const ArticleTemplate = ({title, date, tags, slug, html, bgImage, isPrevi
         </div>
       </div>
       { isPreview ? (
-        {children}
+        children
         ) : (
         <div
           className="article_body"

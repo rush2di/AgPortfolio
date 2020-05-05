@@ -35,7 +35,7 @@ collections:
     slug: "home-page"
     identifier_field: "templateKey"
     editor: 
-      preview: true
+      preview: false
     fields:
       - {
           name: "templateKey",
@@ -52,6 +52,8 @@ collections:
     create: false
     slug: "social-links"
     identifier_field: "templateKey"
+    editor: 
+      preview: false
     fields:
       - {
           name: "templateKey",
