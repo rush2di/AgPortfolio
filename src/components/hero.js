@@ -146,6 +146,7 @@ const LastBlogPostCard = ({ payload }) => {
   const { title, description } = payload.frontmatter
   const { cover } = payload.frontmatter
   const { slug } = payload.fields
+  const image = cover.childImageSharp ? cover.childImageSharp.fluid.src : cover
 
   const linkStyles = { width: "100%", display: "block", height: "100%" }
 
@@ -156,9 +157,9 @@ const LastBlogPostCard = ({ payload }) => {
           Last Blog Post <img src={arrow} alt="" />
         </span>
       </h1>
-      <ImagePalette image={cover}>
+      <ImagePalette image={image}>
         {({ backgroundColor, color, alternativeColor }) => {
-          const bgImage = { backgroundImage: `url(${cover.childImageSharp ? cover.childImageSharp.fluid.src : cover})` }
+          const bgImage = { backgroundImage: `url(${image})` }
           return (
             <div style={bgImage} className="hero-lastbp--card shadows-md">
               <Link style={linkStyles} to={`article/${slug}`}>
