@@ -1,12 +1,12 @@
 ---
 templateKey: blog-post
-title: patterns and photography
+title: "10 tips to take awsome photographes during the quarantine "
 date: 2020-04-14T12:35:09.834Z
-cover: /img/91127502_820254298495448_2979745987811200431_n.jpg
-description: >-
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-  incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-  nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+cover: /img/_mg_5115.jpg
+description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+  eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+  veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+  commodo consequat.
 tags:
   - photography portraits colors
 ---
