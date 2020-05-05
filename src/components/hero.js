@@ -156,12 +156,12 @@ const LastBlogPostCard = ({ payload }) => {
           Last Blog Post <img src={arrow} alt="" />
         </span>
       </h1>
-      <ImagePalette image={src}>
+      <ImagePalette image={cover}>
         {({ backgroundColor, color, alternativeColor }) => {
-          const bgImage = { backgroundImage: `url(${src})` }
+          const bgImage = { backgroundImage: `url(${cover.childImageSharp ? cover.childImageSharp.fluid.src : cover})` }
           return (
             <div style={bgImage} className="hero-lastbp--card shadows-md">
-              <Link style={linkStyles} to={`article/${cover.childImageSharp ? cover.childImageSharp.fluid.src : cover}`}>
+              <Link style={linkStyles} to={`article/${slug}`}>
                 <div
                   style={{ backgroundColor: color }}
                   className="card-overlay"
