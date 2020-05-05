@@ -95,8 +95,7 @@ body {
     position: relative;
     font-size: 12px;
     cursor: pointer;
-    transition: all 0.2s;
-    -webkit-tap-highlight-color: transparent;
+    transition: all 0.35s;
     &::after {
       content: "";
       display: block;
@@ -107,7 +106,7 @@ body {
       left: -25%;
     }
     .mobile-nav-btn-lines {
-      transition: all 0.2s;
+      transition: all 0.35s;
       pointer-events: none;
       display: block;
       content: "";
@@ -130,12 +129,11 @@ body {
       background-color: $redish;
       height: 2px;
       position: absolute;
-      -webkit-transform: rotate(0);
       transform: rotate(0);
     }
     .mobile-nav-btn-lines::before,
     .mobile-nav-btn-lines::after {
-      transition: all 0.2s;
+      transition: all 0.35s;
     }
     .mobile-nav-btn-lines::before {
       width: 17px;
@@ -683,11 +681,11 @@ body {
     p {
       line-height: 1.5;
       color: $paragraph;
-      font-size: 1.15rem;
+      font-size: 1rem;
       width: 75%;
     }
     &-socials {
-      margin-top: 4rem;
+      margin-top: 3rem;
       display: flex;
       align-items: center;
       justify-content: stretch;
@@ -1742,12 +1740,12 @@ body {
       height: 250px !important;
       margin-top: 1.15rem !important;
     }
-    &-hero .hero-grid-two {      
+    &-hero .hero-grid-two {
       width: 85%;
       margin: -5rem auto 0;
     }
     &-hero--grid {
-      padding: 0 2rem; 
+      padding: 0 2rem;
     }
     &-albums {
       padding: 0 1rem 3rem;
@@ -1756,16 +1754,15 @@ body {
       margin: 2rem 1.5rem 1rem;
       font-size: 1.4rem;
     }
-    &-about {      
+    &-about {
       padding: 0 2.5rem !important;
     }
-    &-about-socials a {      
+    &-about-socials a {
       font-size: 1.35rem;
-      margin: 0 .75rem;
+      margin: 0 0.75rem;
     }
   }
 }
-
 
 ///////////////////////////////////////////////////////////////////
 //////////////////// New Break point @425px //////////////////////
@@ -1783,10 +1780,14 @@ body {
     &--footer {
       margin: 0.5rem 1rem;
       padding: 0 0.5rem;
-      font-size: .85rem;
+      font-size: 0.85rem;
+      color: #8e8e8e;
+    }
+    &--footer a {
+      color: inherit;
     }
   }
-  .app--nav {    
+  .app--nav {
     padding-top: 1.5rem;
     .mobile-nav-btn {
       top: -15px;
@@ -1797,6 +1798,9 @@ body {
   // Home Page styles ////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////
   .section {
+    &-hero {
+      margin-top: 1.5rem;
+    }
     &-hero--grid {
       padding: 0 1rem;
     }
@@ -1811,17 +1815,22 @@ body {
     }
     &-hero .hero-grid-two {
       margin: -2rem auto 0;
+      height: 550px;
     }
     &-hero .hero-lastbp--sm {
-      margin: 3.5rem 0 1rem;      
-      padding: 0 .5rem;
+      margin: 3.5rem 0 1rem;
+      padding: 0 0.5rem;
     }
     &-hero .hero-lastbp--card {
-      height: 235px !important;
-      margin-top: 1rem !important
+      height: 230px !important;
+      margin-top: 0.25rem !important;
+      .card-overlay-content h3:last-of-type {
+        font-family: "Muli", Arial, sans-serif;
+        font-size: 1.15rem;
+      }
     }
-    &-albums--info {      
-      font-size: 1.15rem !important;
+    &-albums--info {
+      font-size: 1rem !important;
       padding: 0 0.5rem !important;
       margin: 1.5rem 0 0.5rem !important;
     }
@@ -1838,11 +1847,11 @@ body {
       width: calc(50% - 1rem) !important;
     }
     &-albums--carousel-image img {
-      margin-left: 0!important;
+      margin-left: 0 !important;
     }
-    &-albums--carousel-image button{
+    &-albums--carousel-image button {
       &:first-child {
-        left: 0.15rem;        
+        left: 0.15rem;
       }
       &:last-of-type {
         right: 0.15rem;
@@ -1853,9 +1862,20 @@ body {
     }
     &-albums .btn--gray {
       margin: 2rem 0.5rem 1rem !important;
+      font-size: 1.15rem !important;
+    }
+    &-albums .btn--gray img {
+      margin-bottom: -0.31rem !important;
+      width: 22px !important;
+    }
+    &-albums--catcontainer-items ul li {
+      font-size: 3.15rem;
     }
     &-about {
-      padding: 0 1.5rem !important;
+      padding: 1.5rem 1.5rem 0 !important;
+    }
+    &-about-socials a {
+      font-size: 1.2rem;
     }
   }
 
@@ -1883,7 +1903,7 @@ body {
   //////////////////////////////////////////////////////////////////
   .section {
     .article_wrapper {
-      padding: 0 0.5rem
+      padding: 0 0.5rem;
     }
     .article_wrapper .article_share {
       margin: 0 1rem 2rem;
@@ -1892,7 +1912,7 @@ body {
       justify-content: flex-start;
       padding-bottom: 1.5rem;
       font-size: 0.9rem;
-      span {        
+      span {
         font-size: 0.95rem;
         font-weight: 800;
         margin-right: 0.5rem;
@@ -1904,7 +1924,7 @@ body {
 ///////////////////////////////////////////////////////////////////
 //////////////////// New Break point @375px //////////////////////
 /////////////////////////////////////////////////////////////////
-@media(max-width: 375px) {
+@media (max-width: 375px) {
   // Home Page styles ////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////
   .section {
@@ -1926,7 +1946,7 @@ body {
 ///////////////////////////////////////////////////////////////////
 //////////////////// New Break point @320px //////////////////////
 /////////////////////////////////////////////////////////////////
-@media(max-width: 320px) {
+@media (max-width: 320px) {
   // Home Page styles ////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////
   .section {
@@ -1945,7 +1965,7 @@ body {
     &-hero .hero-lastbp--card .card-overlay-content {
       padding: 1rem !important;
       h3 {
-        font-size: 0.85rem !important
+        font-size: 0.85rem !important;
       }
     }
   }
