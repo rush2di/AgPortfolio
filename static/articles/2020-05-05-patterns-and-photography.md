@@ -2,7 +2,7 @@
 templateKey: blog-post
 title: 10 افكار تقد دير بيهوم تصاور ففترة الحجر الصحي
 date: 2020-05-05T21:21:27.925Z
-cover: /img/92319068_3334306246584132_8767615550789517312_o.jpg
+cover: /img/91127502_820254298495448_2979745987811200431_n.jpg
 description: 10 Ideas for Photos During Quarantine Period
 tags:
   - photography portraits colors self portraits qurantine ideas
