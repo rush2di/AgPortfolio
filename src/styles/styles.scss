@@ -956,6 +956,11 @@ body {
           text-align: center;  
         }
         &-tags {
+          width: inherit;
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: center;
           span {
             margin-right: 1rem;
             color: #cdcdcd;
@@ -1092,8 +1097,6 @@ body {
       img {
         object-fit: cover;
         object-position: 50% 50%;
-        height: 350px;
-        width: 100%;
         padding: 1rem;
         margin: 0 auto 1rem;
         border-radius: 1.3rem;
@@ -1104,7 +1107,9 @@ body {
         border-style: solid;
         border-color: #eee;
         padding: 1.5em 0 0.5em;
-        margin: 1.5em 0;
+        margin: 1.5em 0;   
+        max-width: 100%;
+        display: block;
         text-align: center;
         position: relative;
         p,
