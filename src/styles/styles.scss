@@ -1738,6 +1738,9 @@ body {
     }
     .article_wrapper .article_share {
       margin: 0 0 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
     }
   }
 }
