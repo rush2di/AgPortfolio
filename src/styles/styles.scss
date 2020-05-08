@@ -768,6 +768,10 @@ body {
           }
         }
         &--tags {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: flex-start;
+          line-height: 1.75;
           margin-bottom: 0.5rem;
           span {
             margin-right: 0.5rem;
