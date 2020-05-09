@@ -1,27 +1,31 @@
 ---
 templateKey: blog-post
-title: Secrets of modern Photogrphy
+title: "10 Types of photography composition "
 date: 2020-04-13T13:21:42.903Z
-cover: /img/34651840_612009955832019_1390474822898679808_n.jpg
-description: >-
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-  incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-  nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+cover: /img/compositiontechniqueshead-800x514.jpg
+description: For the arts, whether visual or musical, composition refers to the
+  arrangement of elements used. In photography, it means paying attention to
+  what will be photographed, how it is placed in relationship to other objects
+  in the image, and how well the subject matter is expressed.
 tags:
   - photography montage visuals
 ---
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dictumst vestibulum rhoncus est pellentesque elit ullamcorper dignissim cras. Nam at lectus urna duis convallis convallis tellus. Proin nibh nisl condimentum id venenatis a condimentum. Lectus sit amet est placerat. Tortor pretium viverra suspendisse potenti nullam ac. Sit amet dictum sit amet justo donec enim. Imperdiet nulla malesuada pellentesque elit eget gravida. Non diam phasellus vestibulum lorem sed risus ultricies tristique. Pellentesque eu tincidunt tortor aliquam nulla. Neque aliquam vestibulum morbi blandit cursus risus at ultrices mi. Id donec ultrices tincidunt arcu non sodales neque sodales. Laoreet non curabitur gravida arcu. Ultrices gravida dictum fusce ut placerat orci nulla. Interdum posuere lorem ipsum dolor sit amet consectetur adipiscing elit. Elementum pulvinar etiam non quam. Nullam ac tortor vitae purus. Dignissim sodales ut eu sem integer vitae justo.
+![](/img/89344174_3262180037130087_7098975560352661504_o.jpg)
 
-Fermentum leo vel orci porta non pulvinar neque laoreet. Massa tincidunt dui ut ornare lectus sit amet. Magna ac placerat vestibulum lectus mauris ultrices eros. Tristique senectus et netus et malesuada fames ac turpis egestas. Nulla posuere sollicitudin aliquam ultrices sagittis orci a scelerisque purus. Ipsum nunc aliquet bibendum enim facilisis. Turpis egestas maecenas pharetra convallis posuere. Velit ut tortor pretium viverra suspendisse potenti nullam. Viverra vitae congue eu consequat ac felis donec et. Hac habitasse platea dictumst vestibulum. Cras semper auctor neque vitae tempus quam pellentesque nec nam. Velit dignissim sodales ut eu sem. Id nibh tortor id aliquet lectus proin. Habitasse platea dictumst vestibulum rhoncus est pellentesque elit ullamcorper. Scelerisque fermentum dui faucibus in ornare quam. Id neque aliquam vestibulum morbi blandit cursus risus. Convallis tellus id interdum velit laoreet id donec ultrices tincidunt. Molestie ac feugiat sed lectus vestibulum mattis ullamcorper. Donec ac odio tempor orci dapibus ultrices.
+![](/img/88197240_3262176060463818_2905822409724526592_o.jpg)
 
-Vitae congue mauris rhoncus aenean vel elit scelerisque mauris. Ultrices eros in cursus turpis massa. Venenatis a condimentum vitae sapien. Tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada proin. Fusce id velit ut tortor pretium. Amet nisl purus in mollis nunc sed. Enim blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Libero enim sed faucibus turpis in eu mi. Pulvinar pellentesque habitant morbi tristique senectus et netus et malesuada. Feugiat pretium nibh ipsum consequat. Etiam tempor orci eu lobortis elementum nibh tellus. Vitae elementum curabitur vitae nunc sed velit dignissim. Erat imperdiet sed euismod nisi porta lorem. Elementum tempus egestas sed sed risus pretium quam. Ipsum dolor sit amet consectetur adipiscing. Suspendisse potenti nullam ac tortor vitae purus. Dui accumsan sit amet nulla.
+![](/img/89121844_3262176050463819_4360008283570831360_o.jpg)
 
-Arcu cursus euismod quis viverra nibh cras. Ipsum consequat nisl vel pretium lectus quam id. Consectetur purus ut faucibus pulvinar elementum integer enim. Sollicitudin ac orci phasellus egestas tellus rutrum. Aliquam ultrices sagittis orci a scelerisque. Tristique senectus et netus et malesuada. Cursus turpis massa tincidunt dui ut ornare. Pharetra sit amet aliquam id diam maecenas ultricies. Blandit turpis cursus in hac habitasse platea dictumst. Felis donec et odio pellentesque diam volutpat commodo sed egestas. Nibh sit amet commodo nulla facilisi. Et molestie ac feugiat sed lectus vestibulum mattis ullamcorper.
+![](/img/88240601_3262176693797088_9028072636885762048_o.jpg)
 
-Varius sit amet mattis vulputate enim nulla. Facilisis magna etiam tempor orci eu lobortis elementum. Sapien eget mi proin sed libero enim sed faucibus. Ornare lectus sit amet est placerat in. Dignissim sodales ut eu sem integer vitae. In metus vulputate eu scelerisque felis imperdiet. Proin nibh nisl condimentum id. Neque convallis a cras semper. Phasellus vestibulum lorem sed risus. Hendrerit dolor magna eget est lorem ipsum dolor sit. Enim lobortis scelerisque fermentum dui faucibus in. Mi quis hendrerit dolor magna eget est lorem ipsum dolor. Aenean sed adipiscing diam donec adipiscing tristique. Ridiculus mus mauris vitae ultricies leo integer malesuada nunc vel. Malesuada fames ac turpis egestas. Sed velit dignissim sodales ut eu sem integer. Mi ipsum faucibus vitae aliquet nec ullamcorper. Ullamcorper eget nulla facilisi etiam. A scelerisque purus semper eget duis at.
+![](/img/89087703_3262177473797010_5672959891669516288_o.jpg)
 
-Purus in massa tempor nec feugiat nisl. Parturient montes nascetur ridiculus mus mauris vitae. Sed viverra tellus in hac habitasse platea dictumst vestibulum. Malesuada fames ac turpis egestas integer. Orci dapibus ultrices in iaculis. Nulla aliquet porttitor lacus luctus accumsan tortor posuere. Ullamcorper malesuada proin libero nunc. A cras semper auctor neque vitae. Elementum tempus egestas sed sed risus pretium quam vulputate. Commodo nulla facilisi nullam vehicula ipsum a arcu. In hac habitasse platea dictumst quisque. Aliquet lectus proin nibh nisl condimentum. Blandit libero volutpat sed cras ornare arcu. Egestas quis ipsum suspendisse ultrices gravida.
+![](/img/87459426_3262177140463710_2992898276035919872_o.jpg)
 
-Quis vel eros donec ac. Praesent elementum facilisis leo vel fringilla est. Cursus vitae congue mauris rhoncus aenean vel elit scelerisque. Convallis tellus id interdum velit laoreet id. Metus dictum at tempor commodo ullamcorper a. Erat pellentesque adipiscing commodo elit at imperdiet dui accumsan. Vitae congue eu consequat ac. At imperdiet dui accumsan sit. Sit amet tellus cras adipiscing enim eu. Scelerisque in dictum non consectetur a erat. Volutpat commodo sed egestas egestas fringilla phasellus faucibus scelerisque eleifend. Posuere urna nec tincidunt praesent semper. Quis commodo odio aenean sed adipiscing diam. Sociis natoque penatibus et magnis dis parturient montes nascetur. Vestibulum morbi blandit cursus risus at ultrices mi. Id ornare arcu odio ut sem nulla pharetra diam sit. Ipsum nunc aliquet bibendum enim facilisis gravida neque convallis. Pretium lectus quam id leo in. Gravida quis blandit turpis cursus in hac habitasse. Morbi leo urna molestie at elementum eu facilisis.
+![](/img/87464778_3262177870463637_170721690135822336_o.jpg)
 
-Duis at consectetur lorem donec massa sapien. Sed enim ut sem viverra aliquet eget sit amet tellus. Sed sed risus pretium quam vulputate dignissim suspendisse in. Neque gravida in fermentum et sollicitudin ac. Condimentum vitae sapien pellentesque habitant morbi tristique senectus et. Pharetra sit amet aliquam id diam maecenas ultricies. Mauris pharetra et ultrices neque ornare aenean euismod elementum nisi. Dignissim convallis aenean et tortor. Orci nulla pellentesque dignissim enim sit amet venenatis. Feugiat pretium nibh ipsum consequat. Odio tempor orci dapibus ultrices in iaculis nunc sed augue. Quam quisque id diam vel quam elementum. Egestas dui id ornare arcu odio ut sem. Eget dolor morbi non arcu risus quis varius quam. Dictum fusce ut placerat orci nulla pellentesque dignissim enim sit. Id aliquet lectus proin nibh. Elit ullamcorper dignissim cras tincidunt lobortis feugiat vivamus at. Tellus pellentesque eu tincidunt tortor aliquam. Pretium lectus quam id leo in vitae. Ipsum faucibus vitae aliquet nec.
+![](/img/89255941_3262178557130235_2765132350693048320_o.jpg)
+
+![](/img/89416452_3262179130463511_7139667072652410880_o.jpg)
+
+![]()
