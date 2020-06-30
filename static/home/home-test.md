@@ -1,8 +1,6 @@
 ---
 templateKey: home-page-customizer
 profileImg: /img/91511139_3320374327977324_3432426868123369472_o.jpg
-introTxt: I'm a young photographer from Morocco, I started photography 4 years
-  ago with my Iphone, now I'm shooting everything with my canon 60D from
-  portraits, visuals, products to food and fine art photography and also
-  believer in process
+introTxt: Young photographer based in Morocco, started photography 4 years ago,
+  I use a canon 60d for shooting portraits, visuals, products, and fine arts.
 ---
