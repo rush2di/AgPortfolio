@@ -406,6 +406,10 @@ body {
             &-content {
               width: 50%;
               height: 100%;
+              display: flex;
+              flex-direction: column;
+              align-content: baseline;
+              justify-content: space-between;
               position: absolute;
               padding: 1rem 0.85rem 1rem 1.5rem;
               h3:first-child {
@@ -764,6 +768,10 @@ body {
           }
         }
         &--tags {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: flex-start;
+          line-height: 1.75;
           margin-bottom: 0.5rem;
           span {
             margin-right: 0.5rem;
@@ -951,10 +959,18 @@ body {
           color: white;
           font-size: 2.5rem;
           text-transform: capitalize;
+          font-size: 1.5rem;
+          padding: 0 0.5rem;
+          text-align: center;  
         }
         &-tags {
+          width: inherit;
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: center;
           span {
-            margin-right: 1rem;
+            margin: 0 .3rem;
             color: #cdcdcd;
           }
         }
@@ -1089,10 +1105,10 @@ body {
       img {
         object-fit: cover;
         object-position: 50% 50%;
-        height: 350px;
-        width: 100%;
         padding: 1rem;
-        margin: 0 auto 1rem;
+        margin: 0 auto 1rem;        
+        max-width: 100%;
+        display: block;
         border-radius: 1.3rem;
       }
       blockquote {
@@ -1652,7 +1668,7 @@ body {
           font-weight: 800;
         }
         h3:last-of-type {
-          @include headings(1.35rem, 800, 0);
+          @include headings(1rem, 800, 0);
         }
         p {
           display: none;
@@ -1722,6 +1738,9 @@ body {
     }
     .article_wrapper .article_share {
       margin: 0 0 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
     }
   }
 }
@@ -1734,10 +1753,7 @@ body {
   ///////////////////////////////////////////////////////////////
   .section {
     &-hero .hero-grid-one .hero-title-container h1 {
-      font-size: 4.2rem !important;
-      &:last-of-type {
-        margin-top: -2.35rem !important;
-      }
+      font-size: 4.5rem !important;
     }
     &-hero .hero-lastbp--card {
       height: 250px !important;
@@ -1764,13 +1780,6 @@ body {
       font-size: 1.35rem;
       margin: 0 0.75rem;
     }
-  }
-}
-// Article Page ////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////
-.section {
-  .article_wrapper .article_head--over h3 {
-    font-size: 1.5rem;
   }
 }
 

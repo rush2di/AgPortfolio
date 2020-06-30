@@ -9,12 +9,11 @@ import ShareButtons from "../components/shareButtons"
 /////////////////////////////////////////////////////////////////////////////
 
 const Article = ({ data }) => {
-  const {
-    src: bgImage,
-  } = data.markdownRemark.frontmatter.cover.childImageSharp.fluid
+  const { cover } = data.markdownRemark.frontmatter
   const { title, date, tags, description } = data.markdownRemark.frontmatter
   const { slug } = data.markdownRemark.fields
   const { html } = data.markdownRemark
+  const bgImage = cover.childImageSharp ? cover.childImageSharp.fluid.src : cover
 
   const [urlOrigin, setUrlOrigin] = useState("https://grana-ab.netlify.app")
 

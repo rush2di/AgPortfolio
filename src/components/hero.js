@@ -13,15 +13,13 @@ import { useScreenSpy } from "../utils/utils"
 const Hero = ({ lastBlogPost = false, homeContent, socials }) => {
   const { instagram, facebook } = socials.edges[0].node.frontmatter
   const { introTxt } = homeContent.edges[0].node.frontmatter
-  const {
-    fluid,
-  } = homeContent.edges[0].node.frontmatter.profileImg.childImageSharp
+  const { profileImg } = homeContent.edges[0].node.frontmatter
 
   return (
     <React.Fragment>
       <HeroContent
         txt={introTxt}
-        img={fluid}
+        img={profileImg}
         payload={lastBlogPost}
         instagram={instagram}
         facebook={facebook}
@@ -121,8 +119,8 @@ const HeroContent = ({ txt, img, payload, instagram, facebook }) => {
             <div className="hero-image-mask">
               <img
                 ref={image}
-                src={img.src ? img.src : img}
-                srcSet={img.srcSet && img.srcSet}
+                src={img.childImageSharp ? img.childImageSharp.fluid.src : img}
+                srcSet={img.childImageSharp ? img.childImageSharp.fluid.srcSet : ""}
                 alt=""
               />
               <div className="hero-image-socials">
@@ -146,8 +144,9 @@ const HeroContent = ({ txt, img, payload, instagram, facebook }) => {
 
 const LastBlogPostCard = ({ payload }) => {
   const { title, description } = payload.frontmatter
-  const { src } = payload.frontmatter.cover.childImageSharp.fluid
+  const { cover } = payload.frontmatter
   const { slug } = payload.fields
+  const image = cover.childImageSharp ? cover.childImageSharp.fluid.src : cover
 
   const linkStyles = { width: "100%", display: "block", height: "100%" }
 
@@ -158,9 +157,9 @@ const LastBlogPostCard = ({ payload }) => {
           Last Blog Post <img src={arrow} alt="" />
         </span>
       </h1>
-      <ImagePalette image={src}>
+      <ImagePalette image={image}>
         {({ backgroundColor, color, alternativeColor }) => {
-          const bgImage = { backgroundImage: `url(${src})` }
+          const bgImage = { backgroundImage: `url(${image})` }
           return (
             <div style={bgImage} className="hero-lastbp--card shadows-md">
               <Link style={linkStyles} to={`article/${slug}`}>

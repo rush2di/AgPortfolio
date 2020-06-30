@@ -1,7 +1,7 @@
 backend:
   name: git-gateway
   repo: rush2di/AgPortfolio
-  branch: master
+  branch: production
 
 publish_mode: editorial_workflow
 media_folder: static/img
@@ -32,6 +32,7 @@ collections:
     label: "Home Page"
     folder: "static/home"
     create: false
+    delete: false
     slug: "home-page"
     identifier_field: "templateKey"
     editor: 
@@ -50,6 +51,7 @@ collections:
     label: "Social Media Links"
     folder: "static/socials"
     create: false
+    delete: false
     slug: "social-links"
     identifier_field: "templateKey"
     editor: 
