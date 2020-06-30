@@ -1,6 +1,6 @@
 ---
 templateKey: blog-post
-title: 10 افكار تقد دير بيهوم تصاور ففترة الحجر الصحي
+title: 10 ideas for taking photographs during the lockdown
 date: 2020-05-05T21:21:27.925Z
 cover: /img/91127502_820254298495448_2979745987811200431_n.jpg
 description: 10 Ideas for Photos During Quarantine Period
