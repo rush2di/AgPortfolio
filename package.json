@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "author": "Rochdi Belhirch <roch2di@gmail.com>",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "gatsby": "^2.20.22",
     "gatsby-image": "^2.3.2",
     "gatsby-paginate": "^1.1.1",
